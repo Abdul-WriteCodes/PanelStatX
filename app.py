@@ -30,10 +30,10 @@ def check_auth():
     <div style='text-align:left;'>
         <p style='font-size:14px; color:cyan; text-align:left; font-weight:600'>
             Supports Panel Regression for Different Datasets:<br><br>
-            🎯 <strong>Companies</strong><br>
-            📝 <strong>Countries</strong><br>
-            ⏱️ <strong>Industries</strong><br>
-            👇 <strong>Any panel data structure</strong><br>
+            🏙️ <strong>Companies</strong><br>
+            🌍 <strong>Countries</strong><br>
+            🏭 <strong>Industries</strong><br>
+            📊 <strong>Any panel data structure</strong><br>
         </p>
         
     </div>
