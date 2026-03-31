@@ -106,9 +106,6 @@ if uploaded_file:
 
         st.success("Dataset uploaded successfully")
 
-        # Preview
-        st.subheader("Dataset Preview")
-        st.dataframe(df.head())
 
     except Exception as e:
         st.error(f"Error reading file: {e}")
