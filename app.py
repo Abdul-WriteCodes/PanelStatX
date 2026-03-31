@@ -33,7 +33,7 @@ def check_auth():
         </p>
         
         <p style='font-size:14px; color:cyan; text-align:center; font-weight:600'>
-            🏙️ <strong>Companies• <strong>🌍 <strong>Countries</strong>• 🏭 <strong>Industries</strong>• 📊 <strong>Any panel data structure</strong>
+            🏙️ Companies• 🌍 Countries • 🏭 Industries• 📊 Any panel data structure
         </p>
         
     </div>
