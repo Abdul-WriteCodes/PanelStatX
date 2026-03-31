@@ -25,12 +25,20 @@ def check_auth():
         <p style='font-size:14px; color:#2ECC71; text-align:center; font-weight:600'>
             🎯 Upload Data • 📝 Select Model • 🔄 Analyse • ✅ Download Results
         </p>
+        Supports Panel Regression for Different Datasets:<br><br>
+        🎯 <strong>Companies</strong><br>
+        📝 <strong>Countries</strong><br>
+        ⏱️ <strong>Industries</strong><br>
+        👇 <strong>Any panel data structure</strong><br>
+        
+        </p>
+        
     </div>
     """,
     unsafe_allow_html=True
     )
         st.markdown("---")
-        st.markdown("##Get Ready for Analysis")
+        st.markdown("## Get Ready for Analysis")
         st.caption("🔐 Enter your access key")
 
         user_token = st.text_input("Access Key", type="password")
