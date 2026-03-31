@@ -1,6 +1,12 @@
 import streamlit as st
 import pandas as pd
 
+
+
+st.title("📊 PanelStatX MVP")
+st.caption("Panel Data Analysis Made Simple")
+
+
 # -----------------------------
 # ACCESS CONTROL
 # -----------------------------
@@ -30,8 +36,6 @@ check_auth()
 # -----------------------------
 # MAIN APP
 # -----------------------------
-#st.title("📊 PanelStatX MVP")
-#st.caption("Panel Data Analysis Made Simple")
 
 # ---------------- HEADER ----------------
 st.markdown(
