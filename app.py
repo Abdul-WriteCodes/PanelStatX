@@ -32,7 +32,7 @@ def check_auth():
             Supports Panel Regression for Different Datasets:
         </p>
         <p style='font-size:14px; color:cyan; text-align:center; font-weight:600'>
-            🏙️ Companies• 🌍 Countries • 🏭 Industries• 📊 Any panel data structure
+            🏙️ Companies 🌍 Countries  🏭 Industries
         </p>
     </div>
     """,
