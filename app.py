@@ -3,9 +3,21 @@ import pandas as pd
 
 
 
-st.title("📊 PanelStatX MVP")
-st.caption("Panel Data Analysis Made Simple")
-
+st.markdown(
+    """
+    <div style='text-align:center;'>
+        <h1> PanelStatX </h1>
+        <p style='font-size:16px; color:gray; font-weight:600'>
+            Panel Data Analysis Made Simple
+        </p>
+        <p style='font-size:14px; color:#2ECC71; text-align:center; font-weight:600'>
+            🎯 Upload Data • 📝 Select Model • 🔄 Analyse • ✅ Download Results
+        </p>
+    </div>
+    """,
+    unsafe_allow_html=True
+)
+st.markdown("---")
 
 # -----------------------------
 # ACCESS CONTROL
