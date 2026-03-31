@@ -1,0 +1,16 @@
+# Virtual environments
+venv/
+env/
+.venv/
+
+# Environment files
+.env
+
+.streamlit/secrets.toml
+
+# Python artifacts
+__pycache__/
+*.pyc
+
+# Temporary debug files
+tracked_venv.txt
