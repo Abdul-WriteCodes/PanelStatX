@@ -30,8 +30,8 @@ def check_auth():
     unsafe_allow_html=True
     )
         st.markdown("---")
-        st.markdown("## 🔐 PanelStatX Private Access")
-        st.caption("Enter your access key")
+        st.markdown("##Get Ready for Analysis")
+        st.caption("🔐 Enter your access key")
 
         user_token = st.text_input("Access Key", type="password")
 
