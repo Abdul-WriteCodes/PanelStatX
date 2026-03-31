@@ -28,7 +28,7 @@ def check_auth():
     </div>
     
     <div style='text-align:left;'>
-         <p style='font-size:16px; color:gray; font-weight:600'>
+        <p style='font-size:16px; color:gray; font-weight:600'>
             Supports Panel Regression for Different Datasets:
         </p>
         
