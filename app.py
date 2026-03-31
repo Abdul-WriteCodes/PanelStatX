@@ -3,7 +3,19 @@ import pandas as pd
 
 
 
-st.markdown(
+
+
+# -----------------------------
+# ACCESS CONTROL
+# -----------------------------
+TOKEN = st.secrets["APP_ACCESS_TOKEN"]
+
+def check_auth():
+    if "authenticated" not in st.session_state:
+        st.session_state.authenticated = False
+
+    if not st.session_state.authenticated:
+        st.markdown(
     """
     <div style='text-align:center;'>
         <h1> PanelStatX </h1>
@@ -16,19 +28,8 @@ st.markdown(
     </div>
     """,
     unsafe_allow_html=True
-)
-st.markdown("---")
-
-# -----------------------------
-# ACCESS CONTROL
-# -----------------------------
-TOKEN = st.secrets["APP_ACCESS_TOKEN"]
-
-def check_auth():
-    if "authenticated" not in st.session_state:
-        st.session_state.authenticated = False
-
-    if not st.session_state.authenticated:
+    )
+        st.markdown("---")
         st.markdown("## 🔐 PanelStatX Private Access")
         st.caption("Enter your access key")
 
