@@ -26,16 +26,14 @@ def check_auth():
             🎯 Upload Data • 📝 Select Model • 🔄 Analyse • ✅ Download Results
         </p>
     </div>
-    
-    <div style='text-align:left;'>
+
+    <div style='text-align:center;'>
         <p style='font-size:16px; color:gray; font-weight:600'>
             Supports Panel Regression for Different Datasets:
         </p>
-        
         <p style='font-size:14px; color:cyan; text-align:center; font-weight:600'>
             🏙️ Companies• 🌍 Countries • 🏭 Industries• 📊 Any panel data structure
         </p>
-        
     </div>
     """,
     unsafe_allow_html=True
