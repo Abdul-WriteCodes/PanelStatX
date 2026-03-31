@@ -4,3 +4,4 @@ python-dateutil
 opik
 python-docx
 python-dotenv
+openpyxl
