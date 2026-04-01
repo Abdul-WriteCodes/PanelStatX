@@ -5,3 +5,4 @@ opik
 python-docx
 python-dotenv
 openpyxl
+plotly
