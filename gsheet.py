@@ -1,4 +1,3 @@
-# gsheet.py
 import gspread
 import streamlit as st
 from google.oauth2.service_account import Credentials
@@ -7,6 +6,7 @@ SCOPES = [
     "https://www.googleapis.com/auth/spreadsheets",
     "https://www.googleapis.com/auth/drive"
 ]
+
 
 @st.cache_resource
 def get_sheet():
@@ -23,7 +23,7 @@ def get_sheet():
 def get_all_keys():
     """Return all rows as list of dicts."""
     ws = get_sheet()
-    return ws.get_all_records()  # [{access_key, credits, date_purchased, status}, ...]
+    return ws.get_all_records()
 
 
 def find_key_row(access_key: str):
@@ -37,7 +37,7 @@ def find_key_row(access_key: str):
 
     for i, row in enumerate(records):
         if str(row["access_key"]).strip() == access_key.strip():
-            return i + 2, row  # +2 because row 1 is header, enumerate starts at 0
+            return i + 2, row  # +2: row 1 is header, enumerate starts at 0
 
     return None, None
 
@@ -45,8 +45,8 @@ def find_key_row(access_key: str):
 def deduct_credit(access_key: str):
     """
     Subtract 1 credit from the key's row.
-    Blocks the key if credits reach 0.
-    Returns updated credit count.
+    Blocks the key automatically if credits reach 0.
+    Returns updated credit count, or None if key not found.
     """
     ws = get_sheet()
     row_num, row_data = find_key_row(access_key)
@@ -59,7 +59,7 @@ def deduct_credit(access_key: str):
     # Update credits column (column B = 2)
     ws.update_cell(row_num, 2, new_credits)
 
-    # Block key if credits exhausted
+    # Auto-block key if credits exhausted
     if new_credits <= 0:
         ws.update_cell(row_num, 4, "blocked")  # column D = status
 
