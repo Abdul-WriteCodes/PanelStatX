@@ -962,27 +962,6 @@ for key, default in [
     if key not in st.session_state:
         st.session_state[key] = default
 
-
-# TEMPORARY DEBUG — remove after fixing
-with st.expander("🔧 Debug info", expanded=True):
-    try:
-        st.write("Secrets keys available:", list(st.secrets.keys()))
-    except Exception as e:
-        st.write("Secrets error:", e)
-    try:
-        ws = _get_sheet()
-        records = ws.get_all_records()
-        st.write("Sheet records:", records)
-    except Exception as e:
-        st.write("Sheet connection error:", e)
-
-
-
-
-
-
-
-
 # ═══════════════════════════════════════════════════════════════════════════════
 # ACCESS KEY GATE  — Google Sheets credit system
 # secrets.toml must contain:
