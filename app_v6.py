@@ -10,6 +10,24 @@ import io
 import warnings
 warnings.filterwarnings("ignore")
 
+
+
+# TEMPORARY DEBUG — remove after fixing
+with st.expander("🔧 Debug info", expanded=True):
+    try:
+        st.write("Secrets keys available:", list(st.secrets.keys()))
+    except Exception as e:
+        st.write("Secrets error:", e)
+    try:
+        ws = _get_sheet()
+        records = ws.get_all_records()
+        st.write("Sheet records:", records)
+    except Exception as e:
+        st.write("Sheet connection error:", e)
+
+
+
+
 # ── Google Sheets credit system ───────────────────────────────────────────────
 from google.oauth2.service_account import Credentials
 import gspread
