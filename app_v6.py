@@ -1603,7 +1603,7 @@ if st.session_state.df is None:
     for col, icon, title, desc in [
         (col1, "⬡", "Panel-Ready", "Fixed effects, first-difference, and pooled OLS estimators built for longitudinal data."),
         (col2, "◈", "Diagnostic Suite", "Residual analysis, heteroskedasticity checks, Hausman test, and entity plots."),
-        (col3, "⬟", "AI Explainer", "Claude interprets your regression output in plain language — coefficients, fit, and caveats."),
+        (col3, "⬟", "AI Explainer", "GPT-4o interprets your regression output in plain language — coefficients, fit, and caveats."),
     ]:
         with col:
             st.markdown(f"""
