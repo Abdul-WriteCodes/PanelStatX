@@ -24,7 +24,7 @@ def _get_sheet():
     creds_dict = dict(st.secrets["gcp_service_account"])
     creds = Credentials.from_service_account_info(creds_dict, scopes=GSHEET_SCOPES)
     gc = gspread.authorize(creds)
-    spreadsheet_id = st.secrets["GSHEET_ID"]
+    spreadsheet_id = st.secrets["SHEET_ID"]
     sh = gc.open_by_key(spreadsheet_id)
     return sh.sheet1   # first sheet: Key | Credits | DatePurchased | Email
 

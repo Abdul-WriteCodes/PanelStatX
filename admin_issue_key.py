@@ -23,8 +23,8 @@ import gspread
 from google.oauth2.service_account import Credentials
 
 # ── Config ────────────────────────────────────────────────────────────────────
-SHEET_ID    = "1AbCdEfGhIjKlMnOpQrStUvWxYz_your_sheet_id_here"   # ← change this
-CREDS_FILE  = "secrets.json"   # path to your service-account JSON key
+SHEET_ID    = "1PeZ1FDhfKwEzQ-Kervm_wOn58dfmQ0RLhc8z60I_kTQ"   # ← change this
+CREDS_FILE  = "panelstatx-271958e2a874.json"   # path to your service-account JSON key
 SCOPES      = [
     "https://www.googleapis.com/auth/spreadsheets",
     "https://www.googleapis.com/auth/drive",
