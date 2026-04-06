@@ -70,7 +70,7 @@ def deduct_credit(row_index: int, current_credits: int) -> int:
 st.set_page_config(
     page_title="PanelStatX",
     page_icon="⬡",
-    layout="wide",
+    layout="tight",
     initial_sidebar_state="expanded",
 )
 
