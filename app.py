@@ -32,7 +32,7 @@ def check_auth():
             Supports Panel Regression for Different Datasets:
         </p>
         <p style='font-size:14px; color:cyan; text-align:center; font-weight:600'>
-            🏙️ Companies• 🌍 Countries • 🏭 Industries• 📊 Any panel data structure
+            🏙️ Companies 🌍 Countries  🏭 Industries
         </p>
     </div>
     """,
@@ -106,9 +106,6 @@ if uploaded_file:
 
         st.success("Dataset uploaded successfully")
 
-        # Preview
-        st.subheader("Dataset Preview")
-        st.dataframe(df.head())
 
     except Exception as e:
         st.error(f"Error reading file: {e}")
