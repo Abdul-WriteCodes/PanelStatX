@@ -5,3 +5,5 @@ opik
 python-docx
 python-dotenv
 openpyxl
+gspread
+google-auth
