@@ -1260,7 +1260,7 @@ if not st.session_state.access_granted:
             </div>
             <div class="feature-item">
               <div class="feature-icon fi-purple">◈</div>
-              <div class="feature-text"><b>AI Explainer</b> — GPT-4 powered coefficient interpretation with economic significance analysis</div>
+              <div class="feature-text"><b>AI Explainer</b> — GPT-5 powered coefficient interpretation with economic significance analysis</div>
             </div>
             <div class="feature-item">
               <div class="feature-icon fi-pink">◉</div>
@@ -1282,7 +1282,7 @@ if not st.session_state.access_granted:
               <div class="sl">Data Formats</div>
             </div>
             <div class="stat-chip">
-              <div class="sv">GPT-4</div>
+              <div class="sv">GPT-5</div>
               <div class="sl">AI Engine</div>
             </div>
           </div>
@@ -1294,10 +1294,10 @@ if not st.session_state.access_granted:
         <div style="display:flex; align-items:center; justify-content:center; padding: 32px 0 24px 0;">
         <div class="gate-card fade-up d3" style="width:100%;">
             <div class="gate-header">
-                <div class="gate-title">Request Access</div>
+                <div class="gate-title">Access Key Required</div>
                 <div class="gate-sub">Enter your licence key to continue →</div>
             </div>
-            <div class="gate-label">Access Key</div>
+            <div class="gate-label">Access Key format: PSX-****-****-****</div>
         </div>
         </div>
         """, unsafe_allow_html=True)
