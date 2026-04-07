@@ -70,7 +70,7 @@ def deduct_credit(row_index: int, current_credits: int) -> int:
 st.set_page_config(
     page_title="PanelStatX",
     page_icon="⬡",
-    layout="tight",
+    layout="wide",
     initial_sidebar_state="expanded",
 )
 
@@ -479,7 +479,7 @@ def call_openai(system_prompt, user_prompt):
         "Authorization": f"Bearer {api_key}",
     }
     payload = {
-        "model": "gpt-4o",
+        "model": "gpt-5.3-mini",
         "max_tokens": 1000,
         "messages": [
             {"role": "system", "content": system_prompt},
@@ -1223,7 +1223,7 @@ if not st.session_state.access_granted:
     <div class="landing-nav fade-up d1">
         <div class="nav-logo">
             <span class="hex">⬡</span>
-            Panel<span class="acc">Stat</span>X
+            PanelStatX<span class="acc">
         </div>
         <span class="nav-tag">Panel Regression Engine</span>
         <div class="nav-right">
