@@ -1399,7 +1399,13 @@ if not st.session_state.access_granted:
         
           </div>
         </div>
+        
+        <div class="gate-footer">
+            Buy Access Key <a href="https://wa.me/2348096506034">🔑request a key →</a>
+        </div>
+        
         """, unsafe_allow_html=True)
+        
 
 
     # ── Ticker strip ──────────────────────────────────────────────────────────
