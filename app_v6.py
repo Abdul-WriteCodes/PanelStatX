@@ -1368,10 +1368,10 @@ if not st.session_state.access_granted:
         """, unsafe_allow_html=True)
         
         st.markdown("""
-        <div style="padding: 32px 0 24px 0;">
+        <div style="padding: 20px 0 16px 0;">
 
           <div class="hero-eyebrow fade-up d2">
-           
+            <span class="eyebrow-dot"></span>
             PAYMENT PLANS
           </div>
 
