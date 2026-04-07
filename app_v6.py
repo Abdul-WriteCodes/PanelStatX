@@ -1223,12 +1223,9 @@ if not st.session_state.access_granted:
     <div class="landing-nav fade-up d1">
         <div class="nav-logo">
             <span class="hex">⬡</span>
-            PanelStatX<span class="acc">
+            PanelStatX<span class="acc"> 
         </div>
         <span class="nav-tag">Panel Regression Engine</span>
-        <div class="nav-right">
-            <span class="nav-badge">✦ v1.0 · Research Edition</span>
-        </div>
     </div>
     """, unsafe_allow_html=True)
 
