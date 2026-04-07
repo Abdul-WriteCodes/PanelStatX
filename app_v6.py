@@ -1358,11 +1358,91 @@ if not st.session_state.access_granted:
             </div>
             """, unsafe_allow_html=True)
 
-        st.markdown("""
+       st.markdown("""
         <div class="gate-footer">
             Access is licence-controlled.<br>
-            Contact Administrator  <a href="https://wa.me/2348096506034"> Here →</a> <br>
-            Buy Access Key <a href="https://wa.me/2348096506034">🔑request a key →</a>
+            Contact Administrator  <a href="https://wa.me/2348096506034"> Here →</a> or Buy Access Key <a href="https://wa.me/2348096506034">request a key →</a>
+        </div>
+ 
+        <div style="margin-top:24px;">
+            <div style="font-family:'DM Mono',monospace;font-size:0.6rem;text-transform:uppercase;
+                        letter-spacing:0.14em;color:#4a5568;margin-bottom:12px;text-align:center;">
+                — Choose a plan —
+            </div>
+ 
+            <!-- Starter -->
+            <div style="background:rgba(255,255,255,0.02);border:1px solid rgba(255,255,255,0.07);
+                        border-radius:10px;padding:14px 16px;margin-bottom:8px;
+                        display:flex;align-items:center;justify-content:space-between;
+                        transition:border-color 0.2s;">
+                <div>
+                    <div style="font-family:'Syne',sans-serif;font-size:0.85rem;font-weight:700;
+                                color:#e2e8f4;">Starter</div>
+                    <div style="font-family:'DM Mono',monospace;font-size:0.62rem;color:#6b7a9a;
+                                margin-top:2px;">10 analysis runs</div>
+                </div>
+                <div style="text-align:right;">
+                    <div style="font-family:'Syne',sans-serif;font-size:1.05rem;font-weight:800;
+                                color:#00e5c8;">₦2,500</div>
+                    <a href="FLUTTERWAVE_LINK_STARTER" target="_blank"
+                       style="font-family:'DM Mono',monospace;font-size:0.6rem;color:#00e5c8;
+                              text-decoration:none;letter-spacing:0.08em;">Buy →</a>
+                </div>
+            </div>
+ 
+            <!-- Standard -->
+            <div style="background:rgba(0,229,200,0.04);border:1px solid rgba(0,229,200,0.2);
+                        border-radius:10px;padding:14px 16px;margin-bottom:8px;
+                        display:flex;align-items:center;justify-content:space-between;
+                        position:relative;overflow:hidden;">
+                <div style="position:absolute;top:0;left:0;right:0;height:2px;
+                            background:linear-gradient(90deg,#00e5c8,#7c6df0);"></div>
+                <div>
+                    <div style="display:flex;align-items:center;gap:8px;">
+                        <span style="font-family:'Syne',sans-serif;font-size:0.85rem;font-weight:700;
+                                     color:#e2e8f4;">Standard</span>
+                        <span style="font-family:'DM Mono',monospace;font-size:0.55rem;
+                                     background:rgba(0,229,200,0.12);color:#00e5c8;
+                                     border:1px solid rgba(0,229,200,0.3);border-radius:20px;
+                                     padding:2px 8px;letter-spacing:0.08em;">POPULAR</span>
+                    </div>
+                    <div style="font-family:'DM Mono',monospace;font-size:0.62rem;color:#6b7a9a;
+                                margin-top:2px;">30 analysis runs</div>
+                </div>
+                <div style="text-align:right;">
+                    <div style="font-family:'Syne',sans-serif;font-size:1.05rem;font-weight:800;
+                                color:#00e5c8;">₦6,000</div>
+                    <a href="FLUTTERWAVE_LINK_STANDARD" target="_blank"
+                       style="font-family:'DM Mono',monospace;font-size:0.6rem;color:#00e5c8;
+                              text-decoration:none;letter-spacing:0.08em;">Buy →</a>
+                </div>
+            </div>
+ 
+            <!-- Pro -->
+            <div style="background:rgba(124,109,240,0.04);border:1px solid rgba(124,109,240,0.15);
+                        border-radius:10px;padding:14px 16px;margin-bottom:8px;
+                        display:flex;align-items:center;justify-content:space-between;">
+                <div>
+                    <div style="font-family:'Syne',sans-serif;font-size:0.85rem;font-weight:700;
+                                color:#e2e8f4;">Pro</div>
+                    <div style="font-family:'DM Mono',monospace;font-size:0.62rem;color:#6b7a9a;
+                                margin-top:2px;">100 analysis runs</div>
+                </div>
+                <div style="text-align:right;">
+                    <div style="font-family:'Syne',sans-serif;font-size:1.05rem;font-weight:800;
+                                color:#7c6df0;">₦15,000</div>
+                    <a href="FLUTTERWAVE_LINK_PRO" target="_blank"
+                       style="font-family:'DM Mono',monospace;font-size:0.6rem;color:#7c6df0;
+                              text-decoration:none;letter-spacing:0.08em;">Buy →</a>
+                </div>
+            </div>
+ 
+            <div style="font-family:'DM Mono',monospace;font-size:0.58rem;color:#4a5568;
+                        text-align:center;margin-top:10px;line-height:1.6;">
+                After payment, contact admin on
+                <a href="https://wa.me/2348096506034" style="color:#00e5c8;text-decoration:none;">
+                WhatsApp</a> to receive your key.
+            </div>
         </div>
         """, unsafe_allow_html=True)
 
