@@ -1375,37 +1375,6 @@ if not st.session_state.access_granted:
             Advanced Econometrics Platform
           </div>
 
-          <h1 class="hero-title fade-up d2">
-            Panel Data<br>
-            <span class="acc">Analysis</span><br>
-            <span class="acc2">Re-imagined</span>
-          </h1>
-
-          <p class="hero-desc fade-up d3">
-            Production-grade panel regression with Fixed Effects, Random Effects,
-            First-Difference estimators and AI-powered interpretation — built for
-            economists, researchers, and data scientists who demand rigour.
-          </p>
-
-          <div class="feature-list fade-up d4">
-            <div class="feature-item">
-              <div class="feature-icon fi-teal">⬡</div>
-              <div class="feature-text"><b>Multiple Estimators</b> — OLS, Fixed Effects (Two-Way), Random Effects, First-Difference with Hausman test</div>
-            </div>
-            <div class="feature-item">
-              <div class="feature-icon fi-purple">◈</div>
-              <div class="feature-text"><b>AI Explainer</b> — GPT-4 powered coefficient interpretation with economic significance analysis</div>
-            </div>
-            <div class="feature-item">
-              <div class="feature-icon fi-pink">◉</div>
-              <div class="feature-text"><b>Diagnostics Suite</b> — Residual plots, Q-Q, Jarque-Bera normality, Durbin-Watson autocorrelation</div>
-            </div>
-            <div class="feature-item">
-              <div class="feature-icon fi-amber">◆</div>
-              <div class="feature-text"><b>Entity Visualisation</b> — Cross-sectional panel plots, time-series overlays, mean comparisons</div>
-            </div>
-          </div>
-
           <div class="stat-row fade-up d5">
             <div class="stat-chip">
               <div class="sv">4+</div>
