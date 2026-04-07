@@ -1294,7 +1294,7 @@ if not st.session_state.access_granted:
         <div style="display:flex; align-items:center; justify-content:center; padding: 32px 0 24px 0;">
         <div class="gate-card fade-up d3" style="width:100%;">
             <div class="gate-header">
-                <div class="gate-title">🔏Access Key Required</div>
+                <div class="gate-title">🔐Access Key Required</div>
                 <div class="gate-sub">Enter your licence key to continue </div>
             </div>
             <div class="gate-label">Access Key format: PSX-****-****-****</div>
