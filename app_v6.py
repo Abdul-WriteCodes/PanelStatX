@@ -479,7 +479,7 @@ def call_openai(system_prompt, user_prompt):
         "Authorization": f"Bearer {api_key}",
     }
     payload = {
-        "model": "gpt-5.3-mini",
+        "model": "gpt-4o",
         "max_tokens": 1000,
         "messages": [
             {"role": "system", "content": system_prompt},
@@ -1361,7 +1361,8 @@ if not st.session_state.access_granted:
         st.markdown("""
         <div class="gate-footer">
             Access is licence-controlled.<br>
-            Contact Administrator  <a href="https://wa.me/2348096506034"> Here →</a> or Buy Access Key <a href="https://wa.me/2348096506034">request a key →</a>
+            Contact Administrator  <a href="https://wa.me/2348096506034"> Here →</a> <br>
+            Buy Access Key <a href="https://wa.me/2348096506034">request a key →</a>
         </div>
         """, unsafe_allow_html=True)
 
