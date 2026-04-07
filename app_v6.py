@@ -1371,7 +1371,7 @@ if not st.session_state.access_granted:
         <div style="padding: 32px 0 24px 0;">
 
           <div class="hero-eyebrow fade-up d2">
-            <span class="eyebrow-dot"></span>
+           
             PAYMENT PLANS
           </div>
 
