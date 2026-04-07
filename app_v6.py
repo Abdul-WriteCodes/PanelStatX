@@ -1282,7 +1282,7 @@ if not st.session_state.access_granted:
               <div class="sl">Data Formats</div>
             </div>
             <div class="stat-chip">
-              <div class="sv">GPT-5</div>
+              <div class="sv">GPT-4</div>
               <div class="sl">AI Engine</div>
             </div>
           </div>
@@ -1294,8 +1294,8 @@ if not st.session_state.access_granted:
         <div style="display:flex; align-items:center; justify-content:center; padding: 32px 0 24px 0;">
         <div class="gate-card fade-up d3" style="width:100%;">
             <div class="gate-header">
-                <div class="gate-title">Access Key Required</div>
-                <div class="gate-sub">Enter your licence key to continue →</div>
+                <div class="gate-title">🔑Access Key Required</div>
+                <div class="gate-sub">Enter your licence key to continue </div>
             </div>
             <div class="gate-label">Access Key format: PSX-****-****-****</div>
         </div>
@@ -1362,7 +1362,7 @@ if not st.session_state.access_granted:
         <div class="gate-footer">
             Access is licence-controlled.<br>
             Contact Administrator  <a href="https://wa.me/2348096506034"> Here →</a> <br>
-            Buy Access Key <a href="https://wa.me/2348096506034">request a key →</a>
+            Buy Access Key <a href="https://wa.me/2348096506034">🔑request a key →</a>
         </div>
         """, unsafe_allow_html=True)
 
