@@ -1372,21 +1372,21 @@ if not st.session_state.access_granted:
 
           <div class="hero-eyebrow fade-up d2">
             <span class="eyebrow-dot"></span>
-            Advanced Econometrics Platform
+            PAYMENT PLANS
           </div>
 
           <div class="stat-row fade-up d5">
             <div class="stat-chip">
-              <div class="sv">4+</div>
-              <div class="sl">Estimators</div>
+              <div class="sv">$10/12 Credits</div>
+              <div class="sl">12 Analysis Run</div>
             </div>
             <div class="stat-chip">
-              <div class="sv">CSV · XLS</div>
-              <div class="sl">Data Formats</div>
+              <div class="sv">$15/25 Credits</div>
+              <div class="sl">25 Analysis Runs</div>
             </div>
             <div class="stat-chip">
-              <div class="sv">GPT-4</div>
-              <div class="sl">AI Engine</div>
+              <div class="sv">$25/30 </div>
+              <div class="sl">30 Analysis Runs</div>
             </div>
           </div>
         </div>
