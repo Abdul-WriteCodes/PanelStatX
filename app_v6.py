@@ -1358,18 +1358,18 @@ if not st.session_state.access_granted:
             </div>
             """, unsafe_allow_html=True)
 
-       st.markdown("""
+        st.markdown("""
         <div class="gate-footer">
             Access is licence-controlled.<br>
             Contact Administrator  <a href="https://wa.me/2348096506034"> Here →</a> or Buy Access Key <a href="https://wa.me/2348096506034">request a key →</a>
         </div>
-        
+
         <div style="margin-top:24px;">
             <div style="font-family:'DM Mono',monospace;font-size:0.6rem;text-transform:uppercase;
                         letter-spacing:0.14em;color:#4a5568;margin-bottom:12px;text-align:center;">
                 — Choose a plan —
             </div>
- 
+
             <!-- Starter -->
             <div style="background:rgba(255,255,255,0.02);border:1px solid rgba(255,255,255,0.07);
                         border-radius:10px;padding:14px 16px;margin-bottom:8px;
@@ -1389,7 +1389,7 @@ if not st.session_state.access_granted:
                               text-decoration:none;letter-spacing:0.08em;">Buy →</a>
                 </div>
             </div>
- 
+
             <!-- Standard -->
             <div style="background:rgba(0,229,200,0.04);border:1px solid rgba(0,229,200,0.2);
                         border-radius:10px;padding:14px 16px;margin-bottom:8px;
@@ -1417,7 +1417,7 @@ if not st.session_state.access_granted:
                               text-decoration:none;letter-spacing:0.08em;">Buy →</a>
                 </div>
             </div>
- 
+
             <!-- Pro -->
             <div style="background:rgba(124,109,240,0.04);border:1px solid rgba(124,109,240,0.15);
                         border-radius:10px;padding:14px 16px;margin-bottom:8px;
@@ -1436,7 +1436,7 @@ if not st.session_state.access_granted:
                               text-decoration:none;letter-spacing:0.08em;">Buy →</a>
                 </div>
             </div>
- 
+
             <div style="font-family:'DM Mono',monospace;font-size:0.58rem;color:#4a5568;
                         text-align:center;margin-top:10px;line-height:1.6;">
                 After payment, contact admin on
