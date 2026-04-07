@@ -10,7 +10,6 @@ import io
 import warnings
 warnings.filterwarnings("ignore")
 
-
 # ── Google Sheets credit system ───────────────────────────────────────────────
 from google.oauth2.service_account import Credentials
 import gspread
@@ -962,6 +961,7 @@ for key, default in [
     if key not in st.session_state:
         st.session_state[key] = default
 
+
 # ═══════════════════════════════════════════════════════════════════════════════
 # ACCESS KEY GATE  — Google Sheets credit system
 # secrets.toml must contain:
@@ -1223,9 +1223,12 @@ if not st.session_state.access_granted:
     <div class="landing-nav fade-up d1">
         <div class="nav-logo">
             <span class="hex">⬡</span>
-            PanelStatX<span class="acc"> 
+            Panel<span class="acc">Stat</span>X
         </div>
         <span class="nav-tag">Panel Regression Engine</span>
+        <div class="nav-right">
+            <span class="nav-badge">✦ v1.0 · Research Edition</span>
+        </div>
     </div>
     """, unsafe_allow_html=True)
 
@@ -1294,10 +1297,10 @@ if not st.session_state.access_granted:
         <div style="display:flex; align-items:center; justify-content:center; padding: 32px 0 24px 0;">
         <div class="gate-card fade-up d3" style="width:100%;">
             <div class="gate-header">
-                <div class="gate-title">🔐Access Key Required</div>
-                <div class="gate-sub">Enter your licence key to continue </div>
+                <div class="gate-title">Request Access</div>
+                <div class="gate-sub">Enter your licence key to continue →</div>
             </div>
-            <div class="gate-label">Access Key format: PSX-****-****-****</div>
+            <div class="gate-label">Access Key</div>
         </div>
         </div>
         """, unsafe_allow_html=True)
@@ -1349,7 +1352,7 @@ if not st.session_state.access_granted:
             placeholder="PSX-XXXX-XXXX-XXXX",
             label_visibility="collapsed",
         )
-        unlock_btn = st.button("Unlock PanelStatX 🔑", use_container_width=True, type="primary")
+        unlock_btn = st.button("⬡  Unlock PanelStatX", use_container_width=True, type="primary")
 
         if st.session_state.access_error:
             st.markdown(f"""
@@ -1681,7 +1684,7 @@ if st.session_state.df is None:
     for col, icon, title, desc in [
         (col1, "⬡", "Panel-Ready", "Fixed effects, first-difference, and pooled OLS estimators built for longitudinal data."),
         (col2, "◈", "Diagnostic Suite", "Residual analysis, heteroskedasticity checks, Hausman test, and entity plots."),
-        (col3, "⬟", "AI Explainer", "GPT-4o interprets your regression output in plain language — coefficients, fit, and caveats."),
+        (col3, "⬟", "AI Explainer", "Claude interprets your regression output in plain language — coefficients, fit, and caveats."),
     ]:
         with col:
             st.markdown(f"""
