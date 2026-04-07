@@ -1363,7 +1363,7 @@ if not st.session_state.access_granted:
         <div class="gate-footer">
             Access is licence-controlled.<br>
             Contact Administrator  <a href="https://wa.me/2348096506034"> Here →</a> <br>
-            Buy Access Key <a href="https://wa.me/2348096506034">🔑request a key →</a>
+            
         </div>
         """, unsafe_allow_html=True)
         
@@ -1401,7 +1401,7 @@ if not st.session_state.access_granted:
         </div>
         
         <div class="gate-footer">
-            Buy Access Key <a href="https://wa.me/2348096506034">🔑request a key →</a>
+           Request for <a href="https://wa.me/2348096506034">🔑Access key →</a> Here
         </div>
         
         """, unsafe_allow_html=True)
