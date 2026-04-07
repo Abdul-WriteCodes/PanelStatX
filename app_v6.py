@@ -1369,30 +1369,34 @@ if not st.session_state.access_granted:
         
         st.markdown("""
         <div style="padding: 20px 0 16px 0;">
-        
-        <a href="FLUTTERWAVE_LINK_12" target="_blank" style="text-decoration:none; flex:1;">
+
           <div class="hero-eyebrow fade-up d2">
             <span class="eyebrow-dot"></span>
             PAYMENT PLANS
           </div>
-        </a>
-
           <div class="stat-row fade-up d5">
+          
+        <a href="FLUTTERWAVE_LINK_12" target="_blank" style="text-decoration:none; flex:1;">
             <div class="stat-chip">
               <div class="sv">$10/12 Credits</div>
               <div class="sl">12 Analysis Run</div>
             </div>
-            
+        </a>
+        
+        <a href="FLUTTERWAVE_LINK_12" target="_blank" style="text-decoration:none; flex:1;">
             <div class="stat-chip">
               <div class="sv">$15/25 Credits</div>
               <div class="sl">25 Analysis Runs</div>
             </div>
-            
+        <\a>
+        
+        <a href="FLUTTERWAVE_LINK_12" target="_blank" style="text-decoration:none; flex:1;">
             <div class="stat-chip">
               <div class="sv">$25/30 Credits </div>
               <div class="sl">30 Analysis Runs</div>
             </div>
-            
+        <\a>
+        
           </div>
         </div>
         """, unsafe_allow_html=True)
