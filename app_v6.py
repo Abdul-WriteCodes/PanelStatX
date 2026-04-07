@@ -1359,11 +1359,11 @@ if not st.session_state.access_granted:
             """, unsafe_allow_html=True)
 
        st.markdown("""
-       <div class="gate-footer">
+        <div class="gate-footer">
             Access is licence-controlled.<br>
             Contact Administrator  <a href="https://wa.me/2348096506034"> Here →</a> or Buy Access Key <a href="https://wa.me/2348096506034">request a key →</a>
         </div>
- 
+        
         <div style="margin-top:24px;">
             <div style="font-family:'DM Mono',monospace;font-size:0.6rem;text-transform:uppercase;
                         letter-spacing:0.14em;color:#4a5568;margin-bottom:12px;text-align:center;">
