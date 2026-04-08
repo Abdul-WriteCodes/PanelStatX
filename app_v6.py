@@ -376,34 +376,41 @@ def generate_demo_panel():
 
 def run_ols(df, y_col, x_cols):
     from numpy.linalg import lstsq
+    from scipy import stats as sc_stats
     X = np.column_stack([np.ones(len(df))] + [df[c].values for c in x_cols])
     y = df[y_col].values
     coeffs, residuals, rank, sv = lstsq(X, y, rcond=None)
     y_hat = X @ coeffs
     resid = y - y_hat
     n, k = X.shape
+    k_vars = k - 1           # number of regressors (excl. intercept)
     dof = n - k
     s2 = np.sum(resid**2) / dof
     cov = s2 * np.linalg.inv(X.T @ X)
     se = np.sqrt(np.diag(cov))
     t_stats = coeffs / se
-    from scipy import stats as sc_stats
     p_vals = 2 * sc_stats.t.sf(np.abs(t_stats), df=dof)
     ss_tot = np.sum((y - y.mean())**2)
     ss_res = np.sum(resid**2)
+    ss_reg = ss_tot - ss_res
     r2 = 1 - ss_res / ss_tot
     r2_adj = 1 - (1 - r2) * (n - 1) / dof
+    # F-statistic: (SS_reg / k_vars) / (SS_res / dof)
+    f_stat = (ss_reg / max(k_vars, 1)) / (ss_res / max(dof, 1))
+    f_p    = 1 - sc_stats.f.cdf(f_stat, dfn=k_vars, dfd=dof)
     names = ["const"] + list(x_cols)
     result_df = pd.DataFrame({"Variable": names, "Coeff": coeffs, "Std_Err": se,
                                "t_stat": t_stats, "p_value": p_vals})
-    stats = {"R2": r2, "R2_adj": r2_adj, "N": n, "k": k - 1,
+    stats = {"R2": r2, "R2_adj": r2_adj, "N": n, "k": k_vars,
              "AIC": n * np.log(ss_res / n) + 2 * k,
-             "BIC": n * np.log(ss_res / n) + k * np.log(n)}
-    return result_df, resid, y_hat, stats
+             "BIC": n * np.log(ss_res / n) + k * np.log(n),
+             "F_stat": f_stat, "F_p": f_p}
+    return result_df, resid, y_hat, stats, cov
 
 
 def run_within(df, y_col, x_cols, entity_col, time_col):
     """Fixed-effects (within) estimator via demeaning."""
+    from scipy import stats as sc_stats
     panel = df.copy()
     for col in [y_col] + list(x_cols):
         entity_means = panel.groupby(entity_col)[col].transform("mean")
@@ -424,28 +431,124 @@ def run_within(df, y_col, x_cols, entity_col, time_col):
     cov = s2 * np.linalg.inv(X_dm.T @ X_dm)
     se = np.sqrt(np.diag(cov))
     t_stats = coeffs / se
-    from scipy import stats as sc_stats
     p_vals = 2 * sc_stats.t.sf(np.abs(t_stats), df=dof)
     ss_tot = np.sum((y_dm - y_dm.mean())**2)
     ss_res = np.sum(resid**2)
+    ss_reg = ss_tot - ss_res
     r2 = max(0, 1 - ss_res / ss_tot)
     r2_adj = max(0, 1 - (1 - r2) * (n - 1) / dof)
+    f_stat = (ss_reg / max(k, 1)) / (ss_res / max(dof, 1))
+    f_p    = 1 - sc_stats.f.cdf(f_stat, dfn=k, dfd=dof)
     result_df = pd.DataFrame({"Variable": list(x_cols), "Coeff": coeffs,
                                "Std_Err": se, "t_stat": t_stats, "p_value": p_vals})
     stats = {"R2": r2, "R2_adj": r2_adj, "N": n, "k": k,
              "AIC": n * np.log(max(ss_res, 1e-10) / n) + 2 * k,
-             "BIC": n * np.log(max(ss_res, 1e-10) / n) + k * np.log(n)}
-    return result_df, resid, y_hat_dm, stats
+             "BIC": n * np.log(max(ss_res, 1e-10) / n) + k * np.log(n),
+             "F_stat": f_stat, "F_p": f_p}
+    return result_df, resid, y_hat_dm, stats, cov
 
 
-def run_fd(df, y_col, x_cols, entity_col, time_col):
-    """First-difference estimator."""
-    panel = df.sort_values([entity_col, time_col]).copy()
-    fd = panel.groupby(entity_col)[[y_col] + list(x_cols)].diff().dropna()
-    return run_ols(fd, y_col, x_cols)
+def run_re(df, y_col, x_cols, entity_col, time_col):
+    """
+    Random Effects estimator (Swamy-Arora / GLS).
+    Estimates the between-entity variance (sigma_u²) and within-entity
+    variance (sigma_e²), computes the GLS theta weight, then runs quasi-
+    demeaned OLS to obtain RE coefficients, SEs, t-stats, and p-values.
+    Also returns the coefficient vcov for use in the Hausman test.
+    """
+    from numpy.linalg import lstsq
+    from scipy import stats as sc_stats
+
+    panel = df.copy().sort_values([entity_col, time_col])
+    n_entities = panel[entity_col].nunique()
+    T = panel[time_col].nunique()          # assume balanced panel
+    N = len(panel)
+    k = len(x_cols)
+
+    # ── Step 1: within (FE) residuals to estimate sigma_e² ────────────────────
+    result_fe, resid_fe, _, stats_fe, _ = run_within(
+        panel, y_col, x_cols, entity_col, time_col
+    )
+    dof_fe = max(N - k - n_entities, 1)
+    sigma_e2 = np.sum(resid_fe ** 2) / dof_fe
+
+    # ── Step 2: between residuals to estimate sigma_u² ────────────────────────
+    grp = panel.groupby(entity_col)[[y_col] + list(x_cols)].mean().reset_index()
+    y_b  = grp[y_col].values
+    X_b  = np.column_stack([np.ones(n_entities)] + [grp[c].values for c in x_cols])
+    b_coeffs, _, _, _ = lstsq(X_b, y_b, rcond=None)
+    resid_b = y_b - X_b @ b_coeffs
+    sigma_b2 = max(0.0, np.sum(resid_b ** 2) / max(n_entities - k - 1, 1) - sigma_e2 / T)
+    sigma_u2 = sigma_b2
+
+    # ── Step 3: GLS theta weight ───────────────────────────────────────────────
+    theta = 1.0 - np.sqrt(sigma_e2 / max(T * sigma_u2 + sigma_e2, 1e-12))
+
+    # ── Step 4: quasi-demean (partial within) ─────────────────────────────────
+    panel2 = panel.copy()
+    for col in [y_col] + list(x_cols):
+        entity_mean = panel2.groupby(entity_col)[col].transform("mean")
+        panel2[col + "_qd"] = panel2[col] - theta * entity_mean
+
+    y_qd = panel2[y_col + "_qd"].values
+    X_qd = np.column_stack([np.ones(N)] + [panel2[c + "_qd"].values for c in x_cols])
+
+    # ── Step 5: OLS on quasi-demeaned data ────────────────────────────────────
+    coeffs, _, _, _ = lstsq(X_qd, y_qd, rcond=None)
+    y_hat  = X_qd @ coeffs
+    resid  = y_qd  - y_hat
+    dof    = max(N - k - 1, 1)
+    s2     = np.sum(resid ** 2) / dof
+    cov    = s2 * np.linalg.inv(X_qd.T @ X_qd)
+    se     = np.sqrt(np.diag(cov))
+    t_stats = coeffs / se
+    p_vals  = 2 * sc_stats.t.sf(np.abs(t_stats), df=dof)
+
+    ss_tot = np.sum((y_qd - y_qd.mean()) ** 2)
+    ss_res = np.sum(resid ** 2)
+    ss_reg = ss_tot - ss_res
+    r2     = max(0.0, 1 - ss_res / max(ss_tot, 1e-12))
+    r2_adj = max(0.0, 1 - (1 - r2) * (N - 1) / dof)
+    f_stat = (ss_reg / max(k, 1)) / (ss_res / dof)
+    f_p    = 1 - sc_stats.f.cdf(f_stat, dfn=k, dfd=dof)
+
+    names = ["const"] + list(x_cols)
+    result_df = pd.DataFrame({"Variable": names, "Coeff": coeffs, "Std_Err": se,
+                               "t_stat": t_stats, "p_value": p_vals})
+    stats = {
+        "R2": r2, "R2_adj": r2_adj, "N": N, "k": k,
+        "AIC": N * np.log(max(ss_res, 1e-10) / N) + 2 * (k + 1),
+        "BIC": N * np.log(max(ss_res, 1e-10) / N) + (k + 1) * np.log(N),
+        "F_stat": f_stat, "F_p": f_p,
+        "sigma_u2": sigma_u2, "sigma_e2": sigma_e2, "theta": theta,
+    }
+    return result_df, resid, y_hat, stats, cov
 
 
-def hausman_test(fe_coef, re_coef, fe_vcov, re_vcov):
+def breusch_pagan_test(resid, X):
+    """
+    Breusch-Pagan / Cook-Weisberg test for heteroskedasticity.
+    Regresses squared residuals on the regressors X; the LM statistic
+    is n * R² of that auxiliary regression, chi-sq(k) distributed.
+    X should include the intercept column.
+    """
+    from scipy import stats as sc_stats
+    from numpy.linalg import lstsq
+    resid = np.asarray(resid, dtype=float)
+    e2 = resid ** 2
+    # auxiliary regression of e² on X
+    coeffs_aux, _, _, _ = lstsq(X, e2, rcond=None)
+    e2_hat = X @ coeffs_aux
+    ss_tot_aux = np.sum((e2 - e2.mean()) ** 2)
+    ss_res_aux = np.sum((e2 - e2_hat) ** 2)
+    r2_aux = max(0.0, 1 - ss_res_aux / max(ss_tot_aux, 1e-12))
+    n = len(resid)
+    k = X.shape[1] - 1          # exclude intercept
+    bp_stat = n * r2_aux
+    bp_p    = 1 - sc_stats.chi2.cdf(bp_stat, df=k)
+    return bp_stat, bp_p, k
+
+
     """Simple Hausman test statistic."""
     diff = fe_coef - re_coef
     diff_vcov = fe_vcov - re_vcov
@@ -1556,7 +1659,7 @@ with st.sidebar:
 
         st.markdown("---")
         st.markdown('<div style="font-size:0.7rem;text-transform:uppercase;letter-spacing:0.12em;color:var(--muted);margin-bottom:8px;">Estimator</div>', unsafe_allow_html=True)
-        model_type = st.selectbox("", ["Fixed Effects (Two-Way)", "Fixed Effects (Entity)", "First Difference", "Pooled OLS"], label_visibility="collapsed")
+        model_type = st.selectbox("", ["Fixed Effects (Two-Way)", "Fixed Effects (Entity)", "Random Effects (GLS)", "First Difference", "Pooled OLS"], label_visibility="collapsed")
         st.session_state.model_type = model_type
 
         st.markdown("---")
@@ -1595,18 +1698,47 @@ if run_btn and st.session_state.df is not None and x_cols:
     with st.spinner("Running regression…"):
         try:
             if model_type == "Pooled OLS":
-                result_df, resid, y_hat, stats = run_ols(df, y_col, x_cols)
+                result_df, resid, y_hat, stats, vcov = run_ols(df, y_col, x_cols)
             elif model_type == "First Difference":
-                result_df, resid, y_hat, stats = run_fd(df, y_col, x_cols, entity_col, time_col)
+                result_df, resid, y_hat, stats, vcov = run_fd(df, y_col, x_cols, entity_col, time_col)
             elif model_type == "Fixed Effects (Entity)":
-                result_df, resid, y_hat, stats = run_within(df, y_col, x_cols, entity_col, time_col)
-            else:
-                result_df, resid, y_hat, stats = run_within(df, y_col, x_cols, entity_col, time_col)
+                result_df, resid, y_hat, stats, vcov = run_within(df, y_col, x_cols, entity_col, time_col)
+            elif model_type == "Random Effects (GLS)":
+                result_df, resid, y_hat, stats, vcov = run_re(df, y_col, x_cols, entity_col, time_col)
+            else:  # Fixed Effects (Two-Way)
+                result_df, resid, y_hat, stats, vcov = run_within(df, y_col, x_cols, entity_col, time_col)
+
+            # ── Breusch-Pagan heteroskedasticity test ─────────────────────────
+            # Build regressor matrix for BP (with intercept)
+            try:
+                _bp_X = np.column_stack([np.ones(len(resid))] +
+                                         [df[c].values[:len(resid)] for c in x_cols])
+                bp_stat, bp_p, bp_k = breusch_pagan_test(resid, _bp_X)
+                stats["BP_stat"] = bp_stat
+                stats["BP_p"]    = bp_p
+            except Exception:
+                stats["BP_stat"] = None
+                stats["BP_p"]    = None
+
+            # ── Hausman test (RE vs FE) ────────────────────────────────────────
+            hausman_result = None
+            if model_type == "Random Effects (GLS)":
+                try:
+                    _, _, _, _, fe_vcov = run_within(df, y_col, x_cols, entity_col, time_col)
+                    fe_res, _, _, _, _  = run_within(df, y_col, x_cols, entity_col, time_col)
+                    fe_coef = fe_res["Coeff"].values
+                    re_coef = result_df[result_df["Variable"] != "const"]["Coeff"].values
+                    # align – both should be len(x_cols)
+                    h_stat, h_p, h_df = hausman_test(fe_coef, re_coef, fe_vcov, vcov[1:, 1:])
+                    hausman_result = {"stat": h_stat, "p": h_p, "df": h_df}
+                except Exception:
+                    pass
 
             st.session_state.results = {
                 "result_df": result_df, "resid": resid, "y_hat": y_hat,
                 "stats": stats, "y_col": y_col, "x_cols": x_cols,
                 "entity_col": entity_col, "time_col": time_col,
+                "hausman": hausman_result,
             }
             st.session_state.ai_explanation = ""
 
@@ -1738,7 +1870,9 @@ with tab_results:
 
         # ── Model fit summary ──────────────────────────────────────────────────
         st.markdown('<div class="scard-title">Model Fit</div>', unsafe_allow_html=True)
-        mc = st.columns(6)
+        mc = st.columns(8)
+        f_label = f"{stats.get('F_stat', 0):.3f}" if stats.get('F_stat') is not None else "—"
+        fp_label = f"{stats.get('F_p', 1):.4f}" if stats.get('F_p') is not None else "—"
         for col, label, val in [
             (mc[0], "R²",        f"{stats['R2']:.4f}"),
             (mc[1], "Adj. R²",   f"{stats['R2_adj']:.4f}"),
@@ -1746,9 +1880,42 @@ with tab_results:
             (mc[3], "Variables", f"{stats['k']}"),
             (mc[4], "AIC",       f"{stats['AIC']:.2f}"),
             (mc[5], "BIC",       f"{stats['BIC']:.2f}"),
+            (mc[6], "F-stat",    f_label),
+            (mc[7], "F p-value", fp_label),
         ]:
             with col:
                 st.metric(label, val)
+
+        # F-stat interpretation
+        if stats.get("F_p") is not None:
+            if stats["F_p"] < 0.05:
+                st.success(f"✓ F-statistic ({stats['F_stat']:.3f}) is significant (p={stats['F_p']:.4f}) — regressors jointly explain the outcome.")
+            else:
+                st.warning(f"⚠ F-statistic ({stats['F_stat']:.3f}) is not significant (p={stats['F_p']:.4f}) — regressors may not jointly explain the outcome.")
+
+        # RE variance components
+        if st.session_state.model_type == "Random Effects (GLS)":
+            st.markdown("---")
+            st.markdown('<div class="scard-title">Random Effects Variance Components</div>', unsafe_allow_html=True)
+            rc1, rc2, rc3 = st.columns(3)
+            with rc1: st.metric("σ²ᵤ (between)", f"{stats.get('sigma_u2', 0):.6f}")
+            with rc2: st.metric("σ²ₑ (within)",  f"{stats.get('sigma_e2', 0):.6f}")
+            with rc3: st.metric("θ (GLS weight)", f"{stats.get('theta', 0):.4f}")
+            st.caption("θ → 1 means FE dominates; θ → 0 means OLS/pooled dominates.")
+
+        # Hausman test
+        hausman_res = res.get("hausman")
+        if hausman_res and hausman_res.get("stat") is not None:
+            st.markdown("---")
+            st.markdown('<div class="scard-title">Hausman Specification Test (RE vs FE)</div>', unsafe_allow_html=True)
+            hc1, hc2, hc3 = st.columns(3)
+            with hc1: st.metric("χ² statistic", f"{hausman_res['stat']:.4f}")
+            with hc2: st.metric("p-value",       f"{hausman_res['p']:.4f}")
+            with hc3: st.metric("df",             f"{hausman_res['df']}")
+            if hausman_res["p"] < 0.05:
+                st.warning("⚠ Hausman test rejects RE (p < 0.05) — Fixed Effects estimator is preferred (endogenous individual effects suspected).")
+            else:
+                st.success("✓ Hausman test does not reject RE (p ≥ 0.05) — Random Effects estimator is consistent and efficient.")
 
         st.markdown("---")
 
@@ -1925,6 +2092,24 @@ with tab_diagnostics:
         else:
             st.success("✓ Durbin-Watson statistic is in the acceptable range.")
 
+        # ── Breusch-Pagan Heteroskedasticity Test ─────────────────────────────
+        st.markdown("---")
+        st.markdown('<div class="scard-title">Breusch-Pagan Test for Heteroskedasticity</div>', unsafe_allow_html=True)
+        bp_stat = res["stats"].get("BP_stat")
+        bp_p    = res["stats"].get("BP_p")
+        if bp_stat is not None and bp_p is not None:
+            bpc1, bpc2 = st.columns(2)
+            with bpc1: st.metric("BP LM Statistic", f"{bp_stat:.4f}")
+            with bpc2: st.metric("BP p-value",       f"{bp_p:.4f}")
+            if bp_p < 0.05:
+                st.warning("⚠ Breusch-Pagan test rejects homoskedasticity (p < 0.05). "
+                           "Heteroskedastic errors detected — consider heteroskedasticity-robust (HC) standard errors.")
+            else:
+                st.success("✓ Breusch-Pagan test does not reject homoskedasticity (p ≥ 0.05).")
+            st.caption("H₀: Constant variance (homoskedasticity). LM ~ χ²(k).")
+        else:
+            st.info("Breusch-Pagan test could not be computed for this estimator/data combination.")
+
 
 # ──────────────────────────────────────────────────────────────────────────────
 # TAB 4 · ENTITY PLOTS
@@ -1986,8 +2171,18 @@ with tab_ai:
         result_df = res["result_df"]
         stats = res["stats"]
 
-        # Build a rich summary for Claude
+        # Build a rich summary for GPT-4o Model
         coeff_table = result_df.to_string(index=False)
+        hausman_res = res.get("hausman")
+        hausman_str = ""
+        if hausman_res and hausman_res.get("stat") is not None:
+            hausman_str = f"\nHausman Test: χ²={hausman_res['stat']:.4f}, p={hausman_res['p']:.4f} (df={hausman_res['df']})"
+        bp_str = ""
+        if stats.get("BP_stat") is not None:
+            bp_str = f"\nBreusch-Pagan Test: LM={stats['BP_stat']:.4f}, p={stats['BP_p']:.4f}"
+        re_str = ""
+        if st.session_state.model_type == "Random Effects (GLS)":
+            re_str = f"\nVariance Components: σ²ᵤ={stats.get('sigma_u2',0):.6f}, σ²ₑ={stats.get('sigma_e2',0):.6f}, θ={stats.get('theta',0):.4f}"
         context = f"""
 Model: {st.session_state.model_type}
 Dependent variable: {res['y_col']}
@@ -2000,6 +2195,7 @@ Fit Statistics:
   N         = {stats['N']}
   AIC       = {stats['AIC']:.2f}
   BIC       = {stats['BIC']:.2f}
+  F-stat    = {stats.get('F_stat', 'N/A')}  (p = {stats.get('F_p', 'N/A')}){hausman_str}{bp_str}{re_str}
 
 Coefficient Table:
 {coeff_table}
