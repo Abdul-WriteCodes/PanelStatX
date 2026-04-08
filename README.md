@@ -20,6 +20,25 @@ Panel data (also called longitudinal data) tracks multiple entities across time.
 - Countries
 - Individuals 
 
+Data Format
+
+PanelStatX accepts CSV and Excel files. Panel dataset should be structured in **long format** — one row per entity-period observation.
+
+**Example:**
+
+| entity | year | gdp_growth | investment | trade_openness |
+|--------|------|------------|------------|----------------|
+| Europe | 2015 | 2.7 | 18.3 | 0.34 |
+| Europe | 2016 | -1.6 | 15.1 | 0.29 |
+| Africa | 2015 | 3.8 | 22.0 | 0.51 |
+| ... | ... | ... | ... | ... |
+
+- The **entity column** identifies cross-sectional units (e.g. country, firm, individual)
+- The **time column** identifies the period (e.g. year, quarter)
+- All other numeric columns can serve as dependent or independent variables
+
+
+
 Analysing panel data correctly requires specialised estimators that account for hidden differences between entities and time trends. PanelStatX handles all of this for you automatically.
 
 ---
@@ -108,22 +127,7 @@ To get started, enter your purchased **access key** on the landing page. Your re
 **No software to install. No command line. No code. Very easy to use**
 
 ---
-## Input Data Format
 
-PanelStatX accepts CSV and Excel files. Your dataset should be structured in **long format** — one row per entity-period observation.
-
-**Example:**
-
-| entity | year | gdp_growth | investment | trade_openness |
-|--------|------|------------|------------|----------------|
-| Europe | 2015 | 2.7 | 18.3 | 0.34 |
-| Europe | 2016 | -1.6 | 15.1 | 0.29 |
-| Africa | 2015 | 3.8 | 22.0 | 0.51 |
-| ... | ... | ... | ... | ... |
-
-- The **entity column** identifies cross-sectional units (e.g. country, firm, individual)
-- The **time column** identifies the period (e.g. year, quarter)
-- All other numeric columns can serve as dependent or independent variables
 
 ---
 
