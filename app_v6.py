@@ -806,6 +806,8 @@ def build_docx_report(res, model_type, ai_explanation=""):
     fit_rows = [
         ("R²",                f"{stats['R2']:.6f}",          "Proportion of variance explained"),
         ("Adjusted R²",       f"{stats['R2_adj']:.6f}",      "Penalised for number of predictors"),
+        ("F-stat",       f"{stats['F_stat']:.6f}",      "Explains regressor outcome"),
+         ("p-Value",       f"{stats['F_p']:.6f}",      "Explains model significance"),
         ("Observations (N)",  f"{stats['N']:,}",              "Total data points used in estimation"),
         ("Variables (k)",     f"{stats['k']}",                "Number of independent variables"),
         ("AIC",               f"{stats['AIC']:.4f}",          "Akaike Information Criterion (lower = better)"),
