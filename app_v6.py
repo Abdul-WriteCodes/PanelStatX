@@ -1468,7 +1468,7 @@ if not st.session_state.access_granted:
         entered_key = st.text_input(
             "Access Key",
             type="password",
-            placeholder="PSX-XXXX-XXXX-XXXX",
+            placeholder=" Enter access key 'PSX-XXXX-XXXX-XXXX' to get started ",
             label_visibility="collapsed",
         )
         unlock_btn = st.button("Unlock PanelStatX 🔑", use_container_width=True, type="primary")
