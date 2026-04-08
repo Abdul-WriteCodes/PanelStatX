@@ -1522,22 +1522,17 @@ if not st.session_state.access_granted:
           </div>
         </div>
         
+        
         <div class="gate-footer">
-           Request for <a href="https://wa.me/2348096506034">🔑Access key →</a> Here
+           Check <a href="https://wa.me/2348096506034">📝 User Guide →</a>
         </div>
         
         <div class="gate-footer">
-           Check a href="https://wa.me/2348096506034">🔑User Guide →</a>
+           Contact <a href="mailto:Abdulwrite77@gmail.com">🚀 Technical Support→</a> Here
         </div>
         
         """, unsafe_allow_html=True)
         
-        st.markdown("---")
-        st.markdown("""
-        <div style="text-align:center;font-family:'DM Mono',monospace;font-size:0.7rem;color:var(--muted);padding:12px 0;">
-            ⬡ PanelStatX · Panel Regression Analysis System · Powered by GPT-4
-        </div>
-""", unsafe_allow_html=True)
         
 
 
