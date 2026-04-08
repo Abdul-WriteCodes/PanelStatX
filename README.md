@@ -45,38 +45,37 @@ Analysing panel data correctly requires specialised estimators that account for 
 	- **Fixed Effects (Two-Way)** — controls for both entity-specific and time-specific unobserved heterogeneity via within-group demeaning
 	- **Random Effects (GLS)** — a Swamy-Arora variance-components estimator with quasi-demeaning; appropriate when entity effects are uncorrelated with regressors
 
-### Statistical Diagnostics
-- Coefficient table with standard errors, t-statistics, p-values, and significance stars (`***`, `**`, `*`)
-- Full model fit statistics: R², Adjusted R², AIC, BIC, F-statistic
-- **Hausman Test** — automatically guides you toward Fixed vs Random Effects
-- **Jarque-Bera Test** — checks normality of residuals
-- **Durbin-Watson Statistic** — detects autocorrelation in residuals
-- **Breusch-Pagan Test** — tests for heteroskedasticity
-- Residual distribution plots, Q-Q plots, fitted vs actual scatter, and leverage analysis
+-	Statistical Diagnostics
+	- Coefficient table with standard errors, t-statistics, p-values, and significance stars (`***`, `**`, `*`)
+	- Full model fit statistics: R², Adjusted R², AIC, BIC, F-statistic
+	- **Hausman Test** — automatically guides you toward Fixed vs Random Effects
+	- **Jarque-Bera Test** — checks normality of residuals
+	- **Durbin-Watson Statistic** — detects autocorrelation in residuals
+	- **Breusch-Pagan Test** — tests for heteroskedasticity
+	- Residual distribution plots, Q-Q plots, fitted vs actual scatter, and leverage analysis
 
-### AI Explainer (GPT-4)
-- One-click narrative interpretation of your full regression output
-- Covers model choice rationale, coefficient economic meaning, statistical significance, model fit quality, and caveats (endogeneity, heteroskedasticity, etc.)
-- Ask custom follow-up questions directly — e.g. *"Is x1 economically significant?"*
+-	AI Explainer using the powerful GPT-4o model from OpenAI
+	- One-click narrative interpretation of your full regression output
+	- Covers model choice rationale, coefficient economic meaning, statistical significance, model fit quality, and caveats (endogeneity, heteroskedasticity, etc.)
+	- Ask custom follow-up questions directly — e.g. *"Is variable x1 economically significant?"*
 
-### Visualisations
-- Interactive Plotly charts throughout — time-series lines by entity, entity mean bar charts, residual diagnostics, correlation heatmaps, distribution plots
-- All charts are dark-themed and render inline — no export needed to share insights at a glance
+-	Visualisations
+	- Interactive Plotly charts throughout — time-series lines by entity, entity mean bar charts, residual diagnostics, correlation heatmaps, distribution plots
+	- All charts are dark-themed and render inline — no export needed to share insights at a glance
 
-### Downloadable Report
-- One-click **Word (.docx) report** containing:
-  - Cover page with model metadata
+-	Downloadable Report **Word (.docx) report** containing:
   - Model summary and fit statistics table
   - Full coefficient estimates table (with significance highlighting)
   - Residual diagnostics table with auto-generated interpretations
   - AI write-up section (if generated before download)
 
-### Demo Mode
-- Built-in synthetic balanced panel dataset (30 entities × 10 periods) — try every feature immediately with no data required
+-	Demo Mode
+	- Built-in synthetic balanced panel dataset (30 entities × 10 periods) — try every feature immediately with no data required
 
 ---
 
-## Why PanelStatX?
+## Why Choose PanelStatX?
+PanelStatX is designed to be the fastest path from raw panel data to a presentation-ready, defensible analysis — whether you're a PhD researcher, a policy analyst, or an analyst building models for a client. Here is how PanelStatX compares with other tools/system
 
 | | PanelStatX | Stata / EViews | R (`plm`) | Excel |
 |---|---|---|---|---|
@@ -90,7 +89,6 @@ Analysing panel data correctly requires specialised estimators that account for 
 | No code required | ✅ | ❌ | ❌ | ✅ |
 | Pay-per-analysis (no subscription) | ✅ | ❌ | ✅ | ✅ |
 
-PanelStatX is designed to be the fastest path from raw panel data to a presentation-ready, defensible analysis — whether you're a PhD researcher, a policy analyst, or an analyst building models for a client.
 
 ---
 
