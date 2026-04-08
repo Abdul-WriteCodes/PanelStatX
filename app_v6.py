@@ -946,6 +946,14 @@ def build_docx_report(res, model_type, ai_explanation=""):
     skew_note       = "Approximately symmetric" if abs(skewness) < 0.5 else ("Moderately skewed" if abs(skewness) < 1 else "Highly skewed")
     kurt_note       = "Approximately normal kurtosis" if abs(kurt) < 1 else ("Leptokurtic (heavy tails)" if kurt > 1 else "Platykurtic (light tails)")
 
+    # Extract Breusch-Pagan results from stats (may be None for some estimators)
+    bp_stat = stats.get("BP_stat")
+    bp_p    = stats.get("BP_p")
+    bp_stat_str = f"{bp_stat:.4f}" if bp_stat is not None else "N/A"
+    bp_p_str    = f"{bp_p:.4f}"    if bp_p    is not None else "N/A"
+    bp_p_note   = ("p-value >0.05 confirm absence of heteroskedasticity"
+                   if bp_p is not None else "Could not be computed for this estimator/data combination")
+
     diag_rows = [
         ("Mean Residual",       f"{np.mean(resid):.6f}",    "Should be near zero for unbiased model"),
         ("Std. Dev. Residual",  f"{np.std(resid):.6f}",     "Spread of residuals around zero"),
@@ -953,8 +961,8 @@ def build_docx_report(res, model_type, ai_explanation=""):
         ("Max Residual",        f"{np.max(resid):.6f}",     "Largest positive deviation"),
         ("Skewness",            f"{skewness:.4f}",           skew_note),
         ("Excess Kurtosis",     f"{kurt:.4f}",               kurt_note),
-        ("Breusch-Pagan Test",       f"{bp_stat:.4f}",    "Breusch-Pagan Langrage Multiplier"),
-        ("Breusch-Pagan p-Value",       f"{bp_p:.4f}",    "p-value >0.05 confirm absense of heteroskedasticity"),
+        ("Breusch-Pagan Test",      bp_stat_str,             "Breusch-Pagan Lagrange Multiplier"),
+        ("Breusch-Pagan p-Value",   bp_p_str,                bp_p_note),
         ("Jarque-Bera Statistic", f"{jb_stat:.4f}",         "Tests for normality of residuals"),
         ("Jarque-Bera p-value", f"{jb_p:.4f}",              normality_note),
         ("Durbin-Watson",       f"{dw_stat:.4f}",            dw_note),
