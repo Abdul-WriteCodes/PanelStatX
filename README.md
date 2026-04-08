@@ -1,5 +1,10 @@
 # ⬡ PanelStatX
 
+<p align="center">
+  <img src="Assets/panelstatx.PNG" alt="PanelStatX Logo" width="800"/>
+</p>
+
+
 PanelStatX is an AI-powered panel regression system that analyses panel data and produce clear, credible and publish ready reports
 
 PanelStatX is a browser-based panel data analysis platform built for economists, researchers, analysts, and data professionals who need rigorous panel regression without the friction of Python scripts, R packages, or heavyweight statistical software. It combines institutional-grade econometric methods with an AI-powered explainer.
