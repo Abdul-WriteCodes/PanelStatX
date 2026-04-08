@@ -1417,7 +1417,8 @@ if not st.session_state.access_granted:
         <div class="gate-card fade-up d3" style="width:100%;">
             <div class="gate-header">
                 <div class="gate-title">🔐Access Key Required</div>
-                <div class="gate-sub">Enter your licence key to continue </div>
+                <div class="gate-sub">PanelStatX uses a credit-based pay-as-you-go model,</div> <br>
+                <div class="gate-sub">allowing users to only pay for the analyses they run</div> <br>
             </div>
             <div class="gate-label">Access Key format: PSX-****-****-****</div>
         </div>
@@ -1494,8 +1495,7 @@ if not st.session_state.access_granted:
 
           <div class="hero-eyebrow fade-up d2">
             <span class="eyebrow-dot"></span>
-            PAYMENT PLANS: PanelStatX operates Credit-based Pay-As-You-Go-Model <br>
-            Buy credits to get unique a license key loaded with credits. No monthly subscription
+            PAYMENT PLANS
           </div>
           <div class="stat-row fade-up d5">
           
