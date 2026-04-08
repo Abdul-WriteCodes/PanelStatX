@@ -1498,21 +1498,21 @@ if not st.session_state.access_granted:
           </div>
           <div class="stat-row fade-up d5">
           
-        <a href="FLUTTERWAVE_LINK_12" target="_blank" style="text-decoration:none; flex:1;">
+        <a href="https://flutterwave.com/pay/j5m67hrqr4iq" target="_blank" style="text-decoration:none; flex:1;">
             <div class="stat-chip">
               <div class="sv">$10/5 Credits</div>
               <div class="sl">5 Analysis Run</div>
             </div>
         </a>
         
-        <a href="FLUTTERWAVE_LINK_12" target="_blank" style="text-decoration:none; flex:1;">
+        <a href="https://flutterwave.com/pay/txyljcuqfsel" target="_blank" style="text-decoration:none; flex:1;">
             <div class="stat-chip">
-              <div class="sv">$15/25 Credits</div>
-              <div class="sl">25 Analysis Runs</div>
+              <div class="sv">$25/15 Credits</div>
+              <div class="sl">15 Analysis Runs</div>
             </div>
         </a>
         
-        <a href="FLUTTERWAVE_LINK_12" target="_blank" style="text-decoration:none; flex:1;">
+        <a href="https://flutterwave.com/pay/yw7k3gmyjoud" target="_blank" style="text-decoration:none; flex:1;">
             <div class="stat-chip">
               <div class="sv">$45/30 Credits </div>
               <div class="sl">30 Analysis Runs</div>
