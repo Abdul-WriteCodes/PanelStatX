@@ -107,33 +107,17 @@ To get started, enter your purchased **access key** on the landing page. Your re
 
 ## Getting Started (End Users)
 
-1. **Get an access key** — purchase credits to receive your key
+**To use PanelStatX, no software installation is needed, No command line is needed. No code is required. Very easy and direct under 5 minutes based on key 7 processes**
+
+1. **Get an access key** — purchase credits to receive your unique key
 2. **Visit the app** and enter your key on the landing screen
-3. **Upload your dataset** — CSV or Excel files with columns for your entity ID, time period, dependent variable, and independent variables
+3. **Upload your panel dataset** in the side bar — CSV or Excel files with columns for your entity ID, time period, dependent variable, and independent variables
 4. **Configure your model** in the sidebar — select columns, choose estimator, set options
 5. **Run Analysis** — results appear instantly across five tabs
 6. **Explore** — check diagnostics, visualise entity trends, ask the AI explainer questions
 7. **Download** your Word report when ready
 
-**No software to install. No command line. No code. Very easy to use**
-
----
-
-
----
-
-
-## Econometric Methods Reference
-
-| Estimator | Handles Entity FE | Handles Time FE | Intercept | Notes |
-|-----------|:-----------------:|:---------------:|:---------:|-------|
-| Pooled OLS | ❌ | ❌ | ✅ | Baseline; inconsistent if FE present |
-| Fixed Effects (Two-Way) | ✅ | ✅ | ❌ | Within-estimator via double demeaning |
-| Random Effects (GLS) | ✅ (partial) | ❌ | ✅ | Swamy-Arora; efficient under RE assumptions |
-
-**Hausman Test guidance:**
-- Reject H₀ (p < 0.05) → use Fixed Effects
-- Fail to reject H₀ → Random Effects is consistent and more efficient
+👉 **[Try the Live System Here](https://achievit.streamlit.app/)**
 
 ---
 
