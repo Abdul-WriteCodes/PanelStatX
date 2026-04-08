@@ -1484,7 +1484,7 @@ if not st.session_state.access_granted:
         st.markdown("""
         <div class="gate-footer">
             Access is licence-controlled.<br>
-            Contact Administrator  <a href="https://wa.me/2348096506034"> Here →</a> <br>
+            | Contact  Access key <a href="htts://wa.me/2348096506034"> 👤Administrator </a> | <br>
             
         </div>
         """, unsafe_allow_html=True)
@@ -1524,7 +1524,7 @@ if not st.session_state.access_granted:
         
         
         <div class="gate-footer">
-           Check: <a href="https://wa.me/2348096506034">📝User Guide </a>  | Contact: <a href="mailto:Abdulwrite77@gmail.com">⚙️Technical Support </a> | Contact: <a href="https://wa.me/2348096506034">👤Administrator </a>
+           | Check: <a href="https://wa.me/2348096506034">📝User Guide </a>  | Contact: <a href="mailto:Abdulwrite77@gmail.com">⚙️Technical Support </a> | 
         </div>
         
         
