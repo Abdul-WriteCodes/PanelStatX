@@ -112,12 +112,11 @@ PanelStatX is designed to be the fastest path from raw panel data to a presentat
 ## Support, Credits & Access
 
 PanelStatX operates on a **prepaid credit system**. 
-
-	- Credits are tied to your unique **access key (PSX-xxxx-xxxx-xxx)** , issued at purchase
-	- **Credits are tied to your email and purchased key. It never expire**. You can use them at your own pace, on your own schedule, from anywhere in the world
-	- There are no subscriptions, no monthly fees, and no usage windows to worry about
-	- Your unique access key works from any device and any browser. No account login required
-	- Each analysis run costs 1 credit. Explanation of Results using AI also cost 1 credit. When credit hit zero, none of this will work
+-	Credits are tied to your unique **access key (PSX-xxxx-xxxx-xxx)** , issued at purchase
+-	**Credits are tied to your email and purchased key. It never expire**. You can use them at your own pace, on your own schedule, from anywhere in the world
+-	There are no subscriptions, no monthly fees, and no usage windows to worry about
+-	Your unique access key works from any device and any browser. No account login required
+-	Each analysis run costs 1 credit. Explanation of Results using AI also cost 1 credit. When credit hit zero, none of this will work
 
 For access key issues, credit top-ups, or technical questions, contact the PanelStatX team directly. Include your access key (first 4 characters only) and a description of the issue.
 
