@@ -20,11 +20,9 @@ Panel data (also called longitudinal data) tracks multiple entities across time.
 - Countries
 - Individuals 
 
-Data Format
+PanelStatX accepts these kinds of data as CSV and Excel files. For analysis, panel dataset should be structured in **long format** as one row per entity-period observation.
 
-PanelStatX accepts CSV and Excel files. Panel dataset should be structured in **long format** — one row per entity-period observation.
-
-**Example:**
+**Example of the acceptable data structure format:**
 
 | entity | year | gdp_growth | investment | trade_openness |
 |--------|------|------------|------------|----------------|
@@ -37,20 +35,15 @@ PanelStatX accepts CSV and Excel files. Panel dataset should be structured in **
 - The **time column** identifies the period (e.g. year, quarter)
 - All other numeric columns can serve as dependent or independent variables
 
-
-
-Analysing panel data correctly requires specialised estimators that account for hidden differences between entities and time trends. PanelStatX handles all of this for you automatically.
-
 ---
 
 ## Key Features
+Analysing panel data correctly requires specialised estimators that account for hidden differences between entities and time trends. PanelStatX handles all of this for you automatically. The system is designed and engineered to support the following
 
-PanelStatX is designed and engineered to do support the following
-
-### Regression Models
-- **Pooled OLS** — a standard regression baseline treating all observations equally
-- **Fixed Effects (Two-Way)** — controls for both entity-specific and time-specific unobserved heterogeneity via within-group demeaning
-- **Random Effects (GLS)** — a Swamy-Arora variance-components estimator with quasi-demeaning; appropriate when entity effects are uncorrelated with regressors
+-	Regression Models
+	- **Pooled OLS** — a standard regression baseline treating all observations equally
+	- **Fixed Effects (Two-Way)** — controls for both entity-specific and time-specific unobserved heterogeneity via within-group demeaning
+	- **Random Effects (GLS)** — a Swamy-Arora variance-components estimator with quasi-demeaning; appropriate when entity effects are uncorrelated with regressors
 
 ### Statistical Diagnostics
 - Coefficient table with standard errors, t-statistics, p-values, and significance stars (`***`, `**`, `*`)
