@@ -1484,7 +1484,7 @@ if not st.session_state.access_granted:
         st.markdown("""
         <div class="gate-footer">
             Access is licence-controlled.<br>
-            | Contact  Access key <a href="htts://wa.me/2348096506034"> 👤Administrator </a> | <br>
+            | Contact  Access key <a href="https://wa.me/2348096506034"> 👤Administrator </a> | <br>
             
         </div>
         """, unsafe_allow_html=True)
@@ -1494,7 +1494,8 @@ if not st.session_state.access_granted:
 
           <div class="hero-eyebrow fade-up d2">
             <span class="eyebrow-dot"></span>
-            PAYMENT PLANS
+            PAYMENT PLANS: PanelStatX operates Credit-based Pay-As-You-Go-Model <br>
+            Buy credits to get unique a license key loaded with credits. No monthly subscription
           </div>
           <div class="stat-row fade-up d5">
           
