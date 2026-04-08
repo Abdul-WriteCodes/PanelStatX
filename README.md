@@ -64,10 +64,10 @@ Analysing panel data correctly requires specialised estimators that account for 
 	- All charts are dark-themed and render inline — no export needed to share insights at a glance
 
 -	Downloadable Report **Word (.docx) report** containing:
-  - Model summary and fit statistics table
-  - Full coefficient estimates table (with significance highlighting)
-  - Residual diagnostics table with auto-generated interpretations
-  - AI write-up section (if generated before download)
+	- Model summary and fit statistics table
+	- Full coefficient estimates table (with significance highlighting)
+	- Residual diagnostics table with auto-generated interpretations
+	- AI write-up section (if generated before download)
 
 -	Demo Mode
 	- Built-in synthetic balanced panel dataset (30 entities × 10 periods) — try every feature immediately with no data required
