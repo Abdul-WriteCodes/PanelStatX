@@ -15,6 +15,7 @@ __pycache__/
 #googlesheet and consol credentials
 panelstatx-271958e2a874.json
 
+admin_issue_key.py
 
 # Temporary debug files
 tracked_venv.txt
