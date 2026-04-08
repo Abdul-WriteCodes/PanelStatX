@@ -1492,8 +1492,8 @@ if not st.session_state.access_granted:
           
         <a href="FLUTTERWAVE_LINK_12" target="_blank" style="text-decoration:none; flex:1;">
             <div class="stat-chip">
-              <div class="sv">$10/12 Credits</div>
-              <div class="sl">12 Analysis Run</div>
+              <div class="sv">$10/5 Credits</div>
+              <div class="sl">5 Analysis Run</div>
             </div>
         </a>
         
@@ -1506,7 +1506,7 @@ if not st.session_state.access_granted:
         
         <a href="FLUTTERWAVE_LINK_12" target="_blank" style="text-decoration:none; flex:1;">
             <div class="stat-chip">
-              <div class="sv">$25/30 Credits </div>
+              <div class="sv">$45/30 Credits </div>
               <div class="sl">30 Analysis Runs</div>
             </div>
         </a>
