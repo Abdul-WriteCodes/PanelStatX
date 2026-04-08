@@ -1468,7 +1468,7 @@ if not st.session_state.access_granted:
         entered_key = st.text_input(
             "Access Key",
             type="password",
-            placeholder=" Enter access key 'PSX-XXXX-XXXX-XXXX' to get started ",
+            placeholder="PSX-XXXX-XXXX-XXXX",
             label_visibility="collapsed",
         )
         unlock_btn = st.button("Unlock PanelStatX 🔑", use_container_width=True, type="primary")
@@ -1479,7 +1479,6 @@ if not st.session_state.access_granted:
                 <span>✕</span> {st.session_state.access_error}
             </div>
             """, unsafe_allow_html=True)
-
 
         st.markdown("""
         <div class="gate-footer">
