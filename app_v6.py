@@ -951,6 +951,8 @@ def build_docx_report(res, model_type, ai_explanation=""):
         ("Max Residual",        f"{np.max(resid):.6f}",     "Largest positive deviation"),
         ("Skewness",            f"{skewness:.4f}",           skew_note),
         ("Excess Kurtosis",     f"{kurt:.4f}",               kurt_note),
+        ("Breusch-Pagan Test",       f"{bp_stat:.4f}",    "Breusch-Pagan Langrage Multiplier"),
+        ("Breusch-Pagan p-Value",       f"{bp_p:.4f}",    "p-value >0.05 confirm absense of heteroskedasticity"),
         ("Jarque-Bera Statistic", f"{jb_stat:.4f}",         "Tests for normality of residuals"),
         ("Jarque-Bera p-value", f"{jb_p:.4f}",              normality_note),
         ("Durbin-Watson",       f"{dw_stat:.4f}",            dw_note),
