@@ -525,6 +525,13 @@ def run_re(df, y_col, x_cols, entity_col, time_col):
     return result_df, resid, y_hat, stats, cov
 
 
+def run_fd(df, y_col, x_cols, entity_col, time_col):
+    """First-difference estimator."""
+    panel = df.sort_values([entity_col, time_col]).copy()
+    fd = panel.groupby(entity_col)[[y_col] + list(x_cols)].diff().dropna()
+    return run_ols(fd, y_col, x_cols)
+
+
 def breusch_pagan_test(resid, X):
     """
     Breusch-Pagan / Cook-Weisberg test for heteroskedasticity.
