@@ -90,18 +90,6 @@ PanelStatX is designed to be the fastest path from raw panel data to a presentat
 | Pay-per-analysis (no subscription) | ✅ | ❌ | ✅ | ✅ |
 
 
----
-
-## Credits & Access
-
-PanelStatX operates on a **prepaid credit system**. Each analysis run costs 1 credit. Explanation of Results using AI also cost 1 credit
-
-- Credits are tied to your unique **access key (PSX-xxxx-xxxx-xxx)** , issued at purchase
-- **Credits are tied to your email and purchased key. It never expire** — use them at your own pace, on your own schedule, from anywhere in the world
-- There are no subscriptions, no monthly fees, and no usage windows to worry about
-- Your key works from any device and any browser — no account login required
-
-To get started, enter your purchased **access key** on the landing page. Your remaining credit balance is shown in the sidebar at all times. You can top it up anytime
 
 ---
 
@@ -110,7 +98,7 @@ To get started, enter your purchased **access key** on the landing page. Your re
 **To use PanelStatX, no software installation is needed, No command line is needed. No code is required. Very easy and direct under 5 minutes based on key 7 processes**
 
 1. **Get an access key** — purchase credits to receive your unique key
-2. **Visit the app** and enter your key on the landing screen
+2. **Visit the app** and enter your key on the landing screen. Your remaining credit balance is shown in the sidebar at all times. You can top it up anytime
 3. **Upload your panel dataset** in the side bar — CSV or Excel files with columns for your entity ID, time period, dependent variable, and independent variables
 4. **Configure your model** in the sidebar — select columns, choose estimator, set options
 5. **Run Analysis** — results appear instantly across five tabs
@@ -121,7 +109,14 @@ To get started, enter your purchased **access key** on the landing page. Your re
 
 ---
 
-## Support
+## Support, Credits & Access
+
+PanelStatX operates on a **prepaid credit system**. 
+	- Credits are tied to your unique **access key (PSX-xxxx-xxxx-xxx)** , issued at purchase
+	- **Credits are tied to your email and purchased key. It never expire**. You can use them at your own pace, on your own schedule, from anywhere in the world
+	- There are no subscriptions, no monthly fees, and no usage windows to worry about
+	- Your unique access key works from any device and any browser. No account login required
+	- Each analysis run costs 1 credit. Explanation of Results using AI also cost 1 credit. When credit hit zero, none of this will work
 
 For access key issues, credit top-ups, or technical questions, contact the PanelStatX team directly. Include your access key (first 4 characters only) and a description of the issue.
 
