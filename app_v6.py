@@ -1524,8 +1524,7 @@ if not st.session_state.access_granted:
         
         
         <div class="gate-footer">
-           Check <a href="https://wa.me/2348096506034">📝 User Guide </a>  <br>
-           Contact <a href="mailto:Abdulwrite77@gmail.com">📝 Technical Support </a>
+           Check <a href="https://wa.me/2348096506034">📝 User Guide </a>  | Contact <a href="mailto:Abdulwrite77@gmail.com">📝 Technical Support </a>
         </div>
         
         
