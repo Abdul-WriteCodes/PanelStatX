@@ -12,6 +12,8 @@ env/
 __pycache__/
 *.pyc
 
+
+
 #googlesheet and consol credentials
 panelstatx-271958e2a874.json
 
