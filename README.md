@@ -43,10 +43,15 @@ The system is designed and equipped with:
 		- **📉Breusch-Pagan Test**: Tests for heteroskedasticity (non-constant variance in errors).
 	
 	
--	AI Explainer using the powerful GPT-4o model from OpenAI
-	- One-click narrative interpretation of your full regression output
-	- Covers model choice rationale, coefficient economic meaning, statistical significance, model fit quality, and caveats (endogeneity, heteroskedasticity, etc.)
-	- Ask custom follow-up questions directly — e.g. *"Is variable x1 economically significant?"*
+-	🤖 AI Explainer Powered by OpenAI’s **GPT-4o**
+	-	**⚡ One-Click Interpretation**:  Instantly generates a full narrative explanation of your regression results.
+	-	**🧠 Deep Analytical Coverage**: System Explains:
+		-	Model choice rationale
+		-	Coefficient interpretation (economic meaning)
+		-	Statistical significance
+		-	Model fit quality
+		-	Key caveats (e.g., endogeneity, heteroskedasticity)
+
 
 -	Visualisations
 	- Interactive Plotly charts throughout — time-series lines by entity, entity mean bar charts, residual diagnostics, correlation heatmaps, distribution plots
