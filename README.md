@@ -24,9 +24,13 @@ PanelStatX automatically handles these complexities, enabling users to focus on 
 The system is designed and equipped with:
 -	Core Regression Models
 	- **📈Pooled OLS**: Provides a baseline regression model that treats all observations as homogeneous, ignoring both entity-specific and time-specific effects. Useful for initial benchmarking and comparison.
+	
 	- **🏢Fixed Effects**: Controls for unobserved, time-invariant heterogeneity across entities (e.g., firms, countries) using within-transformation (demeaning). Ideal when entity-specific or time-specific characteristics may bias results
+	
 	- **🔄Fixed Effects (Two-Way)**: Simultaneously controls for both entity-specific and time-specific unobserved effects. This is particularly useful in real-world datasets where both dimensions influence outcomes.
+	
 	- **⚙️Random Effects (GLS)**: Assumes entity-specific effects are random and uncorrelated with regressors. Uses the Swamy-Arora variance components estimator and quasi-demeaning transformation for efficient estimation
+	
 	- **📉First Difference**: Eliminates entity-specific fixed effects by differencing consecutive time periods. Useful for robustness checks and when strict exogeneity assumptions may be violated
 
 -	Statistical Diagnostics
@@ -38,9 +42,7 @@ The system is designed and equipped with:
 		- **🔁Durbin-Watson Statistic**: Detects autocorrelation in residuals (serial correlation across time).
 		- **📉Breusch-Pagan Test**: Tests for heteroskedasticity (non-constant variance in errors).
 	
-
-
-
+	
 -	AI Explainer using the powerful GPT-4o model from OpenAI
 	- One-click narrative interpretation of your full regression output
 	- Covers model choice rationale, coefficient economic meaning, statistical significance, model fit quality, and caveats (endogeneity, heteroskedasticity, etc.)
