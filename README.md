@@ -23,20 +23,23 @@ PanelStatX automatically handles these complexities, enabling users to focus on 
 
 The system is designed and equipped with:
 -	Core Regression Models
-	- **Pooled OLS**: Provides a baseline regression model that treats all observations as homogeneous, ignoring both entity-specific and time-specific effects. Useful for initial benchmarking and comparison.
-	- **Fixed Effects**: Controls for unobserved, time-invariant heterogeneity across entities (e.g., firms, countries) using within-transformation (demeaning). Ideal when entity-specific or time-specific characteristics may bias results
-	- **Fixed Effects (Two-Way)**: Simultaneously controls for both entity-specific and time-specific unobserved effects. This is particularly useful in real-world datasets where both dimensions influence outcomes.
-	- **Random Effects (GLS)**: Assumes entity-specific effects are random and uncorrelated with regressors. Uses the Swamy-Arora variance components estimator and quasi-demeaning transformation for efficient estimation
-	- **First Difference**: Eliminates entity-specific fixed effects by differencing consecutive time periods. Useful for robustness checks and when strict exogeneity assumptions may be violated
+	- **📈Pooled OLS**: Provides a baseline regression model that treats all observations as homogeneous, ignoring both entity-specific and time-specific effects. Useful for initial benchmarking and comparison.
+	- **🏢Fixed Effects**: Controls for unobserved, time-invariant heterogeneity across entities (e.g., firms, countries) using within-transformation (demeaning). Ideal when entity-specific or time-specific characteristics may bias results
+	- **🔄Fixed Effects (Two-Way)**: Simultaneously controls for both entity-specific and time-specific unobserved effects. This is particularly useful in real-world datasets where both dimensions influence outcomes.
+	- **⚙️Random Effects (GLS)**: Assumes entity-specific effects are random and uncorrelated with regressors. Uses the Swamy-Arora variance components estimator and quasi-demeaning transformation for efficient estimation
+	- **📉First Difference**: Eliminates entity-specific fixed effects by differencing consecutive time periods. Useful for robustness checks and when strict exogeneity assumptions may be violated
 
 -	Statistical Diagnostics
-	- Coefficient table with standard errors, t-statistics, p-values, and significance stars (`***`, `**`, `*`)
-	- Full model fit statistics: R², Adjusted R², AIC, BIC, F-statistic
-	- **Hausman Test** — automatically guides you toward Fixed vs Random Effects
-	- **Jarque-Bera Test** — checks normality of residuals
-	- **Durbin-Watson Statistic** — detects autocorrelation in residuals
-	- **Breusch-Pagan Test** — tests for heteroskedasticity
-	- Residual distribution plots, Q-Q plots, fitted vs actual scatter, and leverage analysis
+	- **📋 Coefficient Summary Table**: system compute and report standard errors, t-statistics, p-values, and significance stars (`***`, `**`, `*`) for easy interpretation.
+	- **📐Model Fit Metrics**: system compute and report R², Adjusted R², AIC, BIC, and F-statistic for evaluating model performance
+	- **🧪 Model Diagnostic** 
+		- **⚖️Hausman Test**: system compute and report Hausman test metrics to help users determine whether **Fixed Effects** or **Random Effects** is more appropriate for your data.
+		- **🔔Jarque-Bera Test**: Checks whether residuals follow a normal distribution
+		- **🔁Durbin-Watson Statistic**: Detects autocorrelation in residuals (serial correlation across time).
+		- **📉Breusch-Pagan Test**: Tests for heteroskedasticity (non-constant variance in errors).
+	
+
+
 
 -	AI Explainer using the powerful GPT-4o model from OpenAI
 	- One-click narrative interpretation of your full regression output
@@ -46,6 +49,7 @@ The system is designed and equipped with:
 -	Visualisations
 	- Interactive Plotly charts throughout — time-series lines by entity, entity mean bar charts, residual diagnostics, correlation heatmaps, distribution plots
 	- All charts are dark-themed and render inline — no export needed to share insights at a glance
+	 Residual distribution plots, Q-Q plots, fitted vs actual scatter, and leverage analysis
 
 -	Downloadable Report **Word (.docx) report** containing:
 	- Model summary and fit statistics table
