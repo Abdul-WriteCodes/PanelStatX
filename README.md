@@ -5,15 +5,16 @@
 </p>
 
 
-PanelStatX is a web-based AI-powered panel regression analysis system that analyses panel data and produce clear, and credible results that can be downloaded
+PanelStatX is a web-based AI-powered panel regression analysis system. It is built as a no-code statistical analysis system for economists, researchers, students, analysts, and data professionals who need to carry out rigorous panel regression without the friction of Python scripts, R packages, or heavyweight statistical software.
 
-PanelStatX is built as a no-code statistical analysis system for economists, researchers, students, analysts, and data professionals who need rigorous panel regression without the friction of Python scripts, R packages, or heavyweight statistical software. It stands out for being:
+PanelStatX stands out for its:
 -	Simplicity: No complex installation or set up is required
+-	Accessibility: It can be accessed and used via Android/iOS mobile phones, laptop and desktop devices
+-	User Friendliness: It is purely a no-code system with a very low steep learning curve
 -	Hybrid Performance: It combines institutional-grade econometric methods with an AI-powered explainer.
+-	Intelligence: It uses Large Language Model (GPT-4o) as a intelligent layer to explain results for users with no statistical background
 
 ---
-
-
 
 ## Key Features
 Analysing panel data correctly requires specialised estimators that account for hidden differences between entities and time trends. PanelStatX handles all of this for you automatically. The system is designed and engineered to support the following
