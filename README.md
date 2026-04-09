@@ -5,24 +5,29 @@
 </p>
 
 
-PanelStatX is a web-based AI-powered panel regression analysis system. It is built as a no-code statistical analysis system for economists, researchers, students, analysts, and data professionals who need to carry out rigorous panel regression without the friction of Python scripts, R packages, or heavyweight statistical software.
+PanelStatX is a web-based AI-powered panel regression analysis system. It is built as a no-code statistical analysis system for economists, researchers, students, analysts, and data professionals who need to carry out rigorous panel regression.
 
 PanelStatX stands out for its:
 -	Simplicity: No complex installation or set up is required
 -	Accessibility: It can be accessed and used via Android/iOS mobile phones, laptop and desktop devices
--	User Friendliness: It is purely a no-code system with a very low steep learning curve
+-	User Friendliness: It is purely a no-code system with a very low steep learning curve. It eliminates friction of writing compex Python scripts, R packages, or mastering use of heavyweight statistical software for panel regression
 -	Hybrid Performance: It combines institutional-grade econometric methods with an AI-powered explainer.
 -	Intelligence: It uses Large Language Model (GPT-4o) as a intelligent layer to explain results for users with no statistical background
 
 ---
 
 ## Key Features
-Analysing panel data correctly requires specialised estimators that account for hidden differences between entities and time trends. PanelStatX automatically handles all of this for users. The system is designed and equipped with:
+Analysing panel data correctly requires specialised estimators that account for hidden differences between entities and time trends.
+ 
+PanelStatX automatically handles these complexities, enabling users to focus on interpretation rather than implementation. 
 
--	Regression Models
-	- **Pooled OLS** — a standard regression baseline treating all observations equally
-	- **Fixed Effects (Two-Way)** — controls for both entity-specific and time-specific unobserved heterogeneity via within-group demeaning
-	- **Random Effects (GLS)** — a Swamy-Arora variance-components estimator with quasi-demeaning; appropriate when entity effects are uncorrelated with regressors
+The system is designed and equipped with:
+-	Core Regression Models
+	- **Pooled OLS**: Provides a baseline regression model that treats all observations as homogeneous, ignoring both entity-specific and time-specific effects. Useful for initial benchmarking and comparison.
+	- **Fixed Effects**: Controls for unobserved, time-invariant heterogeneity across entities (e.g., firms, countries) using within-transformation (demeaning). Ideal when entity-specific or time-specific characteristics may bias results
+	- **Fixed Effects (Two-Way)**: Simultaneously controls for both entity-specific and time-specific unobserved effects. This is particularly useful in real-world datasets where both dimensions influence outcomes.
+	- **Random Effects (GLS)**: Assumes entity-specific effects are random and uncorrelated with regressors. Uses the Swamy-Arora variance components estimator and quasi-demeaning transformation for efficient estimation
+	- **First Difference**: Eliminates entity-specific fixed effects by differencing consecutive time periods. Useful for robustness checks and when strict exogeneity assumptions may be violated
 
 -	Statistical Diagnostics
 	- Coefficient table with standard errors, t-statistics, p-values, and significance stars (`***`, `**`, `*`)
