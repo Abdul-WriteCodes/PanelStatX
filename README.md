@@ -43,20 +43,21 @@ The system is designed and equipped with:
 		- **📉Breusch-Pagan Test**: Tests for heteroskedasticity (non-constant variance in errors).
 	
 	
--	🤖 AI Explainer Powered by OpenAI’s **GPT-4o**
-	-	**⚡ One-Click Interpretation**:  Instantly generates a full narrative explanation of your regression results.
-	-	**🧠 Deep Analytical Coverage**: System Explains:
+-	🤖 AI Explainer Powered by OpenAI’s **GPT-4o**: System supports one One-Click Interpretation that generates a full narrative explanation of  regression results in terms of:
 		-	Model choice rationale
 		-	Coefficient interpretation (economic meaning)
 		-	Statistical significance
 		-	Model fit quality
 		-	Key caveats (e.g., endogeneity, heteroskedasticity)
 
+-	📊Visualisations: System produce interactive charts that include 
+	- 	Time-series trends by entity
+	-	Entity-level comparison bar charts
+	-	Correlation heatmaps
+	-	Residual Distribution Plots for understanding error distribution and detect deviations from normality.
+	-	Q-Q Plots that visually assess whether residuals follow a theoretical normal distribution.
+	-	Fitted vs Actual Scatter plots that evaluate model performance by comparing predicted vs actual values.
 
--	Visualisations
-	- Interactive Plotly charts throughout — time-series lines by entity, entity mean bar charts, residual diagnostics, correlation heatmaps, distribution plots
-	- All charts are dark-themed and render inline — no export needed to share insights at a glance
-	 Residual distribution plots, Q-Q plots, fitted vs actual scatter, and leverage analysis
 
 -	Downloadable Report **Word (.docx) report** containing:
 	- Model summary and fit statistics table
@@ -65,29 +66,8 @@ The system is designed and equipped with:
 	- AI write-up section 
 
 ---
-
-## Why Choose PanelStatX?
-PanelStatX is designed to be the fastest path from raw panel data to a presentation-ready, defensible analysis — whether you're a PhD researcher, a policy analyst, or an analyst building models for a client. Here is how PanelStatX compares with other tools/system
-
-| | PanelStatX | Stata / EViews | R (`plm`) | Excel |
-|---|---|---|---|---|
-| Runs in the browser | ✅ | ❌ | ❌ | ✅ |
-| No installation | ✅ | ❌ | ❌ | ✅ |
-| Fixed + Random Effects | ✅ | ✅ | ✅ | ❌ |
-| Hausman Test | ✅ | ✅ | ✅ | ❌ |
-| Breusch-Pagan Test | ✅ | ✅ | ✅ | ❌ |
-| AI plain-language explanation | ✅ | ❌ | ❌ | ❌ |
-| Downloadable Word report | ✅ | ❌ | ❌ | ❌ |
-| No code required | ✅ | ❌ | ❌ | ✅ |
-| Pay-per-analysis (no subscription) | ✅ | ❌ | ✅ | ✅ |
-
-
-
----
-
-## Getting Started (End Users)
-
-**To use PanelStatX, no software installation is needed, No command line is needed. No code is required. Very easy and direct under 5 minutes based on key 7 processes**
+## Workflow
+**To use PanelStatX, no software installation is needed, No command line is needed. No code is required. Very easy and direct under 5 minutes based on key 7 steps**
 
 1. **Get an access key** — purchase credits to receive your unique key
 2. **Visit the app** and enter your key on the landing screen. Your remaining credit balance is shown in the sidebar at all times. You can top it up anytime
@@ -100,18 +80,4 @@ PanelStatX is designed to be the fastest path from raw panel data to a presentat
 👉 **[Try the Live System Here](https://achievit.streamlit.app/)**
 
 ---
-
-## Support, Credits & Access
-
-PanelStatX operates on a **prepaid credit system**. 
--	Credits are tied to your e-mail and unique **access key (PSX-xxxx-xxxx-xxx)** , issued at purchase
--	**Credits never expire**. Users can use them at their own pace, on their own schedule, from anywhere in the world
--	There are no monthly fees/subscription, and no usage windows to worry about
--	Your unique access key works from any device and any browser. 
--	Each analysis run costs 1 credit. Explanation of Results using AI also cost 1 credit. When credit balance hit zero, none of this will work
-
-For access key issues, credit top-ups, or technical questions, contact the PanelStatX team directly. Include your access key (first 4 characters only) and a description of the issue.
-
----
-
 *⬡ PanelStatX · Panel Regression Analysis System · Powered by GPT-4*
