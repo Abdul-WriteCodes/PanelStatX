@@ -5,37 +5,15 @@
 </p>
 
 
-PanelStatX is an AI-powered panel regression system that analyses panel data and produce clear, credible and publish ready reports
+PanelStatX is a web-based AI-powered panel regression analysis system that analyses panel data and produce clear, and credible results that can be downloaded
 
-PanelStatX is a browser-based panel data analysis platform built for economists, researchers, analysts, and data professionals who need rigorous panel regression without the friction of Python scripts, R packages, or heavyweight statistical software. It combines institutional-grade econometric methods with an AI-powered explainer.
-- No statistics degree required.
-- No complex setup.
-- Just upload your data, run your model, and get results you can actually understand
----
-
-## What Is Panel Data Analysis?
-
-Panel data (also called longitudinal data) tracks multiple entities across time. This data can come from:
-- Companies
-- Countries
-- Individuals 
-
-PanelStatX accepts these kinds of data as CSV and Excel files. For analysis, panel dataset should be structured in **long format** as one row per entity-period observation.
-
-**Example of the acceptable data structure format:**
-
-| entity | year | gdp_growth | investment | trade_openness |
-|--------|------|------------|------------|----------------|
-| Europe | 2015 | 2.7 | 18.3 | 0.34 |
-| Europe | 2016 | -1.6 | 15.1 | 0.29 |
-| Africa | 2015 | 3.8 | 22.0 | 0.51 |
-| ... | ... | ... | ... | ... |
-
-- The **entity column** identifies cross-sectional units (e.g. country, firm, individual)
-- The **time column** identifies the period (e.g. year, quarter)
-- All other numeric columns can serve as dependent or independent variables
+PanelStatX is built as a no-code statistical analysis system for economists, researchers, students, analysts, and data professionals who need rigorous panel regression without the friction of Python scripts, R packages, or heavyweight statistical software. It stands out for being:
+-	Simplicity: No complex installation or set up is required
+-	Hybrid Performance: It combines institutional-grade econometric methods with an AI-powered explainer.
 
 ---
+
+
 
 ## Key Features
 Analysing panel data correctly requires specialised estimators that account for hidden differences between entities and time trends. PanelStatX handles all of this for you automatically. The system is designed and engineered to support the following
