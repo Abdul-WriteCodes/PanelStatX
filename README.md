@@ -80,4 +80,12 @@ The system is designed and equipped with:
 👉 **[Try the Live System Here](https://achievit.streamlit.app/)**
 
 ---
+## Pricing
+
+<p align="center">
+  <img src="Assets/PSX2.jpeg" alt="PanelStatX Logo" width="800"/>
+</p>
+
+
+
 *⬡ PanelStatX · Panel Regression Analysis System · Powered by GPT-4*
