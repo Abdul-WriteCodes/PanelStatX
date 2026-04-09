@@ -1,7 +1,7 @@
 # ⬡ PanelStatX
 
 <p align="center">
-  <img src="Assets/panelstatx.png" alt="PanelStatX Logo" width="800"/>
+  <img src="Assets/PSX1.png" alt="PanelStatX Logo" width="800"/>
 </p>
 
 
