@@ -17,7 +17,7 @@ PanelStatX stands out for its:
 ---
 
 ## Key Features
-Analysing panel data correctly requires specialised estimators that account for hidden differences between entities and time trends. PanelStatX handles all of this for you automatically. The system is designed and engineered to support the following
+Analysing panel data correctly requires specialised estimators that account for hidden differences between entities and time trends. PanelStatX automatically handles all of this for users. The system is designed and equipped with:
 
 -	Regression Models
 	- **Pooled OLS** — a standard regression baseline treating all observations equally
@@ -46,10 +46,7 @@ Analysing panel data correctly requires specialised estimators that account for 
 	- Model summary and fit statistics table
 	- Full coefficient estimates table (with significance highlighting)
 	- Residual diagnostics table with auto-generated interpretations
-	- AI write-up section (if generated before download)
-
--	Demo Mode
-	- Built-in synthetic balanced panel dataset (30 entities × 10 periods) — try every feature immediately with no data required
+	- AI write-up section 
 
 ---
 
