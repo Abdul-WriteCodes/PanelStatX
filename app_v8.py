@@ -1671,10 +1671,10 @@ if not st.session_state.access_granted:
           <span class="price-badge badge-pop">Most Popular</span>
           <div class="price-plan">Standard</div>
           <div class="price-amount"><span class="price-curr">$</span>25</div>
-          <div class="price-credits">15 Analysis Credits</div>
+          <div class="price-credits">20 Analysis Credits</div>
           <div class="price-divider"></div>
           <ul class="price-features">
-            <li><span class="pf-check">&#x2713;</span>15 full regression runs</li>
+            <li><span class="pf-check">&#x2713;</span>20 full regression runs</li>
             <li><span class="pf-check">&#x2713;</span>All 4 estimators</li>
             <li><span class="pf-check">&#x2713;</span>AI explainer included</li>
             <li><span class="pf-check">&#x2713;</span>DOCX report export</li>
@@ -1688,12 +1688,12 @@ if not st.session_state.access_granted:
         st.markdown("""
         <div class="price-card fi d5">
           <span class="price-badge badge-val">Best Value</span>
-          <div class="price-plan">Pro</div>
-          <div class="price-amount"><span class="price-curr">$</span>45</div>
-          <div class="price-credits">30 Analysis Credits</div>
+          <div class="price-plan">Team</div>
+          <div class="price-amount"><span class="price-curr">$</span>100</div>
+          <div class="price-credits">100 Analysis Credits</div>
           <div class="price-divider"></div>
           <ul class="price-features">
-            <li><span class="pf-check">&#x2713;</span>30 full regression runs</li>
+            <li><span class="pf-check">&#x2713;</span>100 full regression runs</li>
             <li><span class="pf-check">&#x2713;</span>All 4 estimators</li>
             <li><span class="pf-check">&#x2713;</span>AI explainer included</li>
             <li><span class="pf-check">&#x2713;</span>DOCX report export</li>
