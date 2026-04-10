@@ -2,134 +2,127 @@
 <html lang="en">
 <head>
 <meta charset="UTF-8">
-<title>PanelStatX Cinematic Launch</title>
+<title>PanelStatX | The Cinematic Engine</title>
 <style>
     :root {
         --accent: #00e5c8;
-        --bg-dark: #0a0c10;
+        --bg-dark: #05070a;
         --text-dim: #6b7a9a;
+        --data-glow: rgba(0, 229, 200, 0.15);
     }
 
-    body {
+    body, html {
         margin: 0;
+        padding: 0;
         background: var(--bg-dark);
         color: #e2e8f4;
-        font-family: 'Inter', -apple-system, sans-serif;
+        font-family: 'Inter', sans-serif;
         overflow: hidden;
+        height: 100vh;
     }
 
-    /* Ambient Background Effect */
-    .bg-overlay {
+    /* Cinematic Layers */
+    #stats-canvas {
+        position: fixed;
+        top: 0; left: 0;
+        width: 100%; height: 100%;
+        opacity: 0.4;
+        z-index: 0;
+    }
+
+    .vignette {
         position: fixed;
         top: 0; left: 0; width: 100%; height: 100%;
-        background: radial-gradient(circle at 50% 50%, #161b22 0%, #0a0c10 100%);
-        z-index: -1;
-    }
-
-    .grid-lines {
-        position: fixed;
-        top: 0; left: 0; width: 200%; height: 200%;
-        background-image: linear-gradient(rgba(0, 229, 200, 0.05) 1px, transparent 1px),
-                          linear-gradient(90deg, rgba(0, 229, 200, 0.05) 1px, transparent 1px);
-        background-size: 50px 50px;
-        transform: rotateX(45deg);
-        animation: drift 60s linear infinite;
-        z-index: -1;
-    }
-
-    @keyframes drift {
-        from { transform: translateY(0) rotateX(45deg); }
-        to { transform: translateY(-500px) rotateX(45deg); }
+        background: radial-gradient(circle, transparent 20%, var(--bg-dark) 100%);
+        pointer-events: none;
+        z-index: 1;
     }
 
     .scene {
         position: absolute;
-        width: 100%;
-        height: 100%;
-        display: flex;
-        align-items: center;
-        justify-content: center;
+        width: 100%; height: 100%;
+        display: flex; align-items: center; justify-content: center;
         text-align: center;
         opacity: 0;
-        transform: scale(1.1);
-        transition: opacity 1.2s ease, transform 1.2s cubic-bezier(0.16, 1, 0.3, 1);
-        pointer-events: none;
+        transform: translateY(20px) scale(0.98);
+        transition: all 1.5s cubic-bezier(0.16, 1, 0.3, 1);
+        z-index: 2;
     }
 
     .active {
         opacity: 1;
-        transform: scale(1);
-        pointer-events: all;
+        transform: translateY(0) scale(1);
     }
 
     .content-box {
-        background: rgba(255, 255, 255, 0.03);
-        backdrop-filter: blur(10px);
-        padding: 60px;
-        border-radius: 20px;
-        border: 1px solid rgba(0, 225, 200, 0.1);
-        box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.5);
+        background: rgba(10, 12, 16, 0.7);
+        backdrop-filter: blur(12px);
+        padding: 80px;
+        border-radius: 4px;
+        border-left: 1px solid var(--accent);
+        box-shadow: -20px 0 50px rgba(0, 229, 200, 0.05);
     }
 
     h1 {
-        font-size: 72px;
-        font-weight: 800;
-        letter-spacing: -2px;
-        margin-bottom: 15px;
-        background: linear-gradient(to right, #fff, var(--accent));
+        font-size: 84px;
+        font-weight: 900;
+        margin: 0;
+        letter-spacing: -3px;
+        background: linear-gradient(to bottom, #fff 30%, var(--accent));
         -webkit-background-clip: text;
         -webkit-text-fill-color: transparent;
     }
 
     p {
-        font-size: 26px;
-        max-width: 800px;
-        margin: auto;
+        font-size: 28px;
         color: var(--text-dim);
+        margin-top: 20px;
         font-weight: 300;
+        letter-spacing: 1px;
     }
 
     .accent { color: var(--accent); -webkit-text-fill-color: var(--accent); }
 
-    /* Progress Bar */
+    /* HUD Elements */
     .progress-container {
         position: fixed;
-        bottom: 0; left: 0; width: 100%; height: 4px;
-        background: rgba(255,255,255,0.1);
+        bottom: 0; left: 0; width: 100%; height: 2px;
+        background: rgba(255,255,255,0.05);
+        z-index: 10;
     }
     .progress-bar {
         height: 100%; width: 0%;
         background: var(--accent);
-        transition: width 6s linear;
+        box-shadow: 0 0 15px var(--accent);
     }
 
     .btn {
         position: absolute;
-        bottom: 50px;
-        padding: 15px 40px;
-        border: 2px solid var(--accent);
-        background: transparent;
+        bottom: 60px; left: 50%;
+        transform: translateX(-50%);
+        padding: 20px 50px;
+        background: none;
+        border: 1px solid var(--accent);
         color: var(--accent);
-        font-weight: bold;
+        font-size: 14px;
+        letter-spacing: 4px;
         text-transform: uppercase;
-        letter-spacing: 2px;
         cursor: pointer;
-        transition: 0.3s;
-        z-index: 10;
+        z-index: 20;
+        transition: 0.4s;
     }
 
     .btn:hover {
         background: var(--accent);
         color: var(--bg-dark);
-        box-shadow: 0 0 30px var(--accent);
+        box-shadow: 0 0 40px var(--data-glow);
     }
 </style>
 </head>
-
 <body>
 
-<div class="bg-overlay"></div>
-<div class="grid-lines"></div>
+<canvas id="stats-canvas"></canvas>
+<div class="vignette"></div>
 
 <div id="scene1" class="scene active">
     <div class="content-box">
@@ -140,52 +133,108 @@
 
 <div id="scene2" class="scene">
     <div class="content-box">
-        <h1>The Problem</h1>
-        <p>Complex, time-consuming, and inaccessible.</p>
+        <h1>Complex Data</h1>
+        <p>Transformed into actionable intelligence.</p>
     </div>
 </div>
 
 <div id="scene3" class="scene">
     <div class="content-box">
-        <h1 class="accent">The Solution</h1>
-        <p>Simplifying everything from regression to automated insights.</p>
+        <h1 class="accent">Precision Engine</h1>
+        <p>Fixed Effects. Random Effects. Automated interpretation.</p>
     </div>
 </div>
 
-<div id="scene5" class="scene">
+<div id="scene4" class="scene">
     <div class="content-box">
-        <h1>AI Interpretation</h1>
-        <p>Academic-quality explanations for every result.</p>
-    </div>
-</div>
-
-<div id="scene8" class="scene">
-    <div class="content-box">
-        <h1>⬡ <span class="accent">PanelStatX</span></h1>
+        <h1>PanelStatX</h1>
         <p>Analyze Faster. Understand Better. Publish Smarter.</p>
     </div>
 </div>
 
 <div class="progress-container"><div class="progress-bar" id="pb"></div></div>
-<button class="btn" id="startBtn" onclick="startVideo()">Initiate Launch</button>
+<button class="btn" id="startBtn" onclick="initiateSequence()">Initiate Sequence</button>
 
 <script>
-let scenes = document.querySelectorAll(".scene");
-let current = 0;
-const pb = document.getElementById("pb");
+/* 1. DATA RAIN BACKGROUND */
+const canvas = document.getElementById('stats-canvas');
+const ctx = canvas.getContext('2d');
+let width, height, columns;
+const symbols = "β σ Σ R² Δ √ ε η θ μ χ² p-value OLS GMM ARCH".split(" ");
+const drops = [];
 
+function resize() {
+    width = canvas.width = window.innerWidth;
+    height = canvas.height = window.innerHeight;
+    columns = Math.floor(width / 30);
+    for (let i = 0; i < columns; i++) drops[i] = Math.random() * -100;
+}
+
+function drawStats() {
+    ctx.fillStyle = 'rgba(5, 7, 10, 0.15)';
+    ctx.fillRect(0, 0, width, height);
+    ctx.fillStyle = '#00e5c8';
+    ctx.font = '12px monospace';
+
+    for (let i = 0; i < drops.length; i++) {
+        const text = symbols[Math.floor(Math.random() * symbols.length)];
+        ctx.fillText(text, i * 30, drops[i] * 30);
+        if (drops[i] * 30 > height && Math.random() > 0.975) drops[i] = 0;
+        drops[i]++;
+    }
+}
+window.addEventListener('resize', resize);
+resize();
+setInterval(drawStats, 50);
+
+/* 2. AUDIO ENGINE (Generative Ambient) */
+let audioCtx;
+function playAmbientMusic() {
+    audioCtx = new (window.AudioContext || window.webkitAudioContext)();
+    const osc = audioCtx.createOscillator();
+    const lfo = audioCtx.createOscillator();
+    const gain = audioCtx.createGain();
+    const filter = audioCtx.createBiquadFilter();
+
+    osc.type = 'sawtooth';
+    osc.frequency.setValueAtTime(55, audioCtx.currentTime); // Deep A1 note
+    
+    lfo.type = 'sine';
+    lfo.frequency.value = 0.5;
+    const lfoGain = audioCtx.createGain();
+    lfoGain.gain.value = 10;
+    
+    filter.type = 'lowpass';
+    filter.frequency.value = 400;
+    filter.Q.value = 10;
+
+    gain.gain.setValueAtTime(0, audioCtx.currentTime);
+    gain.gain.linearRampToValueAtTime(0.15, audioCtx.currentTime + 4);
+
+    lfo.connect(lfoGain);
+    lfoGain.connect(osc.frequency);
+    osc.connect(filter);
+    filter.connect(gain);
+    gain.connect(audioCtx.destination);
+
+    osc.start();
+    lfo.start();
+}
+
+/* 3. SCENE LOGIC */
+let current = 0;
+const scenes = document.querySelectorAll(".scene");
+const pb = document.getElementById("pb");
 const narration = [
-    "Welcome to Panel Stat X. The future of panel data analysis.",
-    "Traditional analysis is complex and time consuming.",
-    "Panel Stat X simplifies the entire workflow.",
-    "Experience AI powered interpretation of your results.",
+    "Welcome to Panel Stat X. The pinnacle of econometrics.",
+    "Complex datasets meet intuitive artificial intelligence.",
+    "Precision models. Automated insights. Instant results.",
     "Panel Stat X. Analyze faster. Understand better. Publish smarter."
 ];
 
 function showScene(index) {
     scenes.forEach(s => s.classList.remove("active"));
     scenes[index].classList.add("active");
-    // Reset and trigger progress bar
     pb.style.transition = 'none';
     pb.style.width = '0%';
     setTimeout(() => {
@@ -196,25 +245,23 @@ function showScene(index) {
 
 function speak(text) {
     const speech = new SpeechSynthesisUtterance(text);
-    speech.rate = 0.9;
+    speech.rate = 0.85;
+    speech.pitch = 0.9;
     window.speechSynthesis.speak(speech);
 }
 
-function startVideo() {
+function initiateSequence() {
     document.getElementById("startBtn").style.display = "none";
-    current = 0;
-
-    function nextScene() {
-        if (current >= scenes.length) {
-            pb.style.width = '100%';
-            return;
-        }
+    playAmbientMusic();
+    
+    function next() {
+        if (current >= scenes.length) return;
         showScene(current);
         speak(narration[current]);
         current++;
-        setTimeout(nextScene, 6000);
+        setTimeout(next, 6500);
     }
-    nextScene();
+    next();
 }
 </script>
 
