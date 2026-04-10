@@ -14,20 +14,20 @@ body {
     overflow: hidden;
 }
 
-/* Background animation */
+/* Background glow animation */
 .bg {
     position: absolute;
     width: 200%;
     height: 200%;
-    background: radial-gradient(circle, rgba(0,229,200,0.08), transparent 60%);
-    animation: drift 20s linear infinite;
+    background: radial-gradient(circle, rgba(0,229,200,0.1), transparent 60%);
+    animation: move 20s infinite alternate ease-in-out;
+}
+@keyframes move {
+    from { transform: translate(-10%, -10%) scale(1); }
+    to { transform: translate(10%, 10%) scale(1.2); }
 }
 
-@keyframes drift {
-    from { transform: translate(-10%, -10%); }
-    to { transform: translate(10%, 10%); }
-}
-
+/* Scene */
 .scene {
     position: absolute;
     width: 100%;
@@ -37,35 +37,33 @@ body {
     align-items: center;
     justify-content: center;
     opacity: 0;
-    transform: scale(1.05);
+    transform: scale(1.1);
     transition: all 1.2s ease;
     text-align: center;
-    padding: 40px;
+    padding: 60px;
 }
-
-.active {
+.scene.active {
     opacity: 1;
     transform: scale(1);
 }
 
+/* Typography */
 h1 {
-    font-size: 70px;
+    font-size: 72px;
     margin: 0;
     letter-spacing: -2px;
 }
-
 p {
-    font-size: 24px;
+    font-size: 26px;
     max-width: 900px;
     color: #8b9bb8;
     margin-top: 20px;
-    line-height: 1.6;
 }
 
-/* Glow accent */
+/* Glow */
 .accent {
     color: #00e5c8;
-    text-shadow: 0 0 20px rgba(0,229,200,0.5);
+    text-shadow: 0 0 25px rgba(0,229,200,0.7);
 }
 
 /* Typewriter */
@@ -75,22 +73,44 @@ p {
     overflow: hidden;
 }
 
+/* AI pulse */
+.ai-box {
+    margin-top: 30px;
+    padding: 20px 30px;
+    border: 1px solid rgba(0,229,200,0.3);
+    background: rgba(0,229,200,0.05);
+    animation: pulse 2s infinite;
+}
+@keyframes pulse {
+    0% { box-shadow: 0 0 0px rgba(0,229,200,0.2); }
+    50% { box-shadow: 0 0 30px rgba(0,229,200,0.4); }
+    100% { box-shadow: 0 0 0px rgba(0,229,200,0.2); }
+}
+
+/* Overlay transition */
+.overlay {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    background: black;
+    opacity: 0;
+    transition: opacity 0.8s;
+}
+
 /* Button */
 .play {
     position: absolute;
     bottom: 40px;
     left: 50%;
     transform: translateX(-50%);
-    padding: 14px 28px;
+    padding: 16px 32px;
     border: 1px solid #00e5c8;
     color: #00e5c8;
     cursor: pointer;
-    transition: 0.3s;
 }
-
 .play:hover {
     background: #00e5c8;
-    color: #000;
+    color: black;
 }
 </style>
 
@@ -99,6 +119,7 @@ p {
 <body>
 
 <div class="bg"></div>
+<div id="overlay" class="overlay"></div>
 
 <!-- Scenes -->
 
@@ -118,13 +139,15 @@ p {
 </div>
 
 <div class="scene">
-    <h1>Core Power</h1>
+    <h1>Core Engine</h1>
     <p class="type" id="t4"></p>
 </div>
 
 <div class="scene">
-    <h1 class="accent">AI Interpretation</h1>
-    <p class="type" id="t5"></p>
+    <h1 class="accent">AI Thinking...</h1>
+    <div class="ai-box">
+        <p class="type" id="t5"></p>
+    </div>
 </div>
 
 <div class="scene">
@@ -142,59 +165,80 @@ p {
     <p class="type" id="t8"></p>
 </div>
 
-<div class="play" onclick="start()">▶ Launch Video</div>
+<div class="play" onclick="start()">▶ Play Cinematic Launch</div>
 
 <script>
 const texts = [
-    "The future of panel data analysis has arrived.",
-    "Panel data is powerful... but complex, technical, and time-consuming.",
-    "What if everything became instant, intuitive, and intelligent?",
-    "Run fixed effects, random effects, diagnostics — in seconds.",
-    "Get AI-powered explanations that sound like a published research paper.",
-    "Automated reports. Built-in credit system. Zero friction workflow.",
-    "Upload your data. Run models. Extract insight instantly.",
-    "Analyze faster. Understand deeper. Publish smarter."
+"The future of panel data analysis has arrived.",
+"Panel data is powerful, but complex, technical, and time consuming.",
+"What if everything became instant, intuitive, and intelligent?",
+"Run fixed effects, random effects, and diagnostics in seconds.",
+"Analyzing regression outputs... generating interpretation...",
+"Automated reports, credit system, seamless workflow.",
+"Upload data. Run models. Extract insight instantly.",
+"Analyze faster. Understand deeper. Publish smarter."
 ];
 
-let scenes = document.querySelectorAll(".scene");
+const scenes = document.querySelectorAll(".scene");
+let current = 0;
+let playing = false;
 
-function typeText(element, text, speed=30) {
-    element.innerHTML = "";
+/* Typewriter */
+function typeText(el, text) {
+    el.innerHTML = "";
     let i = 0;
-
     function typing() {
         if (i < text.length) {
-            element.innerHTML += text.charAt(i);
+            el.innerHTML += text.charAt(i);
             i++;
-            setTimeout(typing, speed);
+            setTimeout(typing, 28);
         }
     }
     typing();
 }
 
+/* Voice */
 function speak(text) {
+    window.speechSynthesis.cancel();
     const speech = new SpeechSynthesisUtterance(text);
-    speech.rate = 0.92;
-    speech.pitch = 1;
-    speech.volume = 1;
+    speech.rate = 0.9;
     window.speechSynthesis.speak(speech);
 }
 
+/* Scene */
+function showScene(i) {
+    scenes.forEach(s => s.classList.remove("active"));
+    scenes[i].classList.add("active");
+
+    const el = document.getElementById("t" + (i+1));
+    typeText(el, texts[i]);
+    speak(texts[i]);
+}
+
+/* Cinematic transition */
+function transition(next) {
+    const overlay = document.getElementById("overlay");
+    overlay.style.opacity = 0.7;
+
+    setTimeout(() => {
+        next();
+        overlay.style.opacity = 0;
+    }, 500);
+}
+
+/* Player */
 function start() {
-    let i = 0;
+    if (playing) return;
+    playing = true;
+    current = 0;
 
     function next() {
-        if (i >= scenes.length) return;
+        if (current >= scenes.length) return;
 
-        scenes.forEach(s => s.classList.remove("active"));
-        scenes[i].classList.add("active");
+        transition(() => showScene(current));
 
-        let textEl = document.getElementById("t" + (i+1));
-        typeText(textEl, texts[i]);
-        speak(texts[i]);
-
-        i++;
-        setTimeout(next, 6500);
+        current++;
+        setTimeout(next, 7000);
     }
 
     next();
