@@ -1,247 +1,220 @@
 <!DOCTYPE html>
-
 <html lang="en">
 <head>
 <meta charset="UTF-8">
 <title>PanelStatX Cinematic Launch</title>
-
 <style>
-body {
-    margin: 0;
-    background: radial-gradient(circle at center, #0f1320, #05070b);
-    color: #e2e8f4;
-    font-family: 'Segoe UI', sans-serif;
-    overflow: hidden;
-}
+    :root {
+        --accent: #00e5c8;
+        --bg-dark: #0a0c10;
+        --text-dim: #6b7a9a;
+    }
 
-/* Background glow animation */
-.bg {
-    position: absolute;
-    width: 200%;
-    height: 200%;
-    background: radial-gradient(circle, rgba(0,229,200,0.1), transparent 60%);
-    animation: move 20s infinite alternate ease-in-out;
-}
-@keyframes move {
-    from { transform: translate(-10%, -10%) scale(1); }
-    to { transform: translate(10%, 10%) scale(1.2); }
-}
+    body {
+        margin: 0;
+        background: var(--bg-dark);
+        color: #e2e8f4;
+        font-family: 'Inter', -apple-system, sans-serif;
+        overflow: hidden;
+    }
 
-/* Scene */
-.scene {
-    position: absolute;
-    width: 100%;
-    height: 100%;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
-    opacity: 0;
-    transform: scale(1.1);
-    transition: all 1.2s ease;
-    text-align: center;
-    padding: 60px;
-}
-.scene.active {
-    opacity: 1;
-    transform: scale(1);
-}
+    /* Ambient Background Effect */
+    .bg-overlay {
+        position: fixed;
+        top: 0; left: 0; width: 100%; height: 100%;
+        background: radial-gradient(circle at 50% 50%, #161b22 0%, #0a0c10 100%);
+        z-index: -1;
+    }
 
-/* Typography */
-h1 {
-    font-size: 72px;
-    margin: 0;
-    letter-spacing: -2px;
-}
-p {
-    font-size: 26px;
-    max-width: 900px;
-    color: #8b9bb8;
-    margin-top: 20px;
-}
+    .grid-lines {
+        position: fixed;
+        top: 0; left: 0; width: 200%; height: 200%;
+        background-image: linear-gradient(rgba(0, 229, 200, 0.05) 1px, transparent 1px),
+                          linear-gradient(90deg, rgba(0, 229, 200, 0.05) 1px, transparent 1px);
+        background-size: 50px 50px;
+        transform: rotateX(45deg);
+        animation: drift 60s linear infinite;
+        z-index: -1;
+    }
 
-/* Glow */
-.accent {
-    color: #00e5c8;
-    text-shadow: 0 0 25px rgba(0,229,200,0.7);
-}
+    @keyframes drift {
+        from { transform: translateY(0) rotateX(45deg); }
+        to { transform: translateY(-500px) rotateX(45deg); }
+    }
 
-/* Typewriter */
-.type {
-    border-right: 2px solid #00e5c8;
-    white-space: nowrap;
-    overflow: hidden;
-}
+    .scene {
+        position: absolute;
+        width: 100%;
+        height: 100%;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        text-align: center;
+        opacity: 0;
+        transform: scale(1.1);
+        transition: opacity 1.2s ease, transform 1.2s cubic-bezier(0.16, 1, 0.3, 1);
+        pointer-events: none;
+    }
 
-/* AI pulse */
-.ai-box {
-    margin-top: 30px;
-    padding: 20px 30px;
-    border: 1px solid rgba(0,229,200,0.3);
-    background: rgba(0,229,200,0.05);
-    animation: pulse 2s infinite;
-}
-@keyframes pulse {
-    0% { box-shadow: 0 0 0px rgba(0,229,200,0.2); }
-    50% { box-shadow: 0 0 30px rgba(0,229,200,0.4); }
-    100% { box-shadow: 0 0 0px rgba(0,229,200,0.2); }
-}
+    .active {
+        opacity: 1;
+        transform: scale(1);
+        pointer-events: all;
+    }
 
-/* Overlay transition */
-.overlay {
-    position: absolute;
-    width: 100%;
-    height: 100%;
-    background: black;
-    opacity: 0;
-    transition: opacity 0.8s;
-}
+    .content-box {
+        background: rgba(255, 255, 255, 0.03);
+        backdrop-filter: blur(10px);
+        padding: 60px;
+        border-radius: 20px;
+        border: 1px solid rgba(0, 225, 200, 0.1);
+        box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.5);
+    }
 
-/* Button */
-.play {
-    position: absolute;
-    bottom: 40px;
-    left: 50%;
-    transform: translateX(-50%);
-    padding: 16px 32px;
-    border: 1px solid #00e5c8;
-    color: #00e5c8;
-    cursor: pointer;
-}
-.play:hover {
-    background: #00e5c8;
-    color: black;
-}
+    h1 {
+        font-size: 72px;
+        font-weight: 800;
+        letter-spacing: -2px;
+        margin-bottom: 15px;
+        background: linear-gradient(to right, #fff, var(--accent));
+        -webkit-background-clip: text;
+        -webkit-text-fill-color: transparent;
+    }
+
+    p {
+        font-size: 26px;
+        max-width: 800px;
+        margin: auto;
+        color: var(--text-dim);
+        font-weight: 300;
+    }
+
+    .accent { color: var(--accent); -webkit-text-fill-color: var(--accent); }
+
+    /* Progress Bar */
+    .progress-container {
+        position: fixed;
+        bottom: 0; left: 0; width: 100%; height: 4px;
+        background: rgba(255,255,255,0.1);
+    }
+    .progress-bar {
+        height: 100%; width: 0%;
+        background: var(--accent);
+        transition: width 6s linear;
+    }
+
+    .btn {
+        position: absolute;
+        bottom: 50px;
+        padding: 15px 40px;
+        border: 2px solid var(--accent);
+        background: transparent;
+        color: var(--accent);
+        font-weight: bold;
+        text-transform: uppercase;
+        letter-spacing: 2px;
+        cursor: pointer;
+        transition: 0.3s;
+        z-index: 10;
+    }
+
+    .btn:hover {
+        background: var(--accent);
+        color: var(--bg-dark);
+        box-shadow: 0 0 30px var(--accent);
+    }
 </style>
-
 </head>
 
 <body>
 
-<div class="bg"></div>
-<div id="overlay" class="overlay"></div>
+<div class="bg-overlay"></div>
+<div class="grid-lines"></div>
 
-<!-- Scenes -->
-
-<div class="scene active">
-    <h1>⬡ <span class="accent">PanelStatX</span></h1>
-    <p class="type" id="t1"></p>
-</div>
-
-<div class="scene">
-    <h1>The Problem</h1>
-    <p class="type" id="t2"></p>
-</div>
-
-<div class="scene">
-    <h1>The Shift</h1>
-    <p class="type" id="t3"></p>
-</div>
-
-<div class="scene">
-    <h1>Core Engine</h1>
-    <p class="type" id="t4"></p>
-</div>
-
-<div class="scene">
-    <h1 class="accent">AI Thinking...</h1>
-    <div class="ai-box">
-        <p class="type" id="t5"></p>
+<div id="scene1" class="scene active">
+    <div class="content-box">
+        <h1>⬡ <span class="accent">PanelStatX</span></h1>
+        <p>The Future of Panel Data Analysis</p>
     </div>
 </div>
 
-<div class="scene">
-    <h1>Automation</h1>
-    <p class="type" id="t6"></p>
+<div id="scene2" class="scene">
+    <div class="content-box">
+        <h1>The Problem</h1>
+        <p>Complex, time-consuming, and inaccessible.</p>
+    </div>
 </div>
 
-<div class="scene">
-    <h1>From Data → Insight</h1>
-    <p class="type" id="t7"></p>
+<div id="scene3" class="scene">
+    <div class="content-box">
+        <h1 class="accent">The Solution</h1>
+        <p>Simplifying everything from regression to automated insights.</p>
+    </div>
 </div>
 
-<div class="scene">
-    <h1>⬡ <span class="accent">PanelStatX</span></h1>
-    <p class="type" id="t8"></p>
+<div id="scene5" class="scene">
+    <div class="content-box">
+        <h1>AI Interpretation</h1>
+        <p>Academic-quality explanations for every result.</p>
+    </div>
 </div>
 
-<div class="play" onclick="start()">▶ Play Cinematic Launch</div>
+<div id="scene8" class="scene">
+    <div class="content-box">
+        <h1>⬡ <span class="accent">PanelStatX</span></h1>
+        <p>Analyze Faster. Understand Better. Publish Smarter.</p>
+    </div>
+</div>
+
+<div class="progress-container"><div class="progress-bar" id="pb"></div></div>
+<button class="btn" id="startBtn" onclick="startVideo()">Initiate Launch</button>
 
 <script>
-const texts = [
-"The future of panel data analysis has arrived.",
-"Panel data is powerful, but complex, technical, and time consuming.",
-"What if everything became instant, intuitive, and intelligent?",
-"Run fixed effects, random effects, and diagnostics in seconds.",
-"Analyzing regression outputs... generating interpretation...",
-"Automated reports, credit system, seamless workflow.",
-"Upload data. Run models. Extract insight instantly.",
-"Analyze faster. Understand deeper. Publish smarter."
+let scenes = document.querySelectorAll(".scene");
+let current = 0;
+const pb = document.getElementById("pb");
+
+const narration = [
+    "Welcome to Panel Stat X. The future of panel data analysis.",
+    "Traditional analysis is complex and time consuming.",
+    "Panel Stat X simplifies the entire workflow.",
+    "Experience AI powered interpretation of your results.",
+    "Panel Stat X. Analyze faster. Understand better. Publish smarter."
 ];
 
-const scenes = document.querySelectorAll(".scene");
-let current = 0;
-let playing = false;
-
-/* Typewriter */
-function typeText(el, text) {
-    el.innerHTML = "";
-    let i = 0;
-    function typing() {
-        if (i < text.length) {
-            el.innerHTML += text.charAt(i);
-            i++;
-            setTimeout(typing, 28);
-        }
-    }
-    typing();
+function showScene(index) {
+    scenes.forEach(s => s.classList.remove("active"));
+    scenes[index].classList.add("active");
+    // Reset and trigger progress bar
+    pb.style.transition = 'none';
+    pb.style.width = '0%';
+    setTimeout(() => {
+        pb.style.transition = 'width 6s linear';
+        pb.style.width = '100%';
+    }, 50);
 }
 
-/* Voice */
 function speak(text) {
-    window.speechSynthesis.cancel();
     const speech = new SpeechSynthesisUtterance(text);
     speech.rate = 0.9;
     window.speechSynthesis.speak(speech);
 }
 
-/* Scene */
-function showScene(i) {
-    scenes.forEach(s => s.classList.remove("active"));
-    scenes[i].classList.add("active");
-
-    const el = document.getElementById("t" + (i+1));
-    typeText(el, texts[i]);
-    speak(texts[i]);
-}
-
-/* Cinematic transition */
-function transition(next) {
-    const overlay = document.getElementById("overlay");
-    overlay.style.opacity = 0.7;
-
-    setTimeout(() => {
-        next();
-        overlay.style.opacity = 0;
-    }, 500);
-}
-
-/* Player */
-function start() {
-    if (playing) return;
-    playing = true;
+function startVideo() {
+    document.getElementById("startBtn").style.display = "none";
     current = 0;
 
-    function next() {
-        if (current >= scenes.length) return;
-
-        transition(() => showScene(current));
-
+    function nextScene() {
+        if (current >= scenes.length) {
+            pb.style.width = '100%';
+            return;
+        }
+        showScene(current);
+        speak(narration[current]);
         current++;
-        setTimeout(next, 7000);
+        setTimeout(nextScene, 6000);
     }
-
-    next();
+    nextScene();
 }
 </script>
 
