@@ -1,115 +1,204 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>PanelStatX Launch</title>
-    <script>
-    const startBtn = document.getElementById('start-btn');
-    const progress = document.getElementById('progress');
-    const synth = window.speechSynthesis;
+<meta charset="UTF-8">
+<title>DataSynthX Launch</title>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-    /**
-     * Helper to wrap speech in a Promise.
-     * This allows the GSAP timeline to "wait" for the voice to finish.
-     */
-    function speak(text) {
-        return new Promise((resolve) => {
-            const utter = new SpeechSynthesisUtterance(text);
-            utter.rate = 0.95;
-            utter.pitch = 1;
-            
-            // Resolve the promise when the speech ends
-            utter.onend = () => {
-                resolve();
-            };
+<style>
+body {
+    margin: 0;
+    font-family: 'Segoe UI', sans-serif;
+    background: #0a0a0f;
+    color: white;
+    overflow: hidden;
+}
 
-            // Handle errors to prevent timeline hanging
-            utter.onerror = () => {
-                resolve();
-            };
+.scene {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
+    opacity: 0;
+    transition: opacity 1s ease;
+}
 
-            synth.speak(utter);
-        });
+.active {
+    opacity: 1;
+}
+
+h1 {
+    font-size: 3rem;
+    background: linear-gradient(90deg, #7c6af7, #3ecfcf);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+}
+
+p {
+    max-width: 600px;
+    text-align: center;
+    color: #aaa;
+    font-size: 1.2rem;
+}
+
+button {
+    position: fixed;
+    bottom: 20px;
+    left: 20px;
+    padding: 12px 20px;
+    border: none;
+    background: #7c6af7;
+    color: white;
+    border-radius: 8px;
+    cursor: pointer;
+}
+
+.glow {
+    width: 200px;
+    height: 200px;
+    background: radial-gradient(circle, #7c6af7, transparent);
+    position: absolute;
+    animation: pulse 3s infinite;
+}
+
+@keyframes pulse {
+    0% { transform: scale(1); opacity: 0.5; }
+    50% { transform: scale(1.5); opacity: 0.2; }
+    100% { transform: scale(1); opacity: 0.5; }
+}
+</style>
+</head>
+
+<body>
+
+<div class="glow"></div>
+
+<!-- Scene 1 -->
+<div class="scene active" id="scene1">
+    <h1>Data is Broken</h1>
+    <p>
+        Access to real-world data is restricted, sensitive, and often unusable.
+        Researchers and developers are stuck.
+    </p>
+</div>
+
+<!-- Scene 2 -->
+<div class="scene" id="scene2">
+    <h1>The Problem</h1>
+    <p>
+        Privacy concerns, missing data, and limited scale prevent innovation.
+        You can't experiment freely.
+    </p>
+</div>
+
+<!-- Scene 3 -->
+<div class="scene" id="scene3">
+    <h1>Introducing DataSynthX</h1>
+    <p>
+        An AI-powered system that learns your dataset’s statistical DNA
+        and generates unlimited synthetic data.
+    </p>
+</div>
+
+<!-- Scene 4 -->
+<div class="scene" id="scene4">
+    <h1>How It Works</h1>
+    <p>
+        Upload your dataset. We model distributions, correlations,
+        and structures—then recreate them at scale.
+    </p>
+</div>
+
+<!-- Scene 5 -->
+<div class="scene" id="scene5">
+    <h1>Trust the Output</h1>
+    <p>
+        Built-in statistical validation ensures your synthetic data
+        remains faithful to reality.
+    </p>
+</div>
+
+<!-- Scene 6 -->
+<div class="scene" id="scene6">
+    <h1>Scale Without Limits</h1>
+    <p>
+        Generate millions of rows instantly—privacy-safe, production-ready,
+        and exportable.
+    </p>
+</div>
+
+<!-- Scene 7 -->
+<div class="scene" id="scene7">
+    <h1>Build Faster</h1>
+    <p>
+        Power machine learning, analytics, and research
+        without data restrictions.
+    </p>
+</div>
+
+<!-- Scene 8 -->
+<div class="scene" id="scene8">
+    <h1>DataSynthX</h1>
+    <p>
+        Generate synthetic data that mirrors reality.
+    </p>
+</div>
+
+<button onclick="startVideo()">▶ Play</button>
+
+<script>
+let scenes = document.querySelectorAll('.scene');
+let current = 0;
+let playing = false;
+
+const narration = [
+    "Data is broken. Access to real-world data is restricted, sensitive, and often unusable.",
+    "Privacy concerns and limited scale prevent innovation.",
+    "Introducing DataSynthX.",
+    "It learns your dataset’s statistical DNA and recreates it.",
+    "With built-in validation, you can trust your synthetic data.",
+    "Scale to millions of rows instantly.",
+    "Build faster without restrictions.",
+    "DataSynthX. Generate synthetic data that mirrors reality."
+];
+
+function speak(text) {
+    let speech = new SpeechSynthesisUtterance(text);
+    speech.rate = 1;
+    speech.pitch = 1;
+    speech.volume = 1;
+    speechSynthesis.speak(speech);
+}
+
+function showScene(index) {
+    scenes.forEach(s => s.classList.remove('active'));
+    scenes[index].classList.add('active');
+}
+
+function nextScene() {
+    if (!playing) return;
+
+    if (current < scenes.length) {
+        showScene(current);
+        speak(narration[current]);
+        current++;
+        setTimeout(nextScene, 4000);
     }
+}
 
-    function typeWriter(text) {
-        const box = document.getElementById('typewriter-box');
-        let i = 0;
-        box.innerHTML = "";
-        return new Promise((resolve) => {
-            function type() {
-                if (i < text.length) {
-                    box.innerHTML += text.charAt(i);
-                    i++;
-                    setTimeout(type, 30);
-                } else {
-                    resolve();
-                }
-            }
-            type();
-        });
-    }
-
-    startBtn.addEventListener('click', () => {
-        // Essential: First user gesture "unlocks" the speech engine
-        const unlock = new SpeechSynthesisUtterance("");
-        synth.speak(unlock);
-
-        startBtn.style.display = 'none';
-        runVideo();
-    });
-
-    async function runVideo() {
-        const tl = gsap.timeline();
-
-        // Start the progress bar (estimating ~35 seconds total)
-        gsap.to("#progress", { width: "100%", duration: 35, ease: "none" });
-
-        // SCENE 1: THE PROBLEM
-        tl.to("#slide1", { opacity: 1, duration: 1 });
-        await speak("You are working with panel data. It is complex, and it is messy. Standard tools are slowing you down with cryptic errors and diagnostic hurdles.");
-        
-        // SCENE 2: THE SOLUTION
-        tl.to("#slide1", { opacity: 0, duration: 0.8 });
-        tl.to("#slide2", { opacity: 1, duration: 1 });
-        await speak("Meet PanelStatX. The high-performance web suite designed to transform raw longitudinal data into publication-ready insights.");
-
-        // SCENE 3: RIGOR
-        tl.to("#slide2", { opacity: 0, duration: 0.8 });
-        tl.to("#slide3", { opacity: 1, duration: 1 });
-        await speak("Run sophisticated estimators in seconds. PanelStatX executes Hausman and Breusch-Pagan diagnostics to guide your model selection automatically.");
-
-        // SCENE 4: AI
-        tl.to("#slide3", { opacity: 0, duration: 0.8 });
-        tl.to("#slide4", { opacity: 1, duration: 1 });
-        // Run typewriter and speech simultaneously
-        typeWriter("Analysis: The coefficient for X1 suggests a significant positive impact on the dependent variable (p < 0.05). High R-Squared indicates a strong model fit.");
-        await speak("Need to explain your findings? Our integrated AI interprets your coefficients and generates professional reports straight to your desk.");
-
-        // SCENE 5: OUTRO
-        tl.to("#slide4", { opacity: 0, duration: 0.8 });
-        tl.to("#slide5", { opacity: 1, duration: 1 });
-        await speak("PanelStatX. Precision in every dimension. Start analyzing today.");
-    }
+function startVideo() {
+    if (playing) return;
+    playing = true;
+    current = 0;
+    nextScene();
+}
 </script>
-    <link href="https://fonts.googleapis.com/css2?family=Syne:wght@700;800&family=Inter:wght@300;400;600&family=DM+Mono&display=swap" rel="stylesheet">
-    <style>
-        :root {
-            --bg: #0a0a0c;
-            --accent: #00e5c8;
-            --accent2: #8a2be2;
-            --text: #ffffff;
-            --muted: #88888e;
-        }
 
-        body, html {
-            margin: 0; padding: 0;
-            width: 100%; height: 100%;
-            background: var(--bg);
-            color: var(--text);
-            font-family: 'Inter', sans-serif;
-            overflow: hidden;
+</body>
+</html>            overflow: hidden;
             display: flex;
             justify-content: center;
             align-items: center;
