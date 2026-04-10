@@ -1798,13 +1798,13 @@ if not st.session_state.access_granted:
             <div class="price-card featured fi d4">
               <span class="price-badge badge-popular">Most Popular</span>
               <div class="price-plan">Standard</div>
-              <div class="price-amount"><span class="currency">$</span>25</div>
+              <div class="price-amount">$25</div>
               <div class="price-credits">15 Analysis Credits</div>
               <div class="price-divider"></div>
               <ul class="price-features">
                 <li>15 full regression runs</li>
                 <li>All 4 estimators</li>
-                <li>AI explainer + Q&amp;A</li>
+                <li>AI explainer</li>
                 <li>DOCX report export</li>
               </ul>
             </div>
@@ -1817,13 +1817,13 @@ if not st.session_state.access_granted:
             <div class="price-card fi d5">
               <span class="price-badge badge-value">Best Value</span>
               <div class="price-plan">Pro</div>
-              <div class="price-amount"><span class="currency">$</span>45</div>
+              <div class="price-amount">$45</div>
               <div class="price-credits">30 Analysis Credits</div>
               <div class="price-divider"></div>
               <ul class="price-features">
                 <li>30 full regression runs</li>
                 <li>All 4 estimators</li>
-                <li>AI explainer + Q&amp;A</li>
+                <li>AI explainer</li>
                 <li>DOCX report export</li>
               </ul>
             </div>
