@@ -1766,60 +1766,60 @@ if not st.session_state.access_granted:
         </style>
         """, unsafe_allow_html=True)
 
-        with pc1:
-            st.markdown("""
-            <div class="price-card fi d3">
-              <div class="price-plan">Starter</div>
-              <div class="price-amount">$10</div>
-              <div class="price-credits">5 Analysis Credits</div>
-              <div class="price-divider"></div>
-              <ul class="price-features">
-                <li>5 full regression runs</li>
-                <li>All 4 estimators</li>
-                <li>AI explainer included</li>
-                <li>DOCX report export</li>
-              </ul>
-            </div>
-            """, unsafe_allow_html=True)
-            st.link_button("Get Started →", "https://flutterwave.com/pay/j5m67hrqr4iq",
+    with pc1:
+        st.markdown("""
+        <div class="price-card fi d3">
+        <div class="price-plan">Starter</div>
+            <div class="price-amount">$10</div>
+            <div class="price-credits">5 Analysis Credits</div>
+            <div class="price-divider"></div>
+            <ul class="price-features">
+              <li>5 full regression runs</li>
+              <li>All 4 estimators</li>
+              <li>AI explainer included</li>
+              <li>DOCX report export</li>
+            </ul>
+        </div>
+        """, unsafe_allow_html=True)
+        st.link_button("Get Started →", "https://flutterwave.com/pay/j5m67hrqr4iq",
                            use_container_width=True)
 
-        with pc2:
-            st.markdown("""
-            <div class="price-card featured fi d4">
-              <span class="price-badge badge-popular">Most Popular</span>
-              <div class="price-plan">Standard</div>
-              <div class="price-amount">$25</div>
-              <div class="price-credits">15 Analysis Credits</div>
-              <div class="price-divider"></div>
-              <ul class="price-features">
-                <li>15 full regression runs</li>
-                <li>All 4 estimators</li>
-                <li>AI explainer</li>
-                <li>DOCX report export</li>
-              </ul>
-            </div>
-            """, unsafe_allow_html=True)
-            st.link_button("Buy Credits →", "https://flutterwave.com/pay/txyljcuqfsel",
+    with pc2:
+        st.markdown("""
+        <div class="price-card featured fi d4">
+            <span class="price-badge badge-popular">Most Popular</span>
+            <div class="price-plan">Standard</div>
+            <div class="price-amount">$25</div>
+            <div class="price-credits">15 Analysis Credits</div>
+            <div class="price-divider"></div>
+            <ul class="price-features">
+              <li>15 full regression runs</li>
+              <li>All 4 estimators</li>
+              <li>AI explainer</li>
+              <li>DOCX report export</li>
+            </ul>
+        </div>
+        """, unsafe_allow_html=True)
+        st.link_button("Buy Credits →", "https://flutterwave.com/pay/txyljcuqfsel",
                            use_container_width=True)
 
-        with pc3:
-            st.markdown("""
-            <div class="price-card fi d5">
-              <span class="price-badge badge-value">Best Value</span>
-              <div class="price-plan">Pro</div>
-              <div class="price-amount">$45</div>
-              <div class="price-credits">30 Analysis Credits</div>
-              <div class="price-divider"></div>
-              <ul class="price-features">
-                <li>30 full regression runs</li>
-                <li>All 4 estimators</li>
-                <li>AI explainer</li>
-                <li>DOCX report export</li>
-              </ul>
-            </div>
-            """, unsafe_allow_html=True)
-            st.link_button("Buy Credits →", "https://flutterwave.com/pay/yw7k3gmyjoud",
+    with pc3:
+        st.markdown("""
+        <div class="price-card fi d5">
+            <span class="price-badge badge-value">Best Value</span>
+            <div class="price-plan">Pro</div>
+            <div class="price-amount">$45</div>
+            <div class="price-credits">30 Analysis Credits</div>
+            <div class="price-divider"></div>
+            <ul class="price-features">
+              <li>30 full regression runs</li>
+              <li>All 4 estimators</li>
+              <li>AI explainer</li>
+              <li>DOCX report export</li>
+            </ul>
+        </div>
+        """, unsafe_allow_html=True)
+        st.link_button("Buy Credits →", "https://flutterwave.com/pay/yw7k3gmyjoud",
                            use_container_width=True)
 
     # ── Access Gate ───────────────────────────────────────────────────────────
