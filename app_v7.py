@@ -1684,7 +1684,7 @@ if not st.session_state.access_granted:
             </div>
           </div>
 
-          <div class="stats-strip fi d5">
+          /*<div class="stats-strip fi d5">
             <div class="stat-block">
               <div class="stat-num">4+</div>
               <div class="stat-lbl">Estimators</div>
@@ -1701,7 +1701,7 @@ if not st.session_state.access_granted:
               <div class="stat-num">DOCX</div>
               <div class="stat-lbl">Export Format</div>
             </div>
-          </div>
+          </div> */
 
         </div>
         """, unsafe_allow_html=True)
