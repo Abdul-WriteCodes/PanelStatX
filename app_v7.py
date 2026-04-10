@@ -1600,7 +1600,7 @@ if not st.session_state.access_granted:
     <nav class="lp-nav fi d1">
         <div class="nav-brand">
             <div class="hex-icon">⬡</div>
-            Panel<span class="brand-teal">Stat</span>X
+            Panel<span class="brand-teal">StatX
         </div>
         <div class="nav-pills">
             <span class="nav-pill">Panel Regression Engine</span>
