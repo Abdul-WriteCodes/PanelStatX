@@ -1727,8 +1727,8 @@ if not st.session_state.access_granted:
             border: 1px solid rgba(255,255,255,0.12) !important;
             color: #dde4f0 !important;
             font-family: 'Syne', sans-serif !important;
-            font-weight: 700 !important; font-size: 0.75rem !important;
-            border-radius: 8px !important; padding: 10px 0 !important;
+            font-weight: 700 !important; font-size: 0.65rem !important;
+            border-radius: 6px !important; padding: 6px 0 !important;
             width: 100% !important; display: block !important;
             text-align: center !important; letter-spacing: 0.04em !important;
             transition: border-color 0.2s, color 0.2s !important;
@@ -1743,8 +1743,8 @@ if not st.session_state.access_granted:
             border: none !important;
             color: #060810 !important;
             font-family: 'Syne', sans-serif !important;
-            font-weight: 800 !important; font-size: 0.75rem !important;
-            border-radius: 8px !important; padding: 10px 0 !important;
+            font-weight: 800 !important; font-size: 0.65rem !important;
+            border-radius: 6px !important; padding: 6px 0 !important;
             width: 100% !important; display: block !important;
             text-align: center !important; letter-spacing: 0.04em !important;
             box-shadow: 0 4px 16px rgba(0,229,200,0.35) !important;
@@ -1760,8 +1760,8 @@ if not st.session_state.access_granted:
             border: 1px solid rgba(255,255,255,0.12) !important;
             color: #dde4f0 !important;
             font-family: 'Syne', sans-serif !important;
-            font-weight: 700 !important; font-size: 0.75rem !important;
-            border-radius: 8px !important; padding: 10px 0 !important;
+            font-weight: 700 !important; font-size: 0.65rem !important;
+            border-radius: 6px !important; padding: 6px 0 !important;
             width: 100% !important; display: block !important;
             text-align: center !important; letter-spacing: 0.04em !important;
             transition: border-color 0.2s, color 0.2s !important;
