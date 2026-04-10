@@ -1696,8 +1696,10 @@ if not st.session_state.access_granted:
         </div>
         """, unsafe_allow_html=True)
 
+
+
     # ── Pricing header ─────────────────────────────────────────────────────
-        st.markdown("""
+    st.markdown("""
         <div style="padding-top:60px; padding-left:4px; padding-right:4px; padding-bottom:8px;">
           <div class="section-eyebrow">Pay-As-You-Go Credits · No Subscription</div>
         </div>
