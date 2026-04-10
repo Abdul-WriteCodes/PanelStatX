@@ -2,388 +2,184 @@
 <html lang="en">
 <head>
 <meta charset="UTF-8">
-<title>DataSynthX Launch</title>
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-
+<title>PanelStatX Launch Video</title>
 <style>
-body {
-    margin: 0;
-    font-family: 'Segoe UI', sans-serif;
-    background: #0a0a0f;
-    color: white;
-    overflow: hidden;
-}
+    body {
+        margin: 0;
+        background: #0a0c10;
+        color: #e2e8f4;
+        font-family: 'Arial', sans-serif;
+        overflow: hidden;
+    }
 
-.scene {
-    position: absolute;
-    width: 100%;
-    height: 100%;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    flex-direction: column;
-    opacity: 0;
-    transition: opacity 1s ease;
-}
+    .scene {
+        position: absolute;
+        width: 100%;
+        height: 100%;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        text-align: center;
+        opacity: 0;
+        transition: opacity 1s ease;
+        padding: 40px;
+    }
 
-.active {
-    opacity: 1;
-}
+    .active {
+        opacity: 1;
+    }
 
-h1 {
-    font-size: 3rem;
-    background: linear-gradient(90deg, #7c6af7, #3ecfcf);
-    -webkit-background-clip: text;
-    -webkit-text-fill-color: transparent;
-}
+    h1 {
+        font-size: 64px;
+        margin-bottom: 20px;
+    }
 
-p {
-    max-width: 600px;
-    text-align: center;
-    color: #aaa;
-    font-size: 1.2rem;
-}
+    p {
+        font-size: 24px;
+        max-width: 900px;
+        margin: auto;
+        line-height: 1.5;
+        color: #6b7a9a;
+    }
 
-button {
-    position: fixed;
-    bottom: 20px;
-    left: 20px;
-    padding: 12px 20px;
-    border: none;
-    background: #7c6af7;
-    color: white;
-    border-radius: 8px;
-    cursor: pointer;
-}
+    .accent {
+        color: #00e5c8;
+    }
 
-.glow {
-    width: 200px;
-    height: 200px;
-    background: radial-gradient(circle, #7c6af7, transparent);
-    position: absolute;
-    animation: pulse 3s infinite;
-}
-
-@keyframes pulse {
-    0% { transform: scale(1); opacity: 0.5; }
-    50% { transform: scale(1.5); opacity: 0.2; }
-    100% { transform: scale(1); opacity: 0.5; }
-}
+    .btn {
+        position: absolute;
+        bottom: 30px;
+        left: 50%;
+        transform: translateX(-50%);
+        padding: 12px 24px;
+        border: 1px solid #00e5c8;
+        color: #00e5c8;
+        cursor: pointer;
+    }
 </style>
 </head>
 
 <body>
 
-<div class="glow"></div>
-
-<!-- Scene 1 -->
-<div class="scene active" id="scene1">
-    <h1>Data is Broken</h1>
-    <p>
-        Access to real-world data is restricted, sensitive, and often unusable.
-        Researchers and developers are stuck.
-    </p>
+<div id="scene1" class="scene active">
+    <div>
+        <h1>⬡ <span class="accent">PanelStatX</span></h1>
+        <p>The Future of Panel Data Analysis</p>
+    </div>
 </div>
 
-<!-- Scene 2 -->
-<div class="scene" id="scene2">
-    <h1>The Problem</h1>
-    <p>
-        Privacy concerns, missing data, and limited scale prevent innovation.
-        You can't experiment freely.
-    </p>
+<div id="scene2" class="scene">
+    <div>
+        <h1>The Problem</h1>
+        <p>
+            Panel data analysis is complex, time-consuming, and requires advanced statistical expertise.
+            Tools like SPSS or Stata are not intuitive, and interpreting results is even harder.
+        </p>
+    </div>
 </div>
 
-<!-- Scene 3 -->
-<div class="scene" id="scene3">
-    <h1>Introducing DataSynthX</h1>
-    <p>
-        An AI-powered system that learns your dataset’s statistical DNA
-        and generates unlimited synthetic data.
-    </p>
+<div id="scene3" class="scene">
+    <div>
+        <h1>The Solution</h1>
+        <p>
+            PanelStatX simplifies everything — from running regressions to generating
+            publish-ready insights automatically.
+        </p>
+    </div>
 </div>
 
-<!-- Scene 4 -->
-<div class="scene" id="scene4">
-    <h1>How It Works</h1>
-    <p>
-        Upload your dataset. We model distributions, correlations,
-        and structures—then recreate them at scale.
-    </p>
+<div id="scene4" class="scene">
+    <div>
+        <h1>Core Engine</h1>
+        <p>
+            Run Fixed Effects, Random Effects, First Difference models,
+            and diagnostic tests — instantly.
+        </p>
+    </div>
 </div>
 
-<!-- Scene 5 -->
-<div class="scene" id="scene5">
-    <h1>Trust the Output</h1>
-    <p>
-        Built-in statistical validation ensures your synthetic data
-        remains faithful to reality.
-    </p>
+<div id="scene5" class="scene">
+    <div>
+        <h1 class="accent">Main Feature</h1>
+        <p>
+            AI-Powered Interpretation — Automatically explains your regression results
+            in clear, academic-quality language.
+        </p>
+    </div>
 </div>
 
-<!-- Scene 6 -->
-<div class="scene" id="scene6">
-    <h1>Scale Without Limits</h1>
-    <p>
-        Generate millions of rows instantly—privacy-safe, production-ready,
-        and exportable.
-    </p>
+<div id="scene6" class="scene">
+    <div>
+        <h1>Unique Features</h1>
+        <p>
+            Built-in credit system, automated reporting, real-time computation,
+            and seamless export to publication-ready documents.
+        </p>
+    </div>
 </div>
 
-<!-- Scene 7 -->
-<div class="scene" id="scene7">
-    <h1>Build Faster</h1>
-    <p>
-        Power machine learning, analytics, and research
-        without data restrictions.
-    </p>
+<div id="scene7" class="scene">
+    <div>
+        <h1>From Data to Insight</h1>
+        <p>
+            Upload your panel dataset, run models, and get actionable insights —
+            all in one streamlined platform.
+        </p>
+    </div>
 </div>
 
-<!-- Scene 8 -->
-<div class="scene" id="scene8">
-    <h1>DataSynthX</h1>
-    <p>
-        Generate synthetic data that mirrors reality.
-    </p>
+<div id="scene8" class="scene">
+    <div>
+        <h1>⬡ <span class="accent">PanelStatX</span></h1>
+        <p>Analyze Faster. Understand Better. Publish Smarter.</p>
+    </div>
 </div>
 
-<button onclick="startVideo()">▶ Play</button>
+<div class="btn" onclick="startVideo()">▶ Play</div>
 
 <script>
-let scenes = document.querySelectorAll('.scene');
+let scenes = document.querySelectorAll(".scene");
 let current = 0;
-let playing = false;
 
 const narration = [
-    "Data is broken. Access to real-world data is restricted, sensitive, and often unusable.",
-    "Privacy concerns and limited scale prevent innovation.",
-    "Introducing DataSynthX.",
-    "It learns your dataset’s statistical DNA and recreates it.",
-    "With built-in validation, you can trust your synthetic data.",
-    "Scale to millions of rows instantly.",
-    "Build faster without restrictions.",
-    "DataSynthX. Generate synthetic data that mirrors reality."
+    "Welcome to PanelStat X, the future of panel data analysis.",
+    "Panel data analysis is complex, time consuming, and requires advanced expertise.",
+    "PanelStat X simplifies everything from regression to insights.",
+    "Run fixed effects, random effects, and advanced models instantly.",
+    "The main feature is AI powered interpretation of your results.",
+    "It includes automated reporting, credit system, and real time computation.",
+    "Upload your dataset and get insights in seconds.",
+    "PanelStat X. Analyze faster. Understand better. Publish smarter."
 ];
 
+function showScene(index) {
+    scenes.forEach(s => s.classList.remove("active"));
+    scenes[index].classList.add("active");
+}
+
 function speak(text) {
-    let speech = new SpeechSynthesisUtterance(text);
-    speech.rate = 1;
+    const speech = new SpeechSynthesisUtterance(text);
+    speech.rate = 0.95;
     speech.pitch = 1;
     speech.volume = 1;
-    speechSynthesis.speak(speech);
-}
-
-function showScene(index) {
-    scenes.forEach(s => s.classList.remove('active'));
-    scenes[index].classList.add('active');
-}
-
-function nextScene() {
-    if (!playing) return;
-
-    if (current < scenes.length) {
-        showScene(current);
-        speak(narration[current]);
-        current++;
-        setTimeout(nextScene, 4000);
-    }
+    window.speechSynthesis.speak(speech);
 }
 
 function startVideo() {
-    if (playing) return;
-    playing = true;
     current = 0;
+
+    function nextScene() {
+        if (current >= scenes.length) return;
+
+        showScene(current);
+        speak(narration[current]);
+
+        current++;
+        setTimeout(nextScene, 6000);
+    }
+
     nextScene();
 }
-</script>
-
-</body>
-</html>            overflow: hidden;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-        }
-
-        #video-container {
-            width: 100vw;
-            height: 100vh;
-            position: relative;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            text-align: center;
-        }
-
-        .slide {
-            position: absolute;
-            opacity: 0;
-            width: 80%;
-            max-width: 900px;
-        }
-
-        h1 { font-family: 'Syne', sans-serif; font-size: 4rem; margin: 0; line-height: 1; }
-        p { font-size: 1.5rem; color: var(--muted); margin-top: 20px; }
-        .highlight { color: var(--accent); }
-
-        /* UI Elements Simulation */
-        .ui-box {
-            background: #16161a;
-            border: 1px solid #333;
-            border-radius: 12px;
-            padding: 20px;
-            font-family: 'DM+Mono', monospace;
-            text-align: left;
-            margin-top: 30px;
-            box-shadow: 0 20px 50px rgba(0,0,0,0.5);
-        }
-
-        .cursor {
-            display: inline-block;
-            width: 10px; height: 20px;
-            background: var(--accent);
-            animation: blink 1s infinite;
-        }
-
-        @keyframes blink { 50% { opacity: 0; } }
-
-        #start-btn {
-            padding: 15px 40px;
-            font-family: 'Syne', sans-serif;
-            font-size: 1.2rem;
-            background: var(--accent);
-            border: none;
-            cursor: pointer;
-            border-radius: 50px;
-            transition: transform 0.2s;
-        }
-
-        #start-btn:hover { transform: scale(1.05); }
-
-        .progress-bar {
-            position: absolute; bottom: 0; left: 0;
-            height: 4px; background: var(--accent); width: 0%;
-        }
-    </style>
-</head>
-<body>
-
-<div id="video-container">
-    <button id="start-btn">PLAY LAUNCH VIDEO</button>
-
-    <div class="slide" id="slide1">
-        <h1 style="color: #f05c7c;">PANEL DATA IS <br> MESSY.</h1>
-        <div class="ui-box" style="opacity: 0.7;">
-            Error: Matrix is Singular<br>
-            > Checking Fixed Effects... <br>
-            > System Crash: Memory Exhausted
-        </div>
-        <p>Complex models shouldn't mean constant errors.</p>
-    </div>
-
-    <div class="slide" id="slide2">
-        <div style="font-size: 5rem; margin-bottom: 10px;">⬡</div>
-        <h1>PanelStatX</h1>
-        <p>Econometrics <span class="highlight">Reimagined.</span></p>
-    </div>
-
-    <div class="slide" id="slide3">
-        <h1 style="font-size: 2.5rem;">RIGOROUS DIAGNOSTICS</h1>
-        <div class="ui-box">
-            <div style="color: var(--accent);">[✓] Hausman Test Complete</div>
-            <div style="color: var(--accent2);">[✓] Breusch-Pagan Verified</div>
-            <div style="margin-top:10px; font-size: 0.8rem; color: var(--muted);">Selecting Optimal Model: FIXED EFFECTS</div>
-        </div>
-        <p>Automated logic for academic precision.</p>
-    </div>
-
-    <div class="slide" id="slide4">
-        <h1>INTELLIGENT INSIGHTS</h1>
-        <div class="ui-box" id="typewriter-box"></div>
-        <p>AI-powered reporting for your dissertation.</p>
-    </div>
-
-    <div class="slide" id="slide5">
-        <h1>START ANALYZING.</h1>
-        <p>Precision in every dimension.</p>
-        <div style="margin-top: 40px; font-family: 'DM+Mono'; color: var(--accent);">www.panelstatx.io</div>
-    </div>
-</div>
-
-<div class="progress-bar" id="progress"></div>
-
-<script>
-    const startBtn = document.getElementById('start-btn');
-    const progress = document.getElementById('progress');
-    const synth = window.speechSynthesis;
-
-    function speak(text, callback) {
-        const utter = new SpeechSynthesisUtterance(text);
-        utter.rate = 0.95;
-        utter.pitch = 1;
-        utter.onend = callback;
-        synth.speak(utter);
-    }
-
-    startBtn.addEventListener('click', () => {
-        startBtn.style.display = 'none';
-        runVideo();
-    });
-
-    function runVideo() {
-        const tl = gsap.timeline();
-
-        // SCENE 1: THE PROBLEM
-        tl.to("#slide1", { opacity: 1, duration: 1 });
-        tl.add(() => {
-            speak("You are working with panel data. It is complex, and it is messy. Standard tools are slowing you down with cryptic errors and diagnostic hurdles.", () => {});
-        });
-
-        // SCENE 2: THE SOLUTION
-        tl.to("#slide1", { opacity: 0, duration: 0.8, delay: 6 });
-        tl.to("#slide2", { opacity: 1, duration: 1 });
-        tl.add(() => {
-            speak("Meet PanelStatX. The high-performance web suite designed to transform raw longitudinal data into publication-ready insights.");
-        });
-
-        // SCENE 3: RIGOR
-        tl.to("#slide2", { opacity: 0, duration: 0.8, delay: 6 });
-        tl.to("#slide3", { opacity: 1, duration: 1 });
-        tl.add(() => {
-            speak("Run sophisticated estimators in seconds. PanelStatX executes Hausman and Breusch-Pagan diagnostics to guide your model selection automatically.");
-        });
-
-        // SCENE 4: AI
-        tl.to("#slide3", { opacity: 0, duration: 0.8, delay: 7 });
-        tl.to("#slide4", { opacity: 1, duration: 1 });
-        tl.add(() => {
-            typeWriter("Analysis: The coefficient for X1 suggests a significant positive impact on the dependent variable (p < 0.05). High R-Squared indicates a strong model fit.");
-            speak("Need to explain your findings? Our integrated AI interprets your coefficients and generates professional reports straight to your desk.");
-        });
-
-        // SCENE 5: OUTRO
-        tl.to("#slide4", { opacity: 0, duration: 0.8, delay: 8 });
-        tl.to("#slide5", { opacity: 1, duration: 1 });
-        tl.add(() => {
-            speak("PanelStatX. Precision in every dimension. Start analyzing today.");
-        });
-
-        // Progress Bar Animation
-        gsap.to("#progress", { width: "100%", duration: 35, ease: "none" });
-    }
-
-    function typeWriter(text) {
-        const box = document.getElementById('typewriter-box');
-        let i = 0;
-        box.innerHTML = "";
-        function type() {
-            if (i < text.length) {
-                box.innerHTML += text.charAt(i);
-                i++;
-                setTimeout(type, 30);
-            }
-        }
-        type();
-    }
 </script>
 
 </body>
