@@ -1085,348 +1085,418 @@ for key, default in [
         st.session_state[key] = default
 
 # ═══════════════════════════════════════════════════════════════════════════════
-# ACCESS KEY GATE  — Google Sheets credit system
-# secrets.toml must contain:
-#   GSHEET_ID = "your-spreadsheet-id"
-#   [gcp_service_account]   ← paste your service-account JSON fields here
-#   type = "service_account"
-#   project_id = "…"
-#   private_key_id = "…"
-#   private_key = "-----BEGIN RSA PRIVATE KEY-----\n…\n-----END RSA PRIVATE KEY-----\n"
-#   client_email = "…"
-#   … (remaining fields from the JSON key file)
+# ACCESS KEY GATE 
 # ═══════════════════════════════════════════════════════════════════════════════
 
 if not st.session_state.access_granted:
 
-    # ═══════════════════════════════════════════════════════════════════════════
-    # LANDING PAGE  —  single-column, centred, desktop + mobile optimised
-    # ═══════════════════════════════════════════════════════════════════════════
+    # ── LANDING PAGE CSS ──────────────────────────────────────────────────────
     st.markdown("""
     <style>
-    @import url('https://fonts.googleapis.com/css2?family=Space+Mono:wght@400;700&family=Syne:wght@600;700;800;900&display=swap');
+    @import url('https://fonts.googleapis.com/css2?family=DM+Mono:ital,wght@0,300;0,400;0,500&family=Bricolage+Grotesque:opsz,wght@12..96,300;12..96,400;12..96,500;12..96,600;12..96,700;12..96,800&display=swap');
 
-    /* ── Hard reset ── */
-    [data-testid="stSidebar"],
-    [data-testid="stSidebarCollapsedControl"] { display: none !important; }
-    [data-testid="stAppViewContainer"]  { padding: 0 !important; background: #07090f !important; }
-    [data-testid="block-container"]     { padding: 0 !important; max-width: 100% !important; }
-    section.main > div                  { padding: 0 !important; }
-    html, body                          { background: #07090f !important; }
-    footer, #MainMenu,
-    [data-testid="stToolbar"]           { display: none !important; }
+    /* ── Global reset for landing ── */
+    [data-testid="stSidebar"]                 { display: none !important; }
+    [data-testid="stSidebarCollapsedControl"]  { display: none !important; }
+    [data-testid="stAppViewContainer"]         { padding: 0 !important; background: #05070f !important; }
+    [data-testid="block-container"]            { padding: 0 !important; max-width: 100% !important; }
+    section.main > div                         { padding: 0 !important; }
+    html, body                                 { background: #05070f !important; }
+    footer, #MainMenu, [data-testid="stToolbar"] { display: none !important; }
 
     /* ── Design tokens ── */
     :root {
-        --bg:      #07090f;
-        --surf:    #0e1117;
-        --surf2:   #141720;
-        --border:  rgba(255,255,255,0.07);
-        --teal:    #00e5c8;
-        --purple:  #7c6df0;
-        --pink:    #f05c7c;
-        --amber:   #f5a623;
-        --text:    #dde4f0;
-        --muted:   #56607a;
-        --mono:    'Space Mono', monospace;
-        --head:    'Syne', sans-serif;
+        --bg:       #05070f;
+        --s1:       #0b0e1a;
+        --s2:       #10141f;
+        --s3:       #161b28;
+        --border:   rgba(255,255,255,0.06);
+        --border2:  rgba(255,255,255,0.11);
+        --teal:     #00e5c8;
+        --teal-dim: rgba(0,229,200,0.12);
+        --purple:   #7c6df0;
+        --pink:     #f05c7c;
+        --amber:    #f5a623;
+        --text:     #e4eaf8;
+        --text2:    #9aa3be;
+        --muted:    #4e576e;
+        --mono:     'DM Mono', monospace;
+        --display:  'Bricolage Grotesque', sans-serif;
     }
 
-    /* ── Subtle ambient background ── */
-    .lp-canvas {
-        position: fixed; inset: 0; z-index: 0; pointer-events: none;
-        background:
-            radial-gradient(ellipse 70% 50% at 15% 10%, rgba(0,229,200,0.055) 0%, transparent 65%),
-            radial-gradient(ellipse 55% 65% at 85% 90%, rgba(124,109,240,0.065) 0%, transparent 65%),
-            #07090f;
+    /* ── Fixed ambient background ── */
+    .lp-bg {
+        position: fixed; inset: 0; z-index: 0;
+        background: var(--bg);
     }
+    .lp-bg::before {
+        content: '';
+        position: absolute; inset: -60%;
+        background:
+            radial-gradient(ellipse 70% 55% at 50% -10%, rgba(0,229,200,0.055) 0%, transparent 65%),
+            radial-gradient(ellipse 55% 70% at 100% 60%, rgba(124,109,240,0.04) 0%, transparent 60%),
+            radial-gradient(ellipse 45% 45% at 0% 80%, rgba(0,229,200,0.025) 0%, transparent 55%);
+        animation: bgDrift 28s ease-in-out infinite alternate;
+    }
+    @keyframes bgDrift {
+        0%   { transform: scale(1) rotate(0deg); }
+        100% { transform: scale(1.06) rotate(1.5deg); }
+    }
+    /* Subtle grid */
     .lp-grid {
         position: fixed; inset: 0; z-index: 0; pointer-events: none;
         background-image:
             linear-gradient(rgba(0,229,200,0.018) 1px, transparent 1px),
             linear-gradient(90deg, rgba(0,229,200,0.018) 1px, transparent 1px);
-        background-size: 56px 56px;
-        mask-image: radial-gradient(ellipse 80% 70% at 50% 40%, black 30%, transparent 100%);
+        background-size: 72px 72px;
+        mask-image: radial-gradient(ellipse 80% 80% at 50% 40%, black 20%, transparent 80%);
     }
 
-    /* ── Nav bar ── */
+    /* ── All content sits above bg ── */
+    .lp-wrap { position: relative; z-index: 10; }
+
+    /* ── Animated pulse dot ── */
+    @keyframes pulse { 0%,100%{opacity:1;transform:scale(1)} 50%{opacity:0.3;transform:scale(0.85)} }
+    .dot-live {
+        display: inline-block; width: 6px; height: 6px;
+        border-radius: 50%; background: var(--teal);
+        animation: pulse 2s ease-in-out infinite;
+        vertical-align: middle; margin-right: 7px;
+    }
+    @keyframes fi { to { opacity: 1; transform: translateY(0); } }
+    .fi { opacity: 0; transform: translateY(18px); animation: fi 0.6s cubic-bezier(0.22,1,0.36,1) forwards; }
+    .d1{animation-delay:.06s} .d2{animation-delay:.14s} .d3{animation-delay:.22s}
+    .d4{animation-delay:.30s} .d5{animation-delay:.38s} .d6{animation-delay:.46s} .d7{animation-delay:.54s}
+
+    /* ── Nav ── */
     .lp-nav {
-        position: relative; z-index: 20;
         display: flex; align-items: center; justify-content: space-between;
-        padding: 18px 48px;
+        padding: 18px clamp(20px, 5vw, 60px);
         border-bottom: 1px solid var(--border);
-        background: rgba(7,9,15,0.85);
-        backdrop-filter: blur(16px);
+        background: rgba(5,7,15,0.85);
+        backdrop-filter: blur(24px);
+        position: sticky; top: 0; z-index: 100;
+    }
+    .nav-brand {
+        display: flex; align-items: center; gap: 10px;
+        font-family: var(--display); font-weight: 800; font-size: 1.15rem;
+        color: var(--text); letter-spacing: -0.03em;
     }
     .nav-logo {
-        display: flex; align-items: center; gap: 10px;
-        font-family: var(--head); font-weight: 900; font-size: 1.15rem;
-        color: var(--text); letter-spacing: -0.025em;
-    }
-    .logo-hex {
-        width: 28px; height: 28px; border-radius: 6px;
-        background: linear-gradient(135deg, var(--teal) 0%, var(--purple) 100%);
+        width: 32px; height: 32px; border-radius: 8px;
+        background: linear-gradient(135deg, rgba(0,229,200,0.2), rgba(124,109,240,0.2));
+        border: 1px solid rgba(0,229,200,0.3);
         display: flex; align-items: center; justify-content: center;
-        font-size: 0.8rem; color: var(--bg); font-weight: 700; flex-shrink: 0;
+        font-size: 1rem; flex-shrink: 0;
     }
-    .logo-teal { color: var(--teal); }
-    .nav-right { display: flex; align-items: center; gap: 10px; }
-    .nav-chip {
+    .brand-accent { color: var(--teal); }
+    .nav-right {
+        display: flex; align-items: center; gap: 10px;
+    }
+    .nav-tag {
         font-family: var(--mono); font-size: 0.58rem;
         letter-spacing: 0.1em; text-transform: uppercase;
-        padding: 4px 11px; border-radius: 100px;
+        padding: 5px 13px; border-radius: 100px;
         border: 1px solid var(--border); color: var(--muted);
     }
-    .nav-live {
+    .nav-tag-live {
         border-color: rgba(0,229,200,0.28); color: var(--teal);
-        background: rgba(0,229,200,0.05);
+        background: rgba(0,229,200,0.06);
     }
-    .nav-live::before {
-        content: ''; display: inline-block;
-        width: 5px; height: 5px; border-radius: 50%;
-        background: var(--teal); margin-right: 6px;
-        box-shadow: 0 0 6px var(--teal);
-        animation: lp-blink 1.6s ease-in-out infinite;
-        vertical-align: middle;
-    }
-    @keyframes lp-blink { 0%,100%{opacity:1} 50%{opacity:0.15} }
+    @media (max-width: 600px) { .nav-right { display: none; } }
 
     /* ── Ticker ── */
     .lp-ticker {
-        position: relative; z-index: 10;
-        background: rgba(14,17,23,0.95);
         border-bottom: 1px solid var(--border);
-        overflow: hidden; padding: 9px 0; white-space: nowrap;
+        background: var(--s1);
+        overflow: hidden; padding: 9px 0;
+        white-space: nowrap; position: relative;
     }
+    .lp-ticker::before, .lp-ticker::after {
+        content: ''; position: absolute; top: 0; bottom: 0; width: 80px; z-index: 2;
+    }
+    .lp-ticker::before { left:0; background: linear-gradient(90deg, var(--s1), transparent); }
+    .lp-ticker::after  { right:0; background: linear-gradient(-90deg, var(--s1), transparent); }
     .ticker-track {
         display: inline-flex;
-        animation: lp-ticker 32s linear infinite;
+        animation: tickerScroll 36s linear infinite;
     }
-    @keyframes lp-ticker { from{transform:translateX(0)} to{transform:translateX(-50%)} }
-    .tk {
+    @keyframes tickerScroll { 0%{transform:translateX(0)} 100%{transform:translateX(-50%)} }
+    .t-item {
         font-family: var(--mono); font-size: 0.58rem;
-        color: var(--muted); letter-spacing: 0.1em;
-        padding: 0 32px; display: inline-flex; align-items: center; gap: 8px;
+        color: var(--muted); letter-spacing: 0.12em;
+        padding: 0 32px; display: inline-flex; align-items: center; gap: 7px;
     }
-    .tk-dot { color: var(--teal); font-size: 0.4rem; }
+    .t-dot { color: var(--teal); font-size: 0.45rem; }
 
-    /* ── Page wrapper — single centred column ── */
-    .lp-wrap {
-        position: relative; z-index: 10;
-        max-width: 720px;
+    /* ══════════════════════════════════════════
+       HERO — single column, centre-aligned
+    ══════════════════════════════════════════ */
+    .lp-hero {
+        max-width: 780px;
         margin: 0 auto;
-        padding: 56px 24px 0;
+        padding: clamp(52px,8vw,96px) clamp(20px,5vw,48px) clamp(40px,6vw,72px);
+        text-align: center;
+        display: flex; flex-direction: column; align-items: center;
     }
-
-    /* ── Hero ── */
     .hero-eyebrow {
         display: inline-flex; align-items: center; gap: 8px;
-        font-family: var(--mono); font-size: 0.58rem;
-        letter-spacing: 0.18em; text-transform: uppercase; color: var(--teal);
-        padding: 5px 13px; border-radius: 100px;
+        font-family: var(--mono); font-size: 0.6rem;
+        letter-spacing: 0.2em; text-transform: uppercase; color: var(--teal);
+        padding: 6px 16px; border-radius: 100px;
         border: 1px solid rgba(0,229,200,0.22);
         background: rgba(0,229,200,0.05);
-        margin-bottom: 24px;
-    }
-    .eyebrow-dot {
-        width: 5px; height: 5px; border-radius: 50%;
-        background: var(--teal); box-shadow: 0 0 7px var(--teal);
-        animation: lp-blink 2s ease-in-out infinite;
-    }
-    .hero-h1 {
-        font-family: var(--head); font-weight: 900;
-        font-size: clamp(2.6rem, 5.5vw, 4rem);
-        line-height: 1.0; letter-spacing: -0.035em;
-        color: var(--text); margin: 0 0 20px 0;
-    }
-    .hero-h1 .ht { color: var(--teal); }
-    .hero-h1 .hp { color: var(--purple); }
-    .hero-sub {
-        font-family: var(--mono); font-size: 0.78rem;
-        color: #707a96; line-height: 1.9;
-        margin-bottom: 36px;
-    }
-    .hero-sub strong { color: #a8b2cc; }
-
-    /* ── Feature row: 4 compact inline chips ── */
-    .feat-row {
-        display: flex; flex-wrap: wrap; gap: 8px;
         margin-bottom: 32px;
     }
-    .feat-chip {
-        display: inline-flex; align-items: center; gap: 7px;
-        background: var(--surf2); border: 1px solid var(--border);
-        border-radius: 8px; padding: 8px 14px;
-        font-family: var(--mono); font-size: 0.63rem; color: #8090ae;
-        line-height: 1;
+    .hero-h1 {
+        font-family: var(--display); font-weight: 800;
+        font-size: clamp(2.6rem, 6.5vw, 5rem);
+        line-height: 1.04; letter-spacing: -0.035em;
+        color: var(--text); margin: 0 0 24px 0;
     }
-    .feat-chip .fc-icon {
-        font-size: 0.7rem; width: 20px; height: 20px;
-        display: flex; align-items: center; justify-content: center;
-        border-radius: 4px;
+    .hero-h1 em { font-style: normal; color: var(--teal); }
+    .hero-h1 .h1-muted {
+        display: block; font-size: clamp(1.5rem,3.5vw,2.6rem);
+        color: var(--muted); font-weight: 600;
+        letter-spacing: -0.02em; margin-top: 8px;
     }
-    .fci-t { color: var(--teal); }
-    .fci-p { color: var(--purple); }
-    .fci-k { color: var(--pink); }
-    .fci-a { color: var(--amber); }
-    .feat-chip strong { color: #c0ccdf; }
+    .hero-sub {
+        font-family: var(--mono); font-size: clamp(0.78rem,1.5vw,0.9rem);
+        color: var(--text2); line-height: 1.9;
+        max-width: 580px; margin: 0 0 48px 0;
+    }
+    .hero-sub strong { color: var(--text); }
 
-    /* ── Stats strip ── */
-    .stats-row {
-        display: grid; grid-template-columns: repeat(4, 1fr);
-        gap: 0; border: 1px solid var(--border);
-        border-radius: 10px; overflow: hidden;
-        margin-bottom: 44px;
+    /* ── Hero feature pills ── */
+    .hero-pills {
+        display: flex; flex-wrap: wrap; justify-content: center; gap: 10px;
+        margin-bottom: 48px;
     }
-    .stat-cell {
-        padding: 14px 0; text-align: center;
-        background: var(--surf2);
+    .h-pill {
+        display: inline-flex; align-items: center; gap: 8px;
+        font-family: var(--mono); font-size: 0.62rem;
+        letter-spacing: 0.06em; text-transform: uppercase;
+        padding: 8px 16px; border-radius: 10px;
+        border: 1px solid var(--border2);
+        background: var(--s2); color: var(--text2);
+        transition: border-color 0.2s, color 0.2s;
+    }
+    .h-pill:hover { border-color: rgba(0,229,200,0.3); color: var(--teal); }
+    .h-pill-icon { font-size: 0.8rem; }
+
+    /* ── Stats bar ── */
+    .hero-stats {
+        display: flex; justify-content: center; flex-wrap: wrap;
+        gap: 0; border: 1px solid var(--border);
+        border-radius: 14px; overflow: hidden;
+        width: 100%; max-width: 560px;
+        background: var(--s2);
+    }
+    .hs-block {
+        flex: 1; min-width: 120px;
+        padding: 18px 16px; text-align: center;
         border-right: 1px solid var(--border);
     }
-    .stat-cell:last-child { border-right: none; }
-    .stat-val {
-        font-family: var(--head); font-weight: 800; font-size: 1.1rem;
-        color: var(--teal); line-height: 1;
+    .hs-block:last-child { border-right: none; }
+    .hs-num {
+        font-family: var(--display); font-weight: 800;
+        font-size: 1.5rem; color: var(--teal); line-height: 1;
     }
-    .stat-lbl {
-        font-family: var(--mono); font-size: 0.52rem;
-        color: var(--muted); text-transform: uppercase;
-        letter-spacing: 0.1em; margin-top: 5px;
-    }
-
-    /* ── Divider with label ── */
-    .section-divider {
-        display: flex; align-items: center; gap: 14px;
-        font-family: var(--mono); font-size: 0.55rem;
-        letter-spacing: 0.18em; text-transform: uppercase; color: var(--muted);
-        margin-bottom: 20px;
-    }
-    .section-divider::before, .section-divider::after {
-        content: ''; flex: 1; height: 1px; background: var(--border);
+    .hs-label {
+        font-family: var(--mono); font-size: 0.54rem;
+        color: var(--muted); text-transform: uppercase; letter-spacing: 0.14em;
+        margin-top: 6px;
     }
 
-    /* ── Pricing cards — horizontal compact row ── */
-    .pricing-row {
+    /* ══════════════════════════════════════════
+       PRICING — single column, centre-aligned
+    ══════════════════════════════════════════ */
+    .lp-pricing {
+        max-width: 860px; margin: 0 auto;
+        padding: clamp(32px,5vw,64px) clamp(20px,5vw,48px);
+    }
+    .section-head {
+        text-align: center; margin-bottom: 40px;
+    }
+    .section-label {
+        font-family: var(--mono); font-size: 0.58rem;
+        letter-spacing: 0.22em; text-transform: uppercase; color: var(--muted);
+        margin-bottom: 12px; display: block;
+    }
+    .section-title {
+        font-family: var(--display); font-weight: 700;
+        font-size: clamp(1.5rem,3vw,2rem); color: var(--text);
+        letter-spacing: -0.025em; margin: 0;
+    }
+    .section-title em { font-style: normal; color: var(--teal); }
+
+    /* Pricing grid — 3 cols on desktop, stacks on mobile */
+    .pricing-grid {
         display: grid;
         grid-template-columns: repeat(3, 1fr);
-        gap: 12px;
-        margin-bottom: 40px;
+        gap: 16px;
     }
-    .pc {
-        background: var(--surf2);
-        border: 1px solid var(--border);
-        border-radius: 12px;
-        padding: 20px 18px 16px;
-        position: relative; overflow: hidden;
-        transition: border-color 0.22s, box-shadow 0.22s;
+    @media (max-width: 720px) { .pricing-grid { grid-template-columns: 1fr; max-width: 380px; margin: 0 auto; } }
+
+    .price-card {
+        position: relative;
+        background: var(--s2); border: 1px solid var(--border);
+        border-radius: 18px; padding: 28px 24px 22px;
+        transition: transform 0.25s, border-color 0.25s;
+        overflow: hidden;
     }
-    .pc::after {
-        content: ''; position: absolute;
-        top: 0; left: 0; right: 0; height: 2px;
-        background: linear-gradient(90deg, var(--teal), var(--purple));
-        opacity: 0; transition: opacity 0.22s;
+    .price-card:hover { transform: translateY(-5px); border-color: var(--border2); }
+    .price-card.featured {
+        border-color: rgba(0,229,200,0.28);
+        background: linear-gradient(155deg, rgba(0,229,200,0.035) 0%, rgba(124,109,240,0.04) 100%);
     }
-    .pc:hover { border-color: rgba(0,229,200,0.3); box-shadow: 0 8px 28px rgba(0,0,0,0.45); }
-    .pc:hover::after { opacity: 1; }
-    .pc.hot {
-        border-color: rgba(0,229,200,0.25);
-        background: linear-gradient(160deg, rgba(0,229,200,0.04) 0%, rgba(124,109,240,0.04) 100%);
-        box-shadow: 0 4px 20px rgba(0,0,0,0.35);
+    .price-card::after {
+        content: ''; position: absolute; top: 0; left: 0; right: 0; height: 2px;
+        opacity: 0; transition: opacity 0.3s;
+        background: linear-gradient(90deg, transparent, var(--teal) 50%, transparent);
     }
-    .pc.hot::after { opacity: 0.7; }
-    .pc-badge {
-        position: absolute; top: 12px; right: 12px;
-        font-family: var(--mono); font-size: 0.5rem;
-        letter-spacing: 0.1em; text-transform: uppercase;
-        padding: 3px 8px; border-radius: 100px;
+    .price-card.featured::after { opacity: 1; }
+    .price-card:hover::after { opacity: 1; }
+
+    .price-badge {
+        position: absolute; top: 14px; right: 14px;
+        font-family: var(--mono); font-size: 0.5rem; letter-spacing: 0.12em;
+        text-transform: uppercase; padding: 3px 9px; border-radius: 100px;
     }
-    .badge-pop { background: rgba(0,229,200,0.1); color: var(--teal); border: 1px solid rgba(0,229,200,0.25); }
-    .badge-val { background: rgba(124,109,240,0.1); color: var(--purple); border: 1px solid rgba(124,109,240,0.25); }
-    .pc-plan {
-        font-family: var(--mono); font-size: 0.55rem;
-        letter-spacing: 0.16em; text-transform: uppercase;
-        color: var(--muted); margin-bottom: 8px;
-    }
-    .pc-price {
-        font-family: var(--head); font-weight: 900;
-        font-size: 2rem; color: var(--text);
-        line-height: 1; letter-spacing: -0.03em; margin-bottom: 2px;
-    }
-    .pc-price .cur { font-size: 0.9rem; color: var(--muted); vertical-align: super; font-weight: 700; margin-right: 1px; }
-    .pc-credits {
-        font-family: var(--mono); font-size: 0.62rem;
-        color: var(--teal); margin-bottom: 14px;
-    }
-    .pc-hr { height: 1px; background: var(--border); margin-bottom: 12px; }
-    .pc-feats {
-        list-style: none; padding: 0; margin: 0 0 16px 0;
-    }
-    .pc-feats li {
+    .badge-pop { background: rgba(0,229,200,0.1); color: var(--teal); border: 1px solid rgba(0,229,200,0.28); }
+    .badge-val { background: rgba(124,109,240,0.1); color: var(--purple); border: 1px solid rgba(124,109,240,0.28); }
+
+    .price-plan {
         font-family: var(--mono); font-size: 0.6rem;
-        color: #5a6880; padding: 4px 0;
-        display: flex; align-items: flex-start; gap: 7px;
+        letter-spacing: 0.18em; text-transform: uppercase;
+        color: var(--muted); margin-bottom: 14px;
+    }
+    .price-amount {
+        font-family: var(--display); font-weight: 800; font-size: 2.6rem;
+        color: var(--text); line-height: 1; letter-spacing: -0.03em;
+    }
+    .price-curr { font-size: 1.1rem; color: var(--muted); vertical-align: top; margin-top: 8px; display: inline-block; }
+    .price-credits { font-family: var(--mono); font-size: 0.7rem; color: var(--teal); margin: 6px 0 18px; }
+    .price-divider { height: 1px; background: var(--border); margin-bottom: 16px; }
+    .price-features { list-style: none; padding: 0; margin: 0 0 22px; }
+    .price-features li {
+        font-family: var(--mono); font-size: 0.64rem; color: var(--text2);
+        padding: 6px 0; display: flex; align-items: flex-start; gap: 9px;
         border-bottom: 1px solid rgba(255,255,255,0.03);
     }
-    .pc-feats li:last-child { border-bottom: none; }
-    .pc-feats li::before { content: '✓'; color: var(--teal); font-size: 0.55rem; flex-shrink:0; margin-top:1px; }
+    .price-features li:last-child { border-bottom: none; }
+    .pf-check { color: var(--teal); flex-shrink: 0; margin-top: 1px; }
 
-    /* ── Access gate card ── */
+    /* ── Streamlit link-button overrides for pricing ── */
+    div[data-testid="column"]:nth-child(1) .stLinkButton a,
+    div[data-testid="column"]:nth-child(3) .stLinkButton a {
+        background: transparent !important;
+        border: 1px solid var(--border2) !important;
+        color: var(--text) !important;
+        font-family: var(--display) !important;
+        font-weight: 700 !important; font-size: 0.72rem !important;
+        border-radius: 10px !important; padding: 11px 0 !important;
+        width: 100% !important; display: block !important;
+        text-align: center !important; letter-spacing: 0.03em !important;
+        transition: border-color 0.2s, color 0.2s !important;
+    }
+    div[data-testid="column"]:nth-child(1) .stLinkButton a:hover,
+    div[data-testid="column"]:nth-child(3) .stLinkButton a:hover {
+        border-color: rgba(0,229,200,0.4) !important; color: var(--teal) !important;
+    }
+    div[data-testid="column"]:nth-child(2) .stLinkButton a {
+        background: linear-gradient(135deg, #00e5c8, #00c4ab) !important;
+        border: none !important; color: #050b10 !important;
+        font-family: var(--display) !important;
+        font-weight: 800 !important; font-size: 0.72rem !important;
+        border-radius: 10px !important; padding: 11px 0 !important;
+        width: 100% !important; display: block !important;
+        text-align: center !important; letter-spacing: 0.03em !important;
+        box-shadow: 0 4px 20px rgba(0,229,200,0.32) !important;
+        transition: box-shadow 0.2s, transform 0.2s !important;
+    }
+    div[data-testid="column"]:nth-child(2) .stLinkButton a:hover {
+        box-shadow: 0 7px 28px rgba(0,229,200,0.52) !important;
+        transform: translateY(-2px) !important;
+    }
+    .stLinkButton { margin: 0 !important; }
+
+    /* ══════════════════════════════════════════
+       ACCESS GATE — single column, centre-aligned
+    ══════════════════════════════════════════ */
+    .lp-gate {
+        max-width: 540px; margin: 0 auto;
+        padding: clamp(16px,4vw,40px) clamp(20px,5vw,48px) clamp(48px,7vw,80px);
+    }
     .gate-card {
-        background: var(--surf2);
-        border: 1px solid var(--border);
-        border-radius: 14px;
-        padding: 28px 32px;
-        margin-bottom: 40px;
+        background: var(--s2);
+        border: 1px solid var(--border2);
+        border-radius: 20px;
+        padding: clamp(28px,5vw,44px) clamp(24px,5vw,44px);
         position: relative; overflow: hidden;
+        text-align: center;
     }
     .gate-card::before {
-        content: '';
-        position: absolute; top: 0; left: 0; right: 0; height: 1px;
-        background: linear-gradient(90deg, transparent, rgba(0,229,200,0.5) 30%, rgba(124,109,240,0.5) 70%, transparent);
+        content: ''; position: absolute; top: 0; left: 0; right: 0; height: 1px;
+        background: linear-gradient(90deg, transparent, var(--teal) 35%, var(--purple) 65%, transparent);
+        opacity: 0.7;
+    }
+    .gate-lock {
+        width: 52px; height: 52px; border-radius: 14px;
+        background: linear-gradient(135deg, rgba(0,229,200,0.12), rgba(124,109,240,0.12));
+        border: 1px solid rgba(0,229,200,0.2);
+        display: flex; align-items: center; justify-content: center;
+        font-size: 1.4rem; margin: 0 auto 20px;
     }
     .gate-title {
-        font-family: var(--head); font-weight: 800; font-size: 1.05rem;
-        color: var(--text); letter-spacing: -0.02em; margin-bottom: 6px;
+        font-family: var(--display); font-weight: 800; font-size: 1.5rem;
+        color: var(--text); letter-spacing: -0.025em; margin-bottom: 10px;
     }
     .gate-desc {
-        font-family: var(--mono); font-size: 0.65rem;
-        color: var(--muted); line-height: 1.85; margin-bottom: 20px;
+        font-family: var(--mono); font-size: 0.7rem;
+        color: var(--text2); line-height: 1.85; margin-bottom: 28px;
     }
-    .gate-desc strong { color: #909ab8; }
-    .gate-hint {
-        display: inline-flex; align-items: center; gap: 7px;
-        font-family: var(--mono); font-size: 0.58rem; color: var(--muted);
-        background: rgba(255,255,255,0.03); border: 1px solid var(--border);
-        border-radius: 6px; padding: 6px 12px; margin-bottom: 18px;
+    .gate-desc strong { color: var(--text); }
+    .key-format {
+        display: inline-flex; align-items: center; gap: 8px;
+        font-family: var(--mono); font-size: 0.6rem; color: var(--muted);
+        background: rgba(255,255,255,0.03);
+        border: 1px solid var(--border); border-radius: 8px;
+        padding: 7px 16px; margin-bottom: 28px;
     }
-    .gate-hint .hi { color: var(--teal); }
-    .err-bar {
-        margin-top: 10px; padding: 9px 14px;
-        background: rgba(240,92,124,0.07);
-        border: 1px solid rgba(240,92,124,0.22);
-        border-radius: 7px; display: flex; align-items: center; gap: 8px;
-        font-family: var(--mono); font-size: 0.63rem; color: var(--pink);
+    .kf-icon { color: var(--teal); }
+    /* Input + button zone */
+    .gate-form { text-align: left; }
+    .gate-input-label {
+        font-family: var(--mono); font-size: 0.58rem;
+        text-transform: uppercase; letter-spacing: 0.16em;
+        color: var(--muted); margin-bottom: 8px; display: block;
     }
     .gate-links {
-        margin-top: 14px; text-align: center;
-        font-family: var(--mono); font-size: 0.58rem; color: var(--muted);
-        line-height: 2.2;
+        margin-top: 20px; text-align: center;
+        font-family: var(--mono); font-size: 0.6rem;
+        color: var(--muted); line-height: 2.4;
+        display: flex; flex-wrap: wrap; justify-content: center; align-items: center; gap: 4px 2px;
     }
     .gate-links a { color: var(--teal); text-decoration: none; }
-    .gate-links a:hover { text-decoration: underline; }
-    .gate-links .sep { color: rgba(255,255,255,0.1); margin: 0 8px; }
+    .gate-links a:hover { text-decoration: underline; text-underline-offset: 2px; }
+    .gate-sep { color: var(--border2); margin: 0 6px; }
+    .err-msg {
+        margin-top: 12px; padding: 10px 14px;
+        background: rgba(240,92,124,0.06);
+        border: 1px solid rgba(240,92,124,0.22); border-radius: 10px;
+        font-family: var(--mono); font-size: 0.65rem; color: var(--pink);
+        display: flex; align-items: center; gap: 9px; text-align: left;
+    }
 
-    /* ── Streamlit widget overrides ── */
+    /* ── Streamlit input overrides (gate) ── */
     [data-testid="stTextInput"] > label { display: none !important; }
     [data-testid="stTextInput"] > div > div > input {
-        background: rgba(255,255,255,0.04) !important;
-        border: 1px solid rgba(255,255,255,0.1) !important;
-        border-radius: 8px !important;
-        color: var(--text) !important;
-        font-family: var(--mono) !important;
-        font-size: 0.78rem !important;
-        padding: 12px 16px !important;
-        letter-spacing: 0.06em !important;
+        background: rgba(255,255,255,0.035) !important;
+        border: 1px solid rgba(255,255,255,0.09) !important;
+        border-radius: 11px !important; color: var(--text) !important;
+        font-family: var(--mono) !important; font-size: 0.82rem !important;
+        padding: 14px 18px !important; letter-spacing: 0.1em !important;
         transition: border-color 0.2s, box-shadow 0.2s !important;
     }
     [data-testid="stTextInput"] > div > div > input:focus {
@@ -1434,251 +1504,237 @@ if not st.session_state.access_granted:
         box-shadow: 0 0 0 3px rgba(0,229,200,0.07) !important;
         outline: none !important;
     }
-    [data-testid="stTextInput"] > div > div > input::placeholder { color: #2e364d !important; }
-
+    [data-testid="stTextInput"] > div > div > input::placeholder { color: #2e3650 !important; }
     [data-testid="baseButton-primary"] {
-        background: linear-gradient(135deg, #00e5c8, #00bfad) !important;
-        border: none !important; color: #07090f !important;
-        font-family: var(--head) !important; font-weight: 800 !important;
-        font-size: 0.82rem !important; letter-spacing: 0.06em !important;
-        border-radius: 8px !important; padding: 13px !important;
-        box-shadow: 0 4px 18px rgba(0,229,200,0.3) !important;
-        transition: box-shadow 0.2s, transform 0.15s !important;
+        background: linear-gradient(135deg, #00e5c8 0%, #00bfab 100%) !important;
+        border: none !important; color: #04090f !important;
+        font-family: var(--display) !important; font-weight: 800 !important;
+        font-size: 0.85rem !important; letter-spacing: 0.04em !important;
+        border-radius: 11px !important; padding: 14px !important;
+        box-shadow: 0 4px 22px rgba(0,229,200,0.28) !important;
+        transition: box-shadow 0.2s, transform 0.2s !important;
     }
     [data-testid="baseButton-primary"]:hover {
-        box-shadow: 0 6px 28px rgba(0,229,200,0.5) !important;
-        transform: translateY(-1px) !important;
+        box-shadow: 0 8px 32px rgba(0,229,200,0.48) !important;
+        transform: translateY(-2px) !important;
     }
-
-    /* link buttons inside pricing columns */
-    .stLinkButton a {
-        display: block !important; width: 100% !important;
-        padding: 9px 0 !important; text-align: center !important;
-        border-radius: 7px !important;
-        font-family: var(--head) !important; font-weight: 700 !important;
-        font-size: 0.72rem !important; letter-spacing: 0.04em !important;
-        transition: all 0.2s !important;
-    }
-    .lp-btn-primary .stLinkButton a {
-        background: linear-gradient(135deg, var(--teal), #00bfad) !important;
-        color: #07090f !important; border: none !important;
-        box-shadow: 0 3px 14px rgba(0,229,200,0.32) !important;
-    }
-    .lp-btn-primary .stLinkButton a:hover {
-        box-shadow: 0 5px 22px rgba(0,229,200,0.52) !important;
-        transform: translateY(-1px) !important;
-    }
-    .lp-btn-ghost .stLinkButton a {
-        background: transparent !important;
-        border: 1px solid rgba(255,255,255,0.1) !important;
-        color: #8898b8 !important;
-    }
-    .lp-btn-ghost .stLinkButton a:hover {
-        border-color: rgba(0,229,200,0.35) !important;
-        color: var(--teal) !important;
-    }
-    .stLinkButton { margin: 0 !important; }
 
     /* ── Footer ── */
     .lp-footer {
-        position: relative; z-index: 10;
-        text-align: center; padding: 20px 24px 28px;
         border-top: 1px solid var(--border);
+        padding: 20px clamp(20px,5vw,60px);
+        display: flex; flex-wrap: wrap; justify-content: space-between; align-items: center;
+        gap: 10px;
+        background: rgba(5,7,15,0.92);
     }
-    .lp-footer-brand {
-        font-family: var(--head); font-weight: 900; font-size: 0.9rem;
+    .footer-brand {
+        font-family: var(--display); font-size: 0.88rem; font-weight: 800;
         color: var(--muted); letter-spacing: -0.02em;
     }
-    .lp-footer-brand .ft { color: var(--teal); }
-    .lp-footer-copy {
-        font-family: var(--mono); font-size: 0.52rem;
-        color: #2a3050; letter-spacing: 0.08em; text-transform: uppercase;
-        margin-top: 4px;
+    .footer-brand .ft { color: var(--teal); }
+    .footer-copy {
+        font-family: var(--mono); font-size: 0.54rem;
+        color: var(--muted); letter-spacing: 0.08em; text-transform: uppercase;
+        opacity: 0.5;
     }
-
-    /* ── Fade-in stagger ── */
-    .lp-fi { opacity: 0; transform: translateY(14px); animation: lp-fi 0.5s ease forwards; }
-    .lp-fi.a1{animation-delay:0.05s} .lp-fi.a2{animation-delay:0.15s}
-    .lp-fi.a3{animation-delay:0.25s} .lp-fi.a4{animation-delay:0.35s}
-    .lp-fi.a5{animation-delay:0.45s} .lp-fi.a6{animation-delay:0.55s}
-    @keyframes lp-fi { to { opacity:1; transform:translateY(0); } }
-
-    /* ── Mobile ── */
-    @media (max-width: 640px) {
-        .lp-nav { padding: 14px 18px; }
-        .nav-right .nav-chip:not(.nav-live) { display: none; }
-        .lp-wrap { padding: 36px 16px 0; }
-        .hero-h1 { font-size: 2.3rem; }
-        .feat-row { gap: 6px; }
-        .feat-chip { font-size: 0.6rem; padding: 7px 11px; }
-        .stats-row { grid-template-columns: repeat(2, 1fr); }
-        .stat-cell:nth-child(2) { border-right: none; }
-        .stat-cell:nth-child(3) { border-top: 1px solid var(--border); }
-        .stat-cell:nth-child(4) { border-top: 1px solid var(--border); border-right: none; }
-        .pricing-row { grid-template-columns: 1fr; gap: 10px; }
-        .gate-card { padding: 22px 18px; }
+    @media (max-width: 480px) {
+        .lp-footer { flex-direction: column; text-align: center; }
+        .hero-stats { flex-direction: column; }
+        .hs-block { border-right: none; border-bottom: 1px solid var(--border); }
+        .hs-block:last-child { border-bottom: none; }
     }
     </style>
     """, unsafe_allow_html=True)
 
-    # ── Background ────────────────────────────────────────────────────────────
-    st.markdown('<div class="lp-canvas"></div><div class="lp-grid"></div>', unsafe_allow_html=True)
+    # ── Background layers ─────────────────────────────────────────────────────
+    st.markdown('<div class="lp-bg"></div><div class="lp-grid"></div>', unsafe_allow_html=True)
 
     # ── Nav ───────────────────────────────────────────────────────────────────
     st.markdown("""
-    <nav class="lp-nav lp-fi a1">
-        <div class="nav-logo">
-            <div class="logo-hex">⬡</div>
-            Panel<span class="logo-teal">Stat</span>X
+    <nav class="lp-nav fi d1">
+        <div class="nav-brand">
+            <div class="nav-logo">&#x2B21;</div>
+            Panel<span class="brand-accent">Stat</span>X
         </div>
         <div class="nav-right">
-            <span class="nav-chip">Panel Regression Engine</span>
-            <span class="nav-chip nav-live">v1.0 Live</span>
+            <span class="nav-tag">Econometrics Platform</span>
+            <span class="nav-tag nav-tag-live"><span class="dot-live"></span>v1.0 Live</span>
         </div>
     </nav>
     """, unsafe_allow_html=True)
 
     # ── Ticker ────────────────────────────────────────────────────────────────
-    _tickers = [
-        "Fixed Effects (Two-Way)", "Random Effects GLS", "First-Difference Estimator",
-        "Hausman Specification Test", "GPT-4 AI Explainer", "Breusch-Pagan Test",
-        "Jarque-Bera Normality", "Durbin-Watson", "Entity Cross-Section Plots",
-        "CSV & Excel Import", "DOCX Report Export", "Balanced Panel Support",
+    ticker_items = [
+        "Fixed Effects Estimation", "Random Effects (GLS)", "First-Difference Estimator",
+        "Hausman Specification Test", "GPT-4 AI Explainer", "Breusch-Pagan Diagnostics",
+        "Jarque-Bera Normality", "Durbin-Watson Autocorrelation", "Entity Cross-Section Plots",
+        "Balanced Panel Support", "CSV & Excel Import", "DOCX Report Export",
     ]
-    _tk_html = "".join(f'<span class="tk"><span class="tk-dot">◆</span>{t}</span>' for t in _tickers)
-    st.markdown(f'<div class="lp-ticker lp-fi a1"><div class="ticker-track">{_tk_html}{_tk_html}</div></div>',
-                unsafe_allow_html=True)
+    ticker_html = "".join(
+        f'<span class="t-item"><span class="t-dot">◆</span>{item}</span>'
+        for item in ticker_items
+    )
+    st.markdown(f"""
+    <div class="lp-ticker fi d1">
+        <div class="ticker-track">{ticker_html}{ticker_html}</div>
+    </div>
+    """, unsafe_allow_html=True)
 
-    # ── Single centred column wrapper ─────────────────────────────────────────
-    _, centre, _ = st.columns([1, 3, 1])
+    # ── Hero ──────────────────────────────────────────────────────────────────
+    st.markdown("""
+    <div class="lp-hero">
 
-    with centre:
+      <div class="hero-eyebrow fi d2">
+        <span class="dot-live"></span>
+        Advanced Econometrics Platform
+      </div>
 
-        # ── Hero ──────────────────────────────────────────────────────────────
+      <h1 class="hero-h1 fi d2">
+        Panel Data <em>Analysis</em>
+        <span class="h1-muted">Re-imagined for rigorous research.</span>
+      </h1>
+
+      <p class="hero-sub fi d3">
+        Production-grade panel regression with <strong>Fixed Effects, Random Effects</strong>
+        and <strong>First-Difference</strong> estimators — paired with
+        <strong>GPT-4 AI interpretation</strong>, full diagnostic suites,
+        and publication-ready DOCX reports.
+      </p>
+
+      <div class="hero-pills fi d4">
+        <span class="h-pill"><span class="h-pill-icon">&#x2B21;</span> 4+ Panel Estimators</span>
+        <span class="h-pill"><span class="h-pill-icon">&#x25C8;</span> GPT-4 AI Explainer</span>
+        <span class="h-pill"><span class="h-pill-icon">&#x25C9;</span> Full Diagnostics Suite</span>
+        <span class="h-pill"><span class="h-pill-icon">&#x25C6;</span> DOCX Report Export</span>
+        <span class="h-pill"><span class="h-pill-icon">&#x25A3;</span> CSV &amp; Excel Import</span>
+        <span class="h-pill"><span class="h-pill-icon">&#x2736;</span> Hausman Spec. Test</span>
+      </div>
+
+      <div class="hero-stats fi d5">
+        <div class="hs-block">
+          <div class="hs-num">4+</div>
+          <div class="hs-label">Estimators</div>
+        </div>
+        <div class="hs-block">
+          <div class="hs-num">CSV&nbsp;&amp;&nbsp;XLS</div>
+          <div class="hs-label">Data Formats</div>
+        </div>
+        <div class="hs-block">
+          <div class="hs-num">GPT-4</div>
+          <div class="hs-label">AI Engine</div>
+        </div>
+        <div class="hs-block">
+          <div class="hs-num">DOCX</div>
+          <div class="hs-label">Report Export</div>
+        </div>
+      </div>
+
+    </div>
+    """, unsafe_allow_html=True)
+
+
+
+    # ── Pricing header ─────────────────────────────────────────────────────
+    st.markdown("""
+    <div class="lp-pricing">
+      <div class="section-head fi d5">
+        <span class="section-label">Pay-As-You-Go Credits &middot; No Subscription</span>
+        <p class="section-title">Simple, <em>transparent</em> pricing</p>
+      </div>
+    </div>
+    """, unsafe_allow_html=True)
+
+        # ── Pricing cards ─────────────────────────────────────────────────────
+    pc1, pc2, pc3 = st.columns(3, gap="small")
+
+    with pc1:
         st.markdown("""
-        <div class="lp-wrap">
-
-          <div class="hero-eyebrow lp-fi a2">
-            <span class="eyebrow-dot"></span>
-            Advanced Econometrics Platform
-          </div>
-
-          <h1 class="hero-h1 lp-fi a2">
-            Panel Data <span class="ht">Analysis</span><br>
-            <span class="hp">Re-imagined.</span>
-          </h1>
-
-          <p class="hero-sub lp-fi a3">
-            Production-grade panel regression with <strong>Fixed Effects, Random Effects</strong>
-            and <strong>First-Difference</strong> estimators — paired with
-            <strong>GPT-4 AI interpretation</strong>, full diagnostic suites, and
-            one-click publication-ready DOCX reports.
-          </p>
-
-          <div class="feat-row lp-fi a3">
-            <div class="feat-chip"><span class="fc-icon fci-t">⬡</span><span><strong>4+ Estimators</strong> — OLS, FE, RE, FD</span></div>
-            <div class="feat-chip"><span class="fc-icon fci-p">◈</span><span><strong>GPT-4 AI</strong> Explainer &amp; Q&amp;A</span></div>
-            <div class="feat-chip"><span class="fc-icon fci-k">◉</span><span><strong>Full Diagnostics</strong> — JB, DW, BP</span></div>
-            <div class="feat-chip"><span class="fc-icon fci-a">◆</span><span><strong>Entity Plots</strong> &amp; DOCX Export</span></div>
-          </div>
-
-          <div class="stats-row lp-fi a4">
-            <div class="stat-cell"><div class="stat-val">4+</div><div class="stat-lbl">Estimators</div></div>
-            <div class="stat-cell"><div class="stat-val">CSV·XLS</div><div class="stat-lbl">Data Formats</div></div>
-            <div class="stat-cell"><div class="stat-val">GPT-4</div><div class="stat-lbl">AI Engine</div></div>
-            <div class="stat-cell"><div class="stat-val">DOCX</div><div class="stat-lbl">Export</div></div>
-          </div>
-
+        <div class="price-card fi d3">
+          <div class="price-plan">Starter</div>
+          <div class="price-amount"><span class="price-curr">$</span>10</div>
+          <div class="price-credits">5 Analysis Credits</div>
+          <div class="price-divider"></div>
+          <ul class="price-features">
+            <li><span class="pf-check">&#x2713;</span>5 full regression runs</li>
+            <li><span class="pf-check">&#x2713;</span>All 4 estimators</li>
+            <li><span class="pf-check">&#x2713;</span>AI explainer included</li>
+            <li><span class="pf-check">&#x2713;</span>DOCX report export</li>
+          </ul>
         </div>
         """, unsafe_allow_html=True)
+        st.link_button("Get Started →", "https://flutterwave.com/pay/j5m67hrqr4iq",
+                           use_container_width=True)
 
-        # ── Pricing section ───────────────────────────────────────────────────
+    with pc2:
         st.markdown("""
-        <div class="lp-wrap" style="padding-top:0; padding-bottom:0;">
-          <div class="section-divider lp-fi a4">Pay-as-you-go · No recurring fees</div>
-          <div class="pricing-row lp-fi a4">
-
-            <div class="pc">
-              <div class="pc-plan">Starter</div>
-              <div class="pc-price"><span class="cur">$</span>10</div>
-              <div class="pc-credits">5 Analysis Credits</div>
-              <div class="pc-hr"></div>
-              <ul class="pc-feats">
-                <li>5 full regression runs</li>
-                <li>All 4 estimators</li>
-                <li>GPT-4 AI explainer</li>
-                <li>DOCX report export</li>
-              </ul>
-            </div>
-
-            <div class="pc hot">
-              <span class="pc-badge badge-pop">Most Popular</span>
-              <div class="pc-plan">Standard</div>
-              <div class="pc-price"><span class="cur">$</span>25</div>
-              <div class="pc-credits">15 Analysis Credits</div>
-              <div class="pc-hr"></div>
-              <ul class="pc-feats">
-                <li>15 full regression runs</li>
-                <li>All 4 estimators</li>
-                <li>GPT-4 AI + custom Q&amp;A</li>
-                <li>DOCX report export</li>
-              </ul>
-            </div>
-
-            <div class="pc">
-              <span class="pc-badge badge-val">Best Value</span>
-              <div class="pc-plan">Pro</div>
-              <div class="pc-price"><span class="cur">$</span>45</div>
-              <div class="pc-credits">30 Analysis Credits</div>
-              <div class="pc-hr"></div>
-              <ul class="pc-feats">
-                <li>30 full regression runs</li>
-                <li>All 4 estimators</li>
-                <li>GPT-4 AI + custom Q&amp;A</li>
-                <li>DOCX report export</li>
-              </ul>
-            </div>
-
-          </div>
+        <div class="price-card featured fi d4">
+          <span class="price-badge badge-pop">Most Popular</span>
+          <div class="price-plan">Standard</div>
+          <div class="price-amount"><span class="price-curr">$</span>25</div>
+          <div class="price-credits">15 Analysis Credits</div>
+          <div class="price-divider"></div>
+          <ul class="price-features">
+            <li><span class="pf-check">&#x2713;</span>15 full regression runs</li>
+            <li><span class="pf-check">&#x2713;</span>All 4 estimators</li>
+            <li><span class="pf-check">&#x2713;</span>AI explainer included</li>
+            <li><span class="pf-check">&#x2713;</span>DOCX report export</li>
+          </ul>
         </div>
         """, unsafe_allow_html=True)
+        st.link_button("Buy Credits →", "https://flutterwave.com/pay/txyljcuqfsel",
+                           use_container_width=True)
 
-        # ── Pricing CTA buttons (native Streamlit — sanitizer safe) ──────────
-        btn_c1, btn_c2, btn_c3 = st.columns(3, gap="small")
-        with btn_c1:
-            st.markdown('<div class="lp-btn-ghost">', unsafe_allow_html=True)
-            st.link_button("Get Started →", "https://flutterwave.com/pay/j5m67hrqr4iq",
-                           use_container_width=True)
-            st.markdown('</div>', unsafe_allow_html=True)
-        with btn_c2:
-            st.markdown('<div class="lp-btn-primary">', unsafe_allow_html=True)
-            st.link_button("Buy Credits →", "https://flutterwave.com/pay/txyljcuqfsel",
-                           use_container_width=True)
-            st.markdown('</div>', unsafe_allow_html=True)
-        with btn_c3:
-            st.markdown('<div class="lp-btn-ghost">', unsafe_allow_html=True)
-            st.link_button("Buy Credits →", "https://flutterwave.com/pay/yw7k3gmyjoud",
-                           use_container_width=True)
-            st.markdown('</div>', unsafe_allow_html=True)
-
-        # ── Access gate card ──────────────────────────────────────────────────
+    with pc3:
         st.markdown("""
-        <div class="lp-wrap" style="padding-top: 32px; padding-bottom: 0;">
-          <div class="section-divider lp-fi a5">Already have a key? Unlock access below</div>
-          <div class="gate-card lp-fi a5">
-            <div class="gate-title">🔐 Enter Your Access Key</div>
-            <div class="gate-desc">
-              PanelStatX runs on a <strong>credit-based, pay-as-you-go</strong> model.
-              Each analysis deducts one credit from your personal, <strong>non-expiring</strong> key.
-              No monthly billing. No subscriptions.
-            </div>
-            <div class="gate-hint">
-              <span class="hi">◈</span> Key format: PSX-XXXX-XXXX-XXXX
-            </div>
-          </div>
+        <div class="price-card fi d5">
+          <span class="price-badge badge-val">Best Value</span>
+          <div class="price-plan">Pro</div>
+          <div class="price-amount"><span class="price-curr">$</span>45</div>
+          <div class="price-credits">30 Analysis Credits</div>
+          <div class="price-divider"></div>
+          <ul class="price-features">
+            <li><span class="pf-check">&#x2713;</span>30 full regression runs</li>
+            <li><span class="pf-check">&#x2713;</span>All 4 estimators</li>
+            <li><span class="pf-check">&#x2713;</span>AI explainer included</li>
+            <li><span class="pf-check">&#x2713;</span>DOCX report export</li>
+          </ul>
         </div>
         """, unsafe_allow_html=True)
+        st.link_button("Buy Credits →", "https://flutterwave.com/pay/yw7k3gmyjoud",
+                           use_container_width=True)
 
+    # ── Access Gate ───────────────────────────────────────────────────────────
+    st.markdown("""
+    <div class="lp-gate fi d6">
+      <div class="gate-card">
+        <div class="gate-lock">&#x1F511;</div>
+        <div class="gate-title">Enter Your Access Key</div>
+        <div class="gate-desc">
+          PanelStatX uses a <strong>credit-based, pay-as-you-go model</strong>.
+          Each analysis run deducts one credit from your unique,
+          <strong>non-expiring</strong> access key.
+          No recurring billing. No monthly subscriptions.
+        </div>
+        <div class="key-format">
+          <span class="kf-icon">&#x25C8;</span>
+          Key format: PSX-XXXX-XXXX-XXXX
+        </div>
+        <div class="gate-form">
+          <span class="gate-input-label">Access Key</span>
+        </div>
+      </div>
+    </div>
+    """, unsafe_allow_html=True)
+
+    # ── Inject Streamlit widgets into gate card ───────────────────────────────
+    st.markdown("""
+    <style>
+    [data-testid="stVerticalBlock"] > [data-testid="stVerticalBlock"] { margin-top: -18px; }
+    </style>
+    """, unsafe_allow_html=True)
+
+    _, gate_input_col, _ = st.columns([1, 2, 1])
+    with gate_input_col:
         entered_key = st.text_input(
             "Access Key",
             type="password",
@@ -1689,30 +1745,30 @@ if not st.session_state.access_granted:
 
         if st.session_state.access_error:
             st.markdown(f"""
-            <div class="err-bar">
-                <span>✕</span> {st.session_state.access_error}
+            <div class="err-msg">
+                <span>&#x2715;</span> {st.session_state.access_error}
             </div>
             """, unsafe_allow_html=True)
 
         st.markdown("""
-        <div class="gate-links lp-fi a6">
-            <a href="https://wa.me/2348096506034">👤 Get Access Key from Administrator</a>
-            <span class="sep">|</span>
-            <a href="https://wa.me/2348096506034">📝 User Guide</a>
-            <span class="sep">|</span>
-            <a href="mailto:Abdulwrite77@gmail.com">⚙️ Technical Support</a>
+        <div class="gate-links">
+            <a href="https://wa.me/2348096506034">&#x1F464; Get Access Key</a>
+            <span class="gate-sep">&nbsp;|&nbsp;</span>
+            <a href="https://wa.me/2348096506034">&#x1F4CB; User Guide</a>
+            <span class="gate-sep">&nbsp;|&nbsp;</span>
+            <a href="mailto:Abdulwrite77@gmail.com">&#x2699;&#xFE0F; Support</a>
         </div>
         """, unsafe_allow_html=True)
 
     # ── Footer ────────────────────────────────────────────────────────────────
     st.markdown("""
-    <div class="lp-footer lp-fi a6">
-        <div class="lp-footer-brand">Panel<span class="ft">Stat</span>X</div>
-        <div class="lp-footer-copy">Panel Regression Analysis System · Powered by GPT-4 · Credit-based access</div>
+    <div class="lp-footer fi d7">
+        <div class="footer-brand">Panel<span class="ft">Stat</span>X</div>
+        <div class="footer-copy">Panel Regression Analysis &middot; Powered by GPT-4 &middot; Credit-based access</div>
     </div>
     """, unsafe_allow_html=True)
 
-    # ── Auth logic ────────────────────────────────────────────────────────────
+    # ── Unlock logic ──────────────────────────────────────────────────────────
     if unlock_btn:
         if not entered_key:
             st.session_state.access_error = "Please enter your access key."
@@ -1739,7 +1795,6 @@ if not st.session_state.access_granted:
                 st.rerun()
 
     st.stop()
-
 
 
 
@@ -1850,6 +1905,40 @@ with st.sidebar:
             type="primary",
             disabled=(st.session_state.user_credits <= 0),
         )
+
+        # ── Analysis status feedback label ────────────────────────────────────
+        if st.session_state.results is not None:
+            st.markdown("""
+            <div style="
+                display:flex; align-items:center; gap:8px;
+                margin-top:8px; padding:9px 14px;
+                background:rgba(34,211,160,0.07);
+                border:1px solid rgba(34,211,160,0.25);
+                border-radius:8px;
+                font-family:'DM Mono',monospace;
+                font-size:0.68rem; color:#22d3a0;
+                letter-spacing:0.04em;
+            ">
+                <span style="font-size:0.8rem;">&#x2713;</span>
+                Analysis complete
+            </div>
+            """, unsafe_allow_html=True)
+        elif st.session_state.df is not None and not (st.session_state.user_credits <= 0):
+            st.markdown("""
+            <div style="
+                display:flex; align-items:center; gap:8px;
+                margin-top:8px; padding:9px 14px;
+                background:rgba(255,255,255,0.02);
+                border:1px solid rgba(255,255,255,0.06);
+                border-radius:8px;
+                font-family:'DM Mono',monospace;
+                font-size:0.68rem; color:#4e576e;
+                letter-spacing:0.04em;
+            ">
+                <span style="font-size:0.8rem;">&#x25CB;</span>
+                Ready to analyse
+            </div>
+            """, unsafe_allow_html=True)
     else:
         run_btn = False
         entity_col = time_col = y_col = "—"
