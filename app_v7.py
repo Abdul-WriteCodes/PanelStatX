@@ -1627,10 +1627,8 @@ if not st.session_state.access_granted:
     """, unsafe_allow_html=True)
 
     # ── Hero ──────────────────────────────────────────────────────────────────
-    left_col, right_col = st.columns([1.15, 1], gap="large")
 
-    with left_col:
-        st.markdown("""
+    st.markdown("""
         <div class="lp-hero">
 
           <div class="hero-tag fi d2">
@@ -1698,8 +1696,7 @@ if not st.session_state.access_granted:
         </div>
         """, unsafe_allow_html=True)
 
-    with right_col:
-        # ── Pricing header ─────────────────────────────────────────────────────
+    # ── Pricing header ─────────────────────────────────────────────────────
         st.markdown("""
         <div style="padding-top:60px; padding-left:4px; padding-right:4px; padding-bottom:8px;">
           <div class="section-eyebrow">Pay-As-You-Go Credits · No Subscription</div>
