@@ -1710,7 +1710,7 @@ if not st.session_state.access_granted:
     pc1, pc2, pc3 = st.columns(3, gap="small")
 
         # Shared CSS for link buttons inside pricing cards
-        st.markdown("""
+    st.markdown("""
         <style>
         /* Starter card button */
         div[data-testid="column"]:nth-child(1) .stLinkButton a {
