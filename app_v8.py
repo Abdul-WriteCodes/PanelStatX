@@ -1651,7 +1651,7 @@ if not st.session_state.access_granted:
         st.markdown("""
         <div class="price-card fi d3">
           <div class="price-plan">Starter</div>
-          <div class="price-amount">$</span>10</div>
+          <div class="price-amount"></span>$10</div>
           <div class="price-credits">5 Analysis Credits</div>
           <div class="price-divider"></div>
           <ul class="price-features">
