@@ -1085,16 +1085,7 @@ for key, default in [
         st.session_state[key] = default
 
 # ═══════════════════════════════════════════════════════════════════════════════
-# ACCESS KEY GATE  — Google Sheets credit system
-# secrets.toml must contain:
-#   GSHEET_ID = "your-spreadsheet-id"
-#   [gcp_service_account]   ← paste your service-account JSON fields here
-#   type = "service_account"
-#   project_id = "…"
-#   private_key_id = "…"
-#   private_key = "-----BEGIN RSA PRIVATE KEY-----\n…\n-----END RSA PRIVATE KEY-----\n"
-#   client_email = "…"
-#   … (remaining fields from the JSON key file)
+# ACCESS KEY GATE 
 # ═══════════════════════════════════════════════════════════════════════════════
 
 if not st.session_state.access_granted:
