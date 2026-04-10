@@ -4,7 +4,95 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>PanelStatX Launch</title>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
+    <script>
+    const startBtn = document.getElementById('start-btn');
+    const progress = document.getElementById('progress');
+    const synth = window.speechSynthesis;
+
+    /**
+     * Helper to wrap speech in a Promise.
+     * This allows the GSAP timeline to "wait" for the voice to finish.
+     */
+    function speak(text) {
+        return new Promise((resolve) => {
+            const utter = new SpeechSynthesisUtterance(text);
+            utter.rate = 0.95;
+            utter.pitch = 1;
+            
+            // Resolve the promise when the speech ends
+            utter.onend = () => {
+                resolve();
+            };
+
+            // Handle errors to prevent timeline hanging
+            utter.onerror = () => {
+                resolve();
+            };
+
+            synth.speak(utter);
+        });
+    }
+
+    function typeWriter(text) {
+        const box = document.getElementById('typewriter-box');
+        let i = 0;
+        box.innerHTML = "";
+        return new Promise((resolve) => {
+            function type() {
+                if (i < text.length) {
+                    box.innerHTML += text.charAt(i);
+                    i++;
+                    setTimeout(type, 30);
+                } else {
+                    resolve();
+                }
+            }
+            type();
+        });
+    }
+
+    startBtn.addEventListener('click', () => {
+        // Essential: First user gesture "unlocks" the speech engine
+        const unlock = new SpeechSynthesisUtterance("");
+        synth.speak(unlock);
+
+        startBtn.style.display = 'none';
+        runVideo();
+    });
+
+    async function runVideo() {
+        const tl = gsap.timeline();
+
+        // Start the progress bar (estimating ~35 seconds total)
+        gsap.to("#progress", { width: "100%", duration: 35, ease: "none" });
+
+        // SCENE 1: THE PROBLEM
+        tl.to("#slide1", { opacity: 1, duration: 1 });
+        await speak("You are working with panel data. It is complex, and it is messy. Standard tools are slowing you down with cryptic errors and diagnostic hurdles.");
+        
+        // SCENE 2: THE SOLUTION
+        tl.to("#slide1", { opacity: 0, duration: 0.8 });
+        tl.to("#slide2", { opacity: 1, duration: 1 });
+        await speak("Meet PanelStatX. The high-performance web suite designed to transform raw longitudinal data into publication-ready insights.");
+
+        // SCENE 3: RIGOR
+        tl.to("#slide2", { opacity: 0, duration: 0.8 });
+        tl.to("#slide3", { opacity: 1, duration: 1 });
+        await speak("Run sophisticated estimators in seconds. PanelStatX executes Hausman and Breusch-Pagan diagnostics to guide your model selection automatically.");
+
+        // SCENE 4: AI
+        tl.to("#slide3", { opacity: 0, duration: 0.8 });
+        tl.to("#slide4", { opacity: 1, duration: 1 });
+        // Run typewriter and speech simultaneously
+        typeWriter("Analysis: The coefficient for X1 suggests a significant positive impact on the dependent variable (p < 0.05). High R-Squared indicates a strong model fit.");
+        await speak("Need to explain your findings? Our integrated AI interprets your coefficients and generates professional reports straight to your desk.");
+
+        // SCENE 5: OUTRO
+        tl.to("#slide4", { opacity: 0, duration: 0.8 });
+        tl.to("#slide5", { opacity: 1, duration: 1 });
+        await speak("PanelStatX. Precision in every dimension. Start analyzing today.");
+    }
+</script>
     <link href="https://fonts.googleapis.com/css2?family=Syne:wght@700;800&family=Inter:wght@300;400;600&family=DM+Mono&display=swap" rel="stylesheet">
     <style>
         :root {
