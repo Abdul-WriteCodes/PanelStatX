@@ -2,31 +2,28 @@
 <html lang="en">
 <head>
 <meta charset="UTF-8">
-<title>PanelStatX | The Cinematic Engine</title>
+<title>PanelStatX | Cinematic Engine</title>
 <style>
     :root {
         --accent: #00e5c8;
         --bg-dark: #05070a;
         --text-dim: #6b7a9a;
-        --data-glow: rgba(0, 229, 200, 0.15);
     }
 
     body, html {
-        margin: 0;
-        padding: 0;
+        margin: 0; padding: 0;
         background: var(--bg-dark);
         color: #e2e8f4;
         font-family: 'Inter', sans-serif;
         overflow: hidden;
-        height: 100vh;
     }
 
-    /* Cinematic Layers */
+    /* Background Layers */
     #stats-canvas {
         position: fixed;
         top: 0; left: 0;
         width: 100%; height: 100%;
-        opacity: 0.4;
+        opacity: 0.35;
         z-index: 0;
     }
 
@@ -38,37 +35,38 @@
         z-index: 1;
     }
 
+    /* Content Layout */
     .scene {
         position: absolute;
         width: 100%; height: 100%;
         display: flex; align-items: center; justify-content: center;
         text-align: center;
         opacity: 0;
-        transform: translateY(20px) scale(0.98);
+        transform: scale(0.95);
         transition: all 1.5s cubic-bezier(0.16, 1, 0.3, 1);
         z-index: 2;
     }
 
     .active {
         opacity: 1;
-        transform: translateY(0) scale(1);
+        transform: scale(1);
     }
 
     .content-box {
-        background: rgba(10, 12, 16, 0.7);
-        backdrop-filter: blur(12px);
+        background: rgba(10, 12, 16, 0.6);
+        backdrop-filter: blur(15px);
         padding: 80px;
         border-radius: 4px;
-        border-left: 1px solid var(--accent);
-        box-shadow: -20px 0 50px rgba(0, 229, 200, 0.05);
+        border-left: 2px solid var(--accent);
+        box-shadow: -20px 0 60px rgba(0, 229, 200, 0.05);
     }
 
     h1 {
-        font-size: 84px;
+        font-size: 80px;
         font-weight: 900;
         margin: 0;
         letter-spacing: -3px;
-        background: linear-gradient(to bottom, #fff 30%, var(--accent));
+        background: linear-gradient(to bottom, #fff 40%, var(--accent));
         -webkit-background-clip: text;
         -webkit-text-fill-color: transparent;
     }
@@ -81,12 +79,10 @@
         letter-spacing: 1px;
     }
 
-    .accent { color: var(--accent); -webkit-text-fill-color: var(--accent); }
-
-    /* HUD Elements */
+    /* UI Components */
     .progress-container {
         position: fixed;
-        bottom: 0; left: 0; width: 100%; height: 2px;
+        bottom: 0; left: 0; width: 100%; height: 3px;
         background: rgba(255,255,255,0.05);
         z-index: 10;
     }
@@ -115,7 +111,7 @@
     .btn:hover {
         background: var(--accent);
         color: var(--bg-dark);
-        box-shadow: 0 0 40px var(--data-glow);
+        box-shadow: 0 0 30px var(--accent);
     }
 </style>
 </head>
@@ -126,22 +122,22 @@
 
 <div id="scene1" class="scene active">
     <div class="content-box">
-        <h1>⬡ <span class="accent">PanelStatX</span></h1>
+        <h1>⬡ <span style="-webkit-text-fill-color: var(--accent);">PanelStatX</span></h1>
         <p>The Future of Panel Data Analysis</p>
     </div>
 </div>
 
 <div id="scene2" class="scene">
     <div class="content-box">
-        <h1>Complex Data</h1>
-        <p>Transformed into actionable intelligence.</p>
+        <h1>Precision Engine</h1>
+        <p>Fixed Effects. Random Effects. Automated interpretation.</p>
     </div>
 </div>
 
 <div id="scene3" class="scene">
     <div class="content-box">
-        <h1 class="accent">Precision Engine</h1>
-        <p>Fixed Effects. Random Effects. Automated interpretation.</p>
+        <h1 style="-webkit-text-fill-color: var(--accent);">AI Interpretation</h1>
+        <p>Academic-quality explanations for every result.</p>
     </div>
 </div>
 
@@ -153,82 +149,83 @@
 </div>
 
 <div class="progress-container"><div class="progress-bar" id="pb"></div></div>
-<button class="btn" id="startBtn" onclick="initiateSequence()">Initiate Sequence</button>
+<button class="btn" id="startBtn" onclick="initiateLaunch()">Initiate Sequence</button>
 
 <script>
-/* 1. DATA RAIN BACKGROUND */
+/* 1. STATISTICAL MATRIX BACKGROUND */
 const canvas = document.getElementById('stats-canvas');
 const ctx = canvas.getContext('2d');
 let width, height, columns;
-const symbols = "β σ Σ R² Δ √ ε η θ μ χ² p-value OLS GMM ARCH".split(" ");
+const metrics = "β σ Σ R² Δ √ ε η θ μ χ² p-value OLS GMM ARCH ∂ y=XB+u".split(" ");
 const drops = [];
 
 function resize() {
     width = canvas.width = window.innerWidth;
     height = canvas.height = window.innerHeight;
-    columns = Math.floor(width / 30);
+    columns = Math.floor(width / 25);
     for (let i = 0; i < columns; i++) drops[i] = Math.random() * -100;
 }
 
-function drawStats() {
+function drawMatrix() {
     ctx.fillStyle = 'rgba(5, 7, 10, 0.15)';
     ctx.fillRect(0, 0, width, height);
     ctx.fillStyle = '#00e5c8';
-    ctx.font = '12px monospace';
+    ctx.font = '14px monospace';
 
     for (let i = 0; i < drops.length; i++) {
-        const text = symbols[Math.floor(Math.random() * symbols.length)];
-        ctx.fillText(text, i * 30, drops[i] * 30);
-        if (drops[i] * 30 > height && Math.random() > 0.975) drops[i] = 0;
+        const text = metrics[Math.floor(Math.random() * metrics.length)];
+        ctx.fillText(text, i * 25, drops[i] * 25);
+        if (drops[i] * 25 > height && Math.random() > 0.975) drops[i] = 0;
         drops[i]++;
     }
 }
 window.addEventListener('resize', resize);
 resize();
-setInterval(drawStats, 50);
+setInterval(drawMatrix, 50);
 
-/* 2. AUDIO ENGINE (Generative Ambient) */
-let audioCtx;
-function playAmbientMusic() {
-    audioCtx = new (window.AudioContext || window.webkitAudioContext)();
-    const osc = audioCtx.createOscillator();
-    const lfo = audioCtx.createOscillator();
-    const gain = audioCtx.createGain();
-    const filter = audioCtx.createBiquadFilter();
-
-    osc.type = 'sawtooth';
-    osc.frequency.setValueAtTime(55, audioCtx.currentTime); // Deep A1 note
+/* 2. MELODIC AUDIO ENGINE (Generative Synth) */
+function playMelodicPad() {
+    const AudioContext = window.AudioContext || window.webkitAudioContext;
+    const audioCtx = new AudioContext();
     
-    lfo.type = 'sine';
-    lfo.frequency.value = 0.5;
-    const lfoGain = audioCtx.createGain();
-    lfoGain.gain.value = 10;
-    
-    filter.type = 'lowpass';
-    filter.frequency.value = 400;
-    filter.Q.value = 10;
+    function createOsc(freq, startTime, duration, vol) {
+        const osc = audioCtx.createOscillator();
+        const gain = audioCtx.createGain();
+        const filter = audioCtx.createBiquadFilter();
 
-    gain.gain.setValueAtTime(0, audioCtx.currentTime);
-    gain.gain.linearRampToValueAtTime(0.15, audioCtx.currentTime + 4);
+        osc.type = 'sine';
+        osc.frequency.setValueAtTime(freq, startTime);
+        
+        filter.type = 'lowpass';
+        filter.frequency.value = 500;
 
-    lfo.connect(lfoGain);
-    lfoGain.connect(osc.frequency);
-    osc.connect(filter);
-    filter.connect(gain);
-    gain.connect(audioCtx.destination);
+        gain.gain.setValueAtTime(0, startTime);
+        gain.gain.linearRampToValueAtTime(vol, startTime + 2);
+        gain.gain.linearRampToValueAtTime(0, startTime + duration);
 
-    osc.start();
-    lfo.start();
+        osc.connect(filter);
+        filter.connect(gain);
+        gain.connect(audioCtx.destination);
+
+        osc.start(startTime);
+        osc.stop(startTime + duration);
+    }
+
+    // Play a slow, melodic minor chord progression (A minor / D minor)
+    const now = audioCtx.currentTime;
+    createOsc(220, now, 30, 0.1); // A3
+    createOsc(261.63, now + 2, 28, 0.08); // C4
+    createOsc(329.63, now + 4, 26, 0.08); // E4
 }
 
-/* 3. SCENE LOGIC */
+/* 3. SCENE CONTROLLER */
 let current = 0;
 const scenes = document.querySelectorAll(".scene");
 const pb = document.getElementById("pb");
 const narration = [
     "Welcome to Panel Stat X. The pinnacle of econometrics.",
-    "Complex datasets meet intuitive artificial intelligence.",
     "Precision models. Automated insights. Instant results.",
+    "Experience AI powered interpretation of your research.",
     "Panel Stat X. Analyze faster. Understand better. Publish smarter."
 ];
 
@@ -238,7 +235,7 @@ function showScene(index) {
     pb.style.transition = 'none';
     pb.style.width = '0%';
     setTimeout(() => {
-        pb.style.transition = 'width 6s linear';
+        pb.style.transition = 'width 6.5s linear';
         pb.style.width = '100%';
     }, 50);
 }
@@ -250,20 +247,19 @@ function speak(text) {
     window.speechSynthesis.speak(speech);
 }
 
-function initiateSequence() {
+function initiateLaunch() {
     document.getElementById("startBtn").style.display = "none";
-    playAmbientMusic();
+    playMelodicPad();
     
     function next() {
         if (current >= scenes.length) return;
         showScene(current);
         speak(narration[current]);
         current++;
-        setTimeout(next, 6500);
+        setTimeout(next, 7000); // 7s per scene for better pacing
     }
     next();
 }
 </script>
-
 </body>
 </html>
