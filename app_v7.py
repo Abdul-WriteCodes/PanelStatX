@@ -1707,7 +1707,7 @@ if not st.session_state.access_granted:
 
         # ── Pricing cards: 3 native Streamlit columns, each with HTML card
         #    body + st.link_button CTA (100% sanitizer-safe) ─────────────────
-        pc1, pc2, pc3 = st.columns(3, gap="small")
+    pc1, pc2, pc3 = st.columns(3, gap="small")
 
         # Shared CSS for link buttons inside pricing cards
         st.markdown("""
