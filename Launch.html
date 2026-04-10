@@ -1,184 +1,203 @@
 <!DOCTYPE html>
+
 <html lang="en">
 <head>
 <meta charset="UTF-8">
-<title>PanelStatX Launch Video</title>
+<title>PanelStatX Cinematic Launch</title>
+
 <style>
-    body {
-        margin: 0;
-        background: #0a0c10;
-        color: #e2e8f4;
-        font-family: 'Arial', sans-serif;
-        overflow: hidden;
-    }
+body {
+    margin: 0;
+    background: radial-gradient(circle at center, #0f1320, #05070b);
+    color: #e2e8f4;
+    font-family: 'Segoe UI', sans-serif;
+    overflow: hidden;
+}
 
-    .scene {
-        position: absolute;
-        width: 100%;
-        height: 100%;
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        text-align: center;
-        opacity: 0;
-        transition: opacity 1s ease;
-        padding: 40px;
-    }
+/* Background animation */
+.bg {
+    position: absolute;
+    width: 200%;
+    height: 200%;
+    background: radial-gradient(circle, rgba(0,229,200,0.08), transparent 60%);
+    animation: drift 20s linear infinite;
+}
 
-    .active {
-        opacity: 1;
-    }
+@keyframes drift {
+    from { transform: translate(-10%, -10%); }
+    to { transform: translate(10%, 10%); }
+}
 
-    h1 {
-        font-size: 64px;
-        margin-bottom: 20px;
-    }
+.scene {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    opacity: 0;
+    transform: scale(1.05);
+    transition: all 1.2s ease;
+    text-align: center;
+    padding: 40px;
+}
 
-    p {
-        font-size: 24px;
-        max-width: 900px;
-        margin: auto;
-        line-height: 1.5;
-        color: #6b7a9a;
-    }
+.active {
+    opacity: 1;
+    transform: scale(1);
+}
 
-    .accent {
-        color: #00e5c8;
-    }
+h1 {
+    font-size: 70px;
+    margin: 0;
+    letter-spacing: -2px;
+}
 
-    .btn {
-        position: absolute;
-        bottom: 30px;
-        left: 50%;
-        transform: translateX(-50%);
-        padding: 12px 24px;
-        border: 1px solid #00e5c8;
-        color: #00e5c8;
-        cursor: pointer;
-    }
+p {
+    font-size: 24px;
+    max-width: 900px;
+    color: #8b9bb8;
+    margin-top: 20px;
+    line-height: 1.6;
+}
+
+/* Glow accent */
+.accent {
+    color: #00e5c8;
+    text-shadow: 0 0 20px rgba(0,229,200,0.5);
+}
+
+/* Typewriter */
+.type {
+    border-right: 2px solid #00e5c8;
+    white-space: nowrap;
+    overflow: hidden;
+}
+
+/* Button */
+.play {
+    position: absolute;
+    bottom: 40px;
+    left: 50%;
+    transform: translateX(-50%);
+    padding: 14px 28px;
+    border: 1px solid #00e5c8;
+    color: #00e5c8;
+    cursor: pointer;
+    transition: 0.3s;
+}
+
+.play:hover {
+    background: #00e5c8;
+    color: #000;
+}
 </style>
+
 </head>
 
 <body>
 
-<div id="scene1" class="scene active">
-    <div>
-        <h1>⬡ <span class="accent">PanelStatX</span></h1>
-        <p>The Future of Panel Data Analysis</p>
-    </div>
+<div class="bg"></div>
+
+<!-- Scenes -->
+
+<div class="scene active">
+    <h1>⬡ <span class="accent">PanelStatX</span></h1>
+    <p class="type" id="t1"></p>
 </div>
 
-<div id="scene2" class="scene">
-    <div>
-        <h1>The Problem</h1>
-        <p>
-            Panel data analysis is complex, time-consuming, and requires advanced statistical expertise.
-            Tools like SPSS or Stata are not intuitive, and interpreting results is even harder.
-        </p>
-    </div>
+<div class="scene">
+    <h1>The Problem</h1>
+    <p class="type" id="t2"></p>
 </div>
 
-<div id="scene3" class="scene">
-    <div>
-        <h1>The Solution</h1>
-        <p>
-            PanelStatX simplifies everything — from running regressions to generating
-            publish-ready insights automatically.
-        </p>
-    </div>
+<div class="scene">
+    <h1>The Shift</h1>
+    <p class="type" id="t3"></p>
 </div>
 
-<div id="scene4" class="scene">
-    <div>
-        <h1>Core Engine</h1>
-        <p>
-            Run Fixed Effects, Random Effects, First Difference models,
-            and diagnostic tests — instantly.
-        </p>
-    </div>
+<div class="scene">
+    <h1>Core Power</h1>
+    <p class="type" id="t4"></p>
 </div>
 
-<div id="scene5" class="scene">
-    <div>
-        <h1 class="accent">Main Feature</h1>
-        <p>
-            AI-Powered Interpretation — Automatically explains your regression results
-            in clear, academic-quality language.
-        </p>
-    </div>
+<div class="scene">
+    <h1 class="accent">AI Interpretation</h1>
+    <p class="type" id="t5"></p>
 </div>
 
-<div id="scene6" class="scene">
-    <div>
-        <h1>Unique Features</h1>
-        <p>
-            Built-in credit system, automated reporting, real-time computation,
-            and seamless export to publication-ready documents.
-        </p>
-    </div>
+<div class="scene">
+    <h1>Automation</h1>
+    <p class="type" id="t6"></p>
 </div>
 
-<div id="scene7" class="scene">
-    <div>
-        <h1>From Data to Insight</h1>
-        <p>
-            Upload your panel dataset, run models, and get actionable insights —
-            all in one streamlined platform.
-        </p>
-    </div>
+<div class="scene">
+    <h1>From Data → Insight</h1>
+    <p class="type" id="t7"></p>
 </div>
 
-<div id="scene8" class="scene">
-    <div>
-        <h1>⬡ <span class="accent">PanelStatX</span></h1>
-        <p>Analyze Faster. Understand Better. Publish Smarter.</p>
-    </div>
+<div class="scene">
+    <h1>⬡ <span class="accent">PanelStatX</span></h1>
+    <p class="type" id="t8"></p>
 </div>
 
-<div class="btn" onclick="startVideo()">▶ Play</div>
+<div class="play" onclick="start()">▶ Launch Video</div>
 
 <script>
-let scenes = document.querySelectorAll(".scene");
-let current = 0;
-
-const narration = [
-    "Welcome to PanelStat X, the future of panel data analysis.",
-    "Panel data analysis is complex, time consuming, and requires advanced expertise.",
-    "PanelStat X simplifies everything from regression to insights.",
-    "Run fixed effects, random effects, and advanced models instantly.",
-    "The main feature is AI powered interpretation of your results.",
-    "It includes automated reporting, credit system, and real time computation.",
-    "Upload your dataset and get insights in seconds.",
-    "PanelStat X. Analyze faster. Understand better. Publish smarter."
+const texts = [
+    "The future of panel data analysis has arrived.",
+    "Panel data is powerful... but complex, technical, and time-consuming.",
+    "What if everything became instant, intuitive, and intelligent?",
+    "Run fixed effects, random effects, diagnostics — in seconds.",
+    "Get AI-powered explanations that sound like a published research paper.",
+    "Automated reports. Built-in credit system. Zero friction workflow.",
+    "Upload your data. Run models. Extract insight instantly.",
+    "Analyze faster. Understand deeper. Publish smarter."
 ];
 
-function showScene(index) {
-    scenes.forEach(s => s.classList.remove("active"));
-    scenes[index].classList.add("active");
+let scenes = document.querySelectorAll(".scene");
+
+function typeText(element, text, speed=30) {
+    element.innerHTML = "";
+    let i = 0;
+
+    function typing() {
+        if (i < text.length) {
+            element.innerHTML += text.charAt(i);
+            i++;
+            setTimeout(typing, speed);
+        }
+    }
+    typing();
 }
 
 function speak(text) {
     const speech = new SpeechSynthesisUtterance(text);
-    speech.rate = 0.95;
+    speech.rate = 0.92;
     speech.pitch = 1;
     speech.volume = 1;
     window.speechSynthesis.speak(speech);
 }
 
-function startVideo() {
-    current = 0;
+function start() {
+    let i = 0;
 
-    function nextScene() {
-        if (current >= scenes.length) return;
+    function next() {
+        if (i >= scenes.length) return;
 
-        showScene(current);
-        speak(narration[current]);
+        scenes.forEach(s => s.classList.remove("active"));
+        scenes[i].classList.add("active");
 
-        current++;
-        setTimeout(nextScene, 6000);
+        let textEl = document.getElementById("t" + (i+1));
+        typeText(textEl, texts[i]);
+        speak(texts[i]);
+
+        i++;
+        setTimeout(next, 6500);
     }
 
-    nextScene();
+    next();
 }
 </script>
 
