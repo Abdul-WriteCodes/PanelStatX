@@ -47,31 +47,38 @@ The system is designed and equipped with:
 	-	Key caveats (e.g., endogeneity, heteroskedasticity) and recommendations
 
 -	📊Visualisations: System produce interactive charts that include 
-	- 	Time-series trends by entity
-	-	Entity-level comparison bar charts
-	-	Correlation heatmaps
-	-	Residual Distribution Plots for understanding error distribution and detect deviations from normality.
-	-	Q-Q Plots that visually assess whether residuals follow a theoretical normal distribution.
-	-	Fitted vs Actual Scatter plots that evaluate model performance by comparing predicted vs actual values.
+	- 	📈Time-series trends by entity
+	-	📊Entity-level comparison bar charts
+	-	✳️Correlation heatmaps
+	-	🔁Residual Distribution Plots for understanding error distribution and detect deviations from normality.
+	-	🔁Q-Q Plots that visually assess whether residuals follow a theoretical normal distribution.
+	-	✅️Fitted vs Actual Scatter plots that evaluate model performance by comparing predicted vs actual values.
 
 
--	Downloadable Report **Word (.docx) report** containing:
-	- Model summary and fit statistics table
-	- Full coefficient estimates table (with significance highlighting)
-	- Residual diagnostics table with auto-generated interpretations
-	- AI write-up section 
+-	📥Downloadable Report **Word (.docx) report** containing:
+	- 📊Model summary and fit statistics table
+	- 🅱️Full coefficient estimates table (with significance highlighting)
+	- 🔁Residual diagnostics table with auto-generated interpretations
+	- 🧠AI write-up section 
 
 ---
 ## Workflow
-**To use PanelStatX, no software installation is needed, No command line is needed. No code is required. Very easy and direct under 5 minutes based on key 7 steps**
+To use PanelStatX:
+-📵No software installation is needed
+-🚫 No command line is needed
+-🚫 No code is required.
+  
+✅️It is very easy and direct to use by anyone under 3 minutes based on key 6 steps**
 
-1. **Get an access key** — purchase credits to receive your unique key
-2. **Visit the app** and enter your key on the landing screen. Your remaining credit balance is shown in the sidebar at all times. You can top it up anytime
-3. **Upload your panel dataset** in the side bar — CSV or Excel files with columns for your entity ID, time period, dependent variable, and independent variables
-4. **Configure your model** in the sidebar — select columns, choose estimator, set options
-5. **Run Analysis** — results appear instantly across five tabs
-6. **Explore** — check diagnostics, visualise entity trends, ask the AI explainer questions
-7. **Download** your Word report when ready
+1. 🔑Get an access key that comes with loaded credits
+2. Visit the app and enter your key on the landing screen. 
+3. 🔼Upload your panel dataset (CSV or excel file) in the side bar
+4. ⚙️Configure your model and run analysis in the sidebar
+    - ▶️select columns variables (i.e dependent and independent variables)
+    - ▶️Choose any model from the 5 estimators
+    - ▶️Click 'Run Analysis' and results will appear instantly across five tabs
+5. 🔍View Results and Explore — check diagnostics, visualise entity trends, ask the AI explainer questions
+7. 📄Download full results of the analysis + AI explained outputs as docx
 
 👉 **[Try the Live System Here](https://achievit.streamlit.app/)**
 
