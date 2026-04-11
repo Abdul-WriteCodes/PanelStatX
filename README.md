@@ -23,30 +23,26 @@ PanelStatX automatically handles these complexities, enabling users to focus on 
 
 The system is designed and equipped with:
 -	Core Regression Models
-	- **📈Pooled OLS**: Provides a baseline regression model that treats all observations as homogeneous, ignoring both entity-specific and time-specific effects. Useful for initial benchmarking and comparison.
-	
-	- **🏢Fixed Effects**: Controls for unobserved, time-invariant heterogeneity across entities (e.g., firms, countries) using within-transformation (demeaning). Ideal when entity-specific or time-specific characteristics may bias results
-	
-	- **🔄Fixed Effects (Two-Way)**: Simultaneously controls for both entity-specific and time-specific unobserved effects. This is particularly useful in real-world datasets where both dimensions influence outcomes.
-	
-	- **⚙️Random Effects (GLS)**: Assumes entity-specific effects are random and uncorrelated with regressors. Uses the Swamy-Arora variance components estimator and quasi-demeaning transformation for efficient estimation
-	
-	- **📉First Difference**: Eliminates entity-specific fixed effects by differencing consecutive time periods. Useful for robustness checks and when strict exogeneity assumptions may be violated
+	- 📈Pooled OLS
+	- 🏢Fixed Effects
+	- 🔄Fixed Effects (Two-Way)
+	- ⚙️Random Effects (GLS)
+	- 📉First Difference
 
 -	Statistical Diagnostics
-	- **📋 Coefficient Summary Table**: system compute and report standard errors, t-statistics, p-values, and significance stars (`***`, `**`, `*`) for easy interpretation.
-	- **📐Model Fit Metrics**: system compute and report R², Adjusted R², AIC, BIC, and F-statistic for evaluating model performance
-	- **🧪 Model Diagnostic** 
-		- **⚖️Hausman Test**: system compute and report Hausman test metrics to help users determine whether **Fixed Effects** or **Random Effects** is more appropriate for your data.
-		- **🔔Jarque-Bera Test**: Checks whether residuals follow a normal distribution
-		- **🔁Durbin-Watson Statistic**: Detects autocorrelation in residuals (serial correlation across time).
-		- **📉Breusch-Pagan Test**: Tests for heteroskedasticity (non-constant variance in errors).
+	-📋 Coefficient Summary Table covering standard errors, t-statistics, p-values, and significance stars (`***`, `**`, `*`)
+	- 📐Model Fit Metrics: covering R², Adjusted R², AIC, BIC, and F-statistic for evaluating model performance
+	- 🧪 Model Diagnostic including:
+		- ⚖️Hausman Test
+		- 🔔Jarque-Bera Test:
+		- 🔁Durbin-Watson Statistic
+		- 📉Breusch-Pagan Test
 	
 	
--	🤖 AI Explainer Powered by OpenAI’s **GPT-4o**: System supports one One-Click Interpretation that generates a full narrative explanation of  regression results in terms of:
+-	🤖 AI Explainer Powered by OpenAI’s **GPT-4o**: System supports one one-click clear nterpretation in terms:
 		-	Model choice rationale
-		-	Coefficient interpretation (economic meaning)
-		-	Statistical significance
+		-	Coefficient interpretation (B-coefficient)
+		-	Statistical significance (p-values)
 		-	Model fit quality
 		-	Key caveats (e.g., endogeneity, heteroskedasticity)
 
