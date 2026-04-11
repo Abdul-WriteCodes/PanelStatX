@@ -55,7 +55,7 @@ The system is designed and equipped with:
 	-	✅️Fitted vs Actual Scatter plots that evaluate model performance by comparing predicted vs actual values.
 
 
--	📥Downloadable Report **Word (.docx) report** containing:
+-	📥Downloadable Report (.docx) containing:
 	- 📊Model summary and fit statistics table
 	- 🅱️Full coefficient estimates table (with significance highlighting)
 	- 🔁Residual diagnostics table with auto-generated interpretations
