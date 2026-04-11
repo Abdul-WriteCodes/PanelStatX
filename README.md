@@ -64,9 +64,10 @@ The system is designed and equipped with:
 ---
 ## Workflow
 To use PanelStatX:
--📵No software installation is needed
--🚫 No command line is needed
--🚫 No code is required.
+
+- 📵No software installation is needed
+- 🚫 No command line is needed
+- 🚫 No code is required.
   
 ✅️It is very easy and direct to use by anyone under 3 minutes based on key 6 steps**
 
