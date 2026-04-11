@@ -22,7 +22,7 @@ Analysing panel data correctly requires specialised estimators that account for 
 PanelStatX automatically handles these complexities, enabling users to focus on interpretation rather than implementation. 
 
 The system is designed and equipped with:
--	Core Regression Models
+-	Core Regression Models as Estimators
 	- 📈Pooled OLS
 	- 🏢Fixed Effects
 	- 🔄Fixed Effects (Two-Way)
