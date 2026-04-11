@@ -40,11 +40,11 @@ The system is designed and equipped with:
 	
 	
 -	🤖 AI Explainer Powered by OpenAI’s **GPT-4o**: System supports one one-click clear nterpretation in terms:
-		-	Model choice rationale
-		-	Coefficient interpretation (B-coefficient)
-		-	Statistical significance (p-values)
-		-	Model fit quality
-		-	Key caveats (e.g., endogeneity, heteroskedasticity)
+	-	Model choice rationale
+	-	Coefficient interpretation (B-coefficient)
+	-	Statistical significance (p-values)
+	-	Model fit quality
+	-	Key caveats (e.g., endogeneity, heteroskedasticity) and recommendations
 
 -	📊Visualisations: System produce interactive charts that include 
 	- 	Time-series trends by entity
