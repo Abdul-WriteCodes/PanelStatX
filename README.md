@@ -90,7 +90,7 @@ To use PanelStatX:
 ## Pricing
 
 - Starter: 5 Credits ($10)
-- Standard: 25 Credits ($20)
+- Standard: 20 Credits ($25)
 - Team: 100 Credits ($100)
   
 *⬡ PanelStatX · Panel Regression Analysis System · Powered by GPT-4*
