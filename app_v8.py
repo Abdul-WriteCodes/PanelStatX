@@ -1754,7 +1754,7 @@ if not st.session_state.access_granted:
         <div class="gate-links">
             <a href="https://wa.me/2348096506034">&#x1F464; Get Access Key</a>
             <span class="gate-sep">&nbsp;|&nbsp;</span>
-            <a href="https://wa.me/2348096506034">&#x1F4CB; User Guide</a>
+            <a href="https://app.box.com/s/vw4c6u10bv0z8ngarzj73ej18t74e3wl">&#x1F4CB; User Guide</a>
             <span class="gate-sep">&nbsp;|&nbsp;</span>
             <a href="mailto:Abdulwrite77@gmail.com">&#x2699;&#xFE0F; Support</a>
         </div>
