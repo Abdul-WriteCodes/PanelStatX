@@ -81,7 +81,7 @@ To use PanelStatX:
 5. 🔍View Results and Explore — check diagnostics, visualise entity trends, ask the AI explainer questions
 7. 📄Download full results of the analysis + AI explained outputs as docx
 
-👉 **[Try the Live System Here](https://achievit.streamlit.app/)**
+👉 **[Try the Live System Here](https://panelstatx.streamlit.app/)**
 
 ---
 
