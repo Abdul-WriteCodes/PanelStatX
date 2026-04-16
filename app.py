@@ -11,7 +11,7 @@ import warnings
 warnings.filterwarnings("ignore")
 
 
-# ── Google Sheets credit system ───────────────────────────────────────────────
+# ── Google Sheets cred system ───────────────────────────────────────────────
 from google.oauth2.service_account import Credentials
 import gspread
 
@@ -383,7 +383,7 @@ def run_ols(df, y_col, x_cols):
     y_hat = X @ coeffs
     resid = y - y_hat
     n, k = X.shape
-    k_vars = k - 1           # number of regressors (excl. intercept)
+    k_vars = k - 1           
     dof = n - k
     s2 = np.sum(resid**2) / dof
     cov = s2 * np.linalg.inv(X.T @ X)
@@ -578,11 +578,11 @@ def significance_stars(p):
 
 
 def call_openai(system_prompt, user_prompt):
-    """Call OpenAI GPT-4 API for AI explanations. Key loaded from st.secrets."""
+    """Call AI Model API for AI explanations."""
     try:
         api_key = st.secrets["OPENAI_API_KEY"]
     except Exception:
-        return "OpenAI API key not configured. Add OPENAI_API_KEY to your Streamlit secrets."
+        return "OpenAI API key not configured or Exhausted."
 
     headers = {
         "Content-Type": "application/json",
@@ -1566,7 +1566,7 @@ if not st.session_state.access_granted:
     # ── Ticker ────────────────────────────────────────────────────────────────
     ticker_items = [
         "Fixed Effects Estimation", "Random Effects (GLS)", "First-Difference Estimator",
-        "Hausman Specification Test", "GPT-4 AI Explainer", "Breusch-Pagan Diagnostics",
+        "Hausman Specification Test", "AI Explainer", "Breusch-Pagan Diagnostics",
         "Jarque-Bera Normality", "Durbin-Watson Autocorrelation", "Entity Cross-Section Plots",
         "Balanced Panel Support", "CSV & Excel Import", "DOCX Report Export",
     ]
@@ -1597,13 +1597,13 @@ if not st.session_state.access_granted:
       <p class="hero-sub fi d3">
         Production-grade panel regression with <strong>Fixed Effects, Random Effects</strong>
         and <strong>First-Difference</strong> estimators — paired with
-        <strong>GPT-4 AI interpretation</strong>, full diagnostic suites,
+        <strong> AI interpretation</strong>, full diagnostic suites,
         and publication-ready DOCX reports.
       </p>
 
       <div class="hero-pills fi d4">
         <span class="h-pill"><span class="h-pill-icon">&#x2B21;</span> 4+ Panel Estimators</span>
-        <span class="h-pill"><span class="h-pill-icon">&#x25C8;</span> GPT-4 AI Explainer</span>
+        <span class="h-pill"><span class="h-pill-icon">&#x25C8;</span> AI Explainer</span>
         <span class="h-pill"><span class="h-pill-icon">&#x25C9;</span> Full Diagnostics Suite</span>
         <span class="h-pill"><span class="h-pill-icon">&#x25C6;</span> DOCX Report Export</span>
         <span class="h-pill"><span class="h-pill-icon">&#x25A3;</span> CSV &amp; Excel Import</span>
@@ -1620,8 +1620,8 @@ if not st.session_state.access_granted:
           <div class="hs-label">Data Formats</div>
         </div>
         <div class="hs-block">
-          <div class="hs-num">GPT-4</div>
-          <div class="hs-label">AI Engine</div>
+          <div class="hs-num">AI Model</div>
+          <div class="hs-label">Intelligent layer</div>
         </div>
         <div class="hs-block">
           <div class="hs-num">DOCX</div>
@@ -1663,7 +1663,7 @@ if not st.session_state.access_granted:
         </div>
         """, unsafe_allow_html=True)
         st.link_button("Get Started →", "https://flutterwave.com/pay/j5m67hrqr4iq",
-                           use_container_width=True)
+                            width='stretch')
 
     with pc2:
         st.markdown("""
@@ -1682,7 +1682,7 @@ if not st.session_state.access_granted:
         </div>
         """, unsafe_allow_html=True)
         st.link_button("Buy Credits →", "https://flutterwave.com/pay/txyljcuqfsel",
-                           use_container_width=True)
+                           width='stretch')
 
     with pc3:
         st.markdown("""
@@ -1701,7 +1701,7 @@ if not st.session_state.access_granted:
         </div>
         """, unsafe_allow_html=True)
         st.link_button("Buy Credits →", "https://flutterwave.com/pay/yw7k3gmyjoud",
-                           use_container_width=True)
+                           width='stretch')
 
     # ── Access Gate ───────────────────────────────────────────────────────────
     st.markdown("""
@@ -1741,7 +1741,7 @@ if not st.session_state.access_granted:
             placeholder="PSX-XXXX-XXXX-XXXX",
             label_visibility="collapsed",
         )
-        unlock_btn = st.button("⬡  Unlock PanelStatX", use_container_width=True, type="primary")
+        unlock_btn = st.button("⬡  Unlock PanelStatX", width='stretch', type="primary")
 
         if st.session_state.access_error:
             st.markdown(f"""
@@ -1765,7 +1765,7 @@ if not st.session_state.access_granted:
     st.markdown("""
     <div class="lp-footer fi d7">
         <div class="footer-brand">Panel<span class="ft">Stat</span>X</div>
-        <div class="footer-copy">Panel Regression Analysis &middot; Powered by GPT-4 &middot; Credit-based access</div>
+        <div class="footer-copy">Panel Regression Analysis &middot; Powered by AI Model &middot; Credit-based access</div>
     </div>
     """, unsafe_allow_html=True)
 
@@ -2046,7 +2046,7 @@ if st.session_state.df is None:
     for col, icon, title, desc in [
         (col1, "⬡", "Panel-Ready", "Fixed effects, first-difference, and pooled OLS estimators built for longitudinal data."),
         (col2, "◈", "Diagnostic Suite", "Residual analysis, heteroskedasticity checks, Hausman test, and entity plots."),
-        (col3, "⬟", "AI Explainer", "GPT-4o interprets your regression output in plain language — coefficients, fit, and caveats."),
+        (col3, "⬟", "AI Explainer", "AI model interprets your regression output in plain language — coefficients, fit, and caveats."),
     ]:
         with col:
             st.markdown(f"""
@@ -2101,10 +2101,10 @@ with tab_data:
     c1, c2 = st.columns([2, 1])
     with c1:
         st.markdown('<div class="scard-title">Dataset Preview</div>', unsafe_allow_html=True)
-        st.dataframe(df.head(100), use_container_width=True, height=320)
+        st.dataframe(df.head(100), width='stretch', height=320)
     with c2:
         st.markdown('<div class="scard-title">Summary Statistics</div>', unsafe_allow_html=True)
-        st.dataframe(df.describe().round(3), use_container_width=True, height=320)
+        st.dataframe(df.describe().round(3), width='stretch', height=320)
 
     st.markdown("---")
     st.markdown('<div class="scard-title">Correlation Heatmap</div>', unsafe_allow_html=True)
@@ -2118,14 +2118,14 @@ with tab_data:
             texttemplate="%{text}", showscale=True,
         ))
         fig_corr.update_layout(title="Pearson Correlation Matrix", height=380, **PLOTLY_THEME)
-        st.plotly_chart(fig_corr, use_container_width=True)
+        st.plotly_chart(fig_corr,  width='stretch')
 
     # Distribution of Y
     if y_col in df.columns:
         st.markdown('<div class="scard-title" style="margin-top:16px;">Dependent Variable Distribution</div>', unsafe_allow_html=True)
         fig_dist = px.histogram(df, x=y_col, nbins=40, color_discrete_sequence=["#00e5c8"])
         fig_dist.update_layout(title=f"Distribution of {y_col}", height=300, bargap=0.05, **PLOTLY_THEME)
-        st.plotly_chart(fig_dist, use_container_width=True)
+        st.plotly_chart(fig_dist,  width='stretch')
 
 
 # ──────────────────────────────────────────────────────────────────────────────
@@ -2234,7 +2234,7 @@ with tab_results:
         ))
         fig_coef.update_layout(title="Coefficients with 95% Confidence Intervals",
                                 height=max(280, len(rd) * 55), **PLOTLY_THEME)
-        st.plotly_chart(fig_coef, use_container_width=True)
+        st.plotly_chart(fig_coef,  width='stretch')
 
         # ── Download Report ────────────────────────────────────────────────────
         st.markdown("---")
@@ -2300,7 +2300,7 @@ with tab_diagnostics:
             ))
             fig_rv.update_layout(title="Residuals vs Fitted",
                                    xaxis_title="Fitted", yaxis_title="Residual", height=340, **PLOTLY_THEME)
-            st.plotly_chart(fig_rv, use_container_width=True)
+            st.plotly_chart(fig_rv, width='stretch')
 
         # Q-Q Plot
         with dc2:
@@ -2319,7 +2319,7 @@ with tab_diagnostics:
             fig_qq.update_layout(title="Normal Q-Q Plot",
                                    xaxis_title="Theoretical Quantiles",
                                    yaxis_title="Sample Quantiles", height=340, **PLOTLY_THEME)
-            st.plotly_chart(fig_qq, use_container_width=True)
+            st.plotly_chart(fig_qq, width='stretch')
 
         dc3, dc4 = st.columns(2)
 
@@ -2328,7 +2328,7 @@ with tab_diagnostics:
             fig_rh = px.histogram(x=resid, nbins=40, color_discrete_sequence=["#7c6df0"])
             fig_rh.update_layout(title="Residual Distribution", xaxis_title="Residual",
                                    height=300, bargap=0.05, **PLOTLY_THEME)
-            st.plotly_chart(fig_rh, use_container_width=True)
+            st.plotly_chart(fig_rh, width='stretch')
 
         # Scale-Location
         with dc4:
@@ -2339,7 +2339,7 @@ with tab_diagnostics:
             ))
             fig_sl.update_layout(title="Scale-Location (√|Residual| vs Fitted)",
                                    xaxis_title="Fitted", yaxis_title="√|Residual|", height=300, **PLOTLY_THEME)
-            st.plotly_chart(fig_sl, use_container_width=True)
+            st.plotly_chart(fig_sl, width='stretch')
 
         # Residual stats
         st.markdown("---")
@@ -2414,7 +2414,7 @@ with tab_entity:
             )
             fig_ep.update_layout(title=f"{y_plot} over {x_axis} by {entity_col}",
                                    height=440, **PLOTLY_THEME)
-            st.plotly_chart(fig_ep, use_container_width=True)
+            st.plotly_chart(fig_ep, width='stretch')
 
             # Entity mean bar
             means = df.groupby(entity_col)[y_plot].mean().sort_values(ascending=False)
@@ -2426,7 +2426,7 @@ with tab_entity:
             )
             fig_bar.update_layout(title=f"Entity Mean of {y_plot}", height=320,
                                    coloraxis_showscale=False, **PLOTLY_THEME)
-            st.plotly_chart(fig_bar, use_container_width=True)
+            st.plotly_chart(fig_bar, width='stretch')
 
 
 # ──────────────────────────────────────────────────────────────────────────────
@@ -2484,15 +2484,15 @@ Coefficient Table:
         col_explain, col_custom = st.columns([3, 2])
 
         with col_explain:
-            if st.button("✦ Generate AI Explanation", type="primary", use_container_width=True):
-                with st.spinner("GPT-4 is analysing your results…"):
+            if st.button("✦ Generate AI Explanation", type="primary", width='stretch'):
+                with st.spinner("AI model is analysing your results…"):
                     explanation = call_openai(sys_prompt, f"Please explain these panel regression results:\n\n{context}")
                     st.session_state.ai_explanation = explanation
 
         with col_custom:
             custom_q = st.text_input("Ask a specific question about the results…",
                                       placeholder="e.g. Is x1 economically significant?")
-            if st.button("Ask GPT-4", use_container_width=True) and custom_q:
+            if st.button("Ask AI Model", width='stretch') and custom_q:
                 with st.spinner("Thinking…"):
                     answer = call_openai(
                         sys_prompt,
@@ -2503,7 +2503,7 @@ Coefficient Table:
         if st.session_state.ai_explanation:
             st.markdown("---")
             st.markdown(f"""
-            <div class="ai-label">✦ &nbsp;GPT-4 AI INTERPRETATION</div>
+            <div class="ai-label">✦ &nbsp; AI MODEL INTERPRETATION</div>
             <div class="ai-box">{st.session_state.ai_explanation}</div>
             """, unsafe_allow_html=True)
 
@@ -2550,6 +2550,6 @@ Coefficient Table:
 st.markdown("---")
 st.markdown("""
 <div style="text-align:center;font-family:'DM Mono',monospace;font-size:0.7rem;color:var(--muted);padding:12px 0;">
-    ⬡ PanelStatX · Panel Regression Analysis System · Powered by GPT-4
+    ⬡ PanelStatX · Panel Regression Analysis System · Powered by an AI Model
 </div>
 """, unsafe_allow_html=True)
