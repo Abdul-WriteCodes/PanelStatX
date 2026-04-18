@@ -556,6 +556,7 @@ def breusch_pagan_test(resid, X):
     return bp_stat, bp_p, k
 
 
+def hausman_test(fe_coef, re_coef, fe_vcov, re_vcov):
     """Simple Hausman test statistic."""
     diff = fe_coef - re_coef
     diff_vcov = fe_vcov - re_vcov
@@ -1256,6 +1257,7 @@ for key, default in [
     # Credit-system state
     ("user_key", ""), ("user_credits", 0),
     ("user_email", ""), ("user_row", None),
+    ("_credit_msg", None),
 ]:
     if key not in st.session_state:
         st.session_state[key] = default
@@ -2016,6 +2018,13 @@ with st.sidebar:
     </div>
     """, unsafe_allow_html=True)
 
+    # Show deferred credit notification after rerun
+    _cmsg = st.session_state.get("_credit_msg")
+    if _cmsg:
+        if _cmsg[0] == "warn":
+            st.warning(_cmsg[1])
+        st.session_state._credit_msg = None
+
     if credits_left <= 0:
         st.error("⚠ No credits remaining. Please purchase more to run analyses.")
         st.markdown("""
@@ -2196,9 +2205,12 @@ if run_btn and st.session_state.df is not None and x_cols:
             )
             st.session_state.user_credits = new_credits
             if new_credits == 0:
-                st.warning("⚠ You just used your last credit. Purchase more to run further analyses.")
+                st.session_state._credit_msg = ("warn", "⚠ You just used your last credit. Purchase more to run further analyses.")
             elif new_credits <= 3:
-                st.warning(f"⚠ Only {new_credits} credit(s) remaining.")
+                st.session_state._credit_msg = ("warn", f"⚠ Only {new_credits} credit(s) remaining.")
+            else:
+                st.session_state._credit_msg = None
+            st.rerun()
 
         except Exception as e:
             st.error(f"Regression error: {e}")
@@ -2444,10 +2456,14 @@ with tab_results:
             except Exception as e:
                 st.error(f"Report generation error: {e}")
         with dl_col2:
-            st.markdown("""
-            <div style="font-family:'DM Mono',monospace;font-size:0.7rem;color:var(--muted);padding:10px 0;line-height:1.8;">
-                ✦ Tip: Generate the AI Explanation first (AI Explainer tab),
-                then return here to download the complete report including the write-up.
+            ai_ready = bool(st.session_state.get("ai_explanation", "").strip())
+            tip_color = "#22d3a0" if ai_ready else "#6b7a9a"
+            tip_icon  = "✓" if ai_ready else "○"
+            tip_text  = "AI interpretation included in report." if ai_ready else "AI write-up not yet generated — go to AI Explainer tab first, then download."
+            st.markdown(f"""
+            <div style="font-family:'DM Mono',monospace;font-size:0.7rem;color:{tip_color};
+                        padding:10px 0;line-height:1.8;">
+                {tip_icon} {tip_text}
             </div>
             """, unsafe_allow_html=True)
 
@@ -2709,10 +2725,13 @@ Coefficient Table:
                         new_credits = deduct_credit(st.session_state.user_row, st.session_state.user_credits)
                         st.session_state.user_credits = new_credits
                         if new_credits == 0:
-                            st.warning("⚠ You just used your last credit.")
+                            st.session_state._credit_msg = ("warn", "⚠ You just used your last credit.")
                         elif new_credits <= 3:
-                            st.warning(f"⚠ Only {new_credits} credit(s) remaining.")
+                            st.session_state._credit_msg = ("warn", f"⚠ Only {new_credits} credit(s) remaining.")
+                        else:
+                            st.session_state._credit_msg = None
                     st.session_state.ai_explanation = explanation
+                    st.rerun()
             if ai_disabled:
                 st.caption("⚠ No credits remaining — cannot generate AI explanation.")
             else:
@@ -2732,10 +2751,13 @@ Coefficient Table:
                         new_credits = deduct_credit(st.session_state.user_row, st.session_state.user_credits)
                         st.session_state.user_credits = new_credits
                         if new_credits == 0:
-                            st.warning("⚠ You just used your last credit.")
+                            st.session_state._credit_msg = ("warn", "⚠ You just used your last credit.")
                         elif new_credits <= 3:
-                            st.warning(f"⚠ Only {new_credits} credit(s) remaining.")
+                            st.session_state._credit_msg = ("warn", f"⚠ Only {new_credits} credit(s) remaining.")
+                        else:
+                            st.session_state._credit_msg = None
                     st.session_state.ai_explanation = answer
+                    st.rerun()
             if ask_disabled:
                 st.caption("⚠ No credits remaining.")
             else:
@@ -2743,10 +2765,57 @@ Coefficient Table:
 
         if st.session_state.ai_explanation:
             st.markdown("---")
-            st.markdown(f"""
-            <div class="ai-label">✦ &nbsp; AI MODEL INTERPRETATION</div>
-            <div class="ai-box">{st.session_state.ai_explanation}</div>
-            """, unsafe_allow_html=True)
+
+            def _md_to_html(text):
+                """Convert ## headings, **bold**, *italic*, - bullets, 1. numbers to HTML."""
+                import re as _re
+                import html as _html
+                HDR_STYLE = (
+                    "font-family:'Syne',sans-serif;font-size:0.78rem;font-weight:700;"
+                    "text-transform:uppercase;letter-spacing:0.1em;color:var(--accent);"
+                    "margin:18px 0 6px 0;border-bottom:1px solid rgba(0,229,200,0.2);padding-bottom:4px;"
+                )
+                BULLET_WRAP  = 'style="padding:2px 0 2px 18px;position:relative;"'
+                BULLET_MARK  = 'style="position:absolute;left:4px;color:var(--accent);"'
+                NUMBER_WRAP  = 'style="padding:2px 0 2px 24px;position:relative;"'
+                NUMBER_MARK  = 'style="position:absolute;left:4px;color:var(--accent);font-weight:700;"'
+                html_parts = []
+                for line in text.split("\n"):
+                    s = line.strip()
+                    if not s:
+                        html_parts.append("<br>")
+                        continue
+                    if s.startswith("## ") or s.startswith("### "):
+                        h = _html.escape(s.lstrip("# ").rstrip(":"))
+                        html_parts.append('<div style="' + HDR_STYLE + '">' + h + "</div>")
+                        continue
+                    s_e = _html.escape(s)
+                    s_e = _re.sub(r'\*\*([^*]+)\*\*', r'<strong>\1</strong>', s_e)
+                    s_e = _re.sub(r'\*([^*]+)\*',   r'<em>\1</em>',           s_e)
+                    if _re.match(r'^[-\u2022\u2013]\s+', s_e):
+                        body = _re.sub(r'^[-\u2022\u2013]\s+', '', s_e)
+                        html_parts.append(
+                            '<div ' + BULLET_WRAP + '>'
+                            '<span ' + BULLET_MARK + '>&#x2013;</span>' + body + '</div>'
+                        )
+                        continue
+                    m = _re.match(r'^(\d+)[.)]\s+(.*)', s_e)
+                    if m:
+                        html_parts.append(
+                            '<div ' + NUMBER_WRAP + '>'
+                            '<span ' + NUMBER_MARK + '>' + m.group(1) + '.</span>'
+                            + m.group(2) + '</div>'
+                        )
+                        continue
+                    html_parts.append('<div style="padding:2px 0;">' + s_e + '</div>')
+                return "\n".join(html_parts)
+
+            ai_html = _md_to_html(st.session_state.ai_explanation)
+            st.markdown(
+                '<div class="ai-label">\u2746 &nbsp; AI MODEL INTERPRETATION</div>'
+                '<div class="ai-box" style="white-space:normal;">' + ai_html + '</div>',
+                unsafe_allow_html=True,
+            )
 
         # ── Quick insight cards ────────────────────────────────────────────────
         st.markdown("---")
