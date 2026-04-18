@@ -878,9 +878,29 @@ def build_docx_report(res, model_type, ai_explanation=""):
     COL_W_STAT = Inches(3.8)
     COL_W_VAL  = Inches(2.7)
 
+
+    def clear_tbl_borders(tbl):
+        """Remove all table-level borders so only cell-level borders show."""
+        tbl_el  = tbl._tbl
+        tblPr   = tbl_el.find(qn("w:tblPr"))
+        if tblPr is None:
+            tblPr = OxmlElement("w:tblPr")
+            tbl_el.insert(0, tblPr)
+        for existing in tblPr.findall(qn("w:tblBorders")):
+            tblPr.remove(existing)
+        tblBorders = OxmlElement("w:tblBorders")
+        for edge in ("top", "left", "bottom", "right", "insideH", "insideV"):
+            tag = OxmlElement(f"w:{edge}")
+            tag.set(qn("w:val"),   "none")
+            tag.set(qn("w:sz"),    "0")
+            tag.set(qn("w:color"), "FFFFFF")
+            tblBorders.append(tag)
+        tblPr.append(tblBorders)
+
     fit_tbl = doc.add_table(rows=n_fit + 2, cols=2)  # +2: header row + bottom rule row
     fit_tbl.alignment = WD_TABLE_ALIGNMENT.LEFT
-    fit_tbl.style     = "Table Normal"
+    fit_tbl.style     = "Table Grid"
+    clear_tbl_borders(fit_tbl)
 
     # --- Top rule row (row 0) ---
     for j in range(2):
@@ -935,7 +955,8 @@ def build_docx_report(res, model_type, ai_explanation=""):
     n_coef_rows = len(result_df)
     coef_tbl = doc.add_table(rows=n_coef_rows + 2, cols=len(coef_headers))
     coef_tbl.alignment = WD_TABLE_ALIGNMENT.LEFT
-    coef_tbl.style     = "Table Normal"
+    coef_tbl.style     = "Table Grid"
+    clear_tbl_borders(coef_tbl)
 
     # --- Header row (row 0): thick top + thin bottom ---
     for j, (h, w) in enumerate(zip(coef_headers, COL_WC)):
@@ -1053,7 +1074,8 @@ def build_docx_report(res, model_type, ai_explanation=""):
     n_diag = len(diag_left)
     diag_tbl = doc.add_table(rows=n_diag + 2, cols=3)
     diag_tbl.alignment = WD_TABLE_ALIGNMENT.LEFT
-    diag_tbl.style     = "Table Normal"
+    diag_tbl.style     = "Table Grid"
+    clear_tbl_borders(diag_tbl)
 
     # Header row
     for j, (hdr, w) in enumerate(zip(["Test / Statistic", "Value", "Decision / Notes"], COL_D)):
