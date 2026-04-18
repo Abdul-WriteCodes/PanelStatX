@@ -2630,6 +2630,18 @@ with tab_ai:
         re_str = ""
         if st.session_state.model_type == "Random Effects (GLS)":
             re_str = f"\nVariance Components: σ²ᵤ={stats.get('sigma_u2',0):.6f}, σ²ₑ={stats.get('sigma_e2',0):.6f}, θ={stats.get('theta',0):.4f}"
+        # Compute diagnostics to inject into context (same as DOCX table)
+        from scipy import stats as _sc_stats
+        _resid_arr = np.asarray(res["resid"], dtype=float)
+        _resid_arr = _resid_arr[np.isfinite(_resid_arr)]
+        _jb_stat, _jb_p   = _sc_stats.jarque_bera(_resid_arr)
+        _dw_stat           = np.sum(np.diff(_resid_arr)**2) / max(np.sum(_resid_arr**2), 1e-10)
+        _skew              = _sc_stats.skew(_resid_arr)
+        _kurt              = _sc_stats.kurtosis(_resid_arr)
+        _bp_stat           = stats.get("BP_stat")
+        _bp_p              = stats.get("BP_p")
+        _bp_str_ctx        = f"LM={_bp_stat:.4f}, p={_bp_p:.4f}" if _bp_stat is not None else "N/A"
+
         context = f"""
 Model: {st.session_state.model_type}
 Dependent variable: {res['y_col']}
@@ -2637,12 +2649,21 @@ Independent variables: {', '.join(res['x_cols'])}
 Entity column: {res['entity_col']} | Time column: {res['time_col']}
 
 Fit Statistics:
-  R²        = {stats['R2']:.4f}
-  Adj. R²   = {stats['R2_adj']:.4f}
-  N         = {stats['N']}
-  AIC       = {stats['AIC']:.2f}
-  BIC       = {stats['BIC']:.2f}
-  F-stat    = {stats.get('F_stat', 'N/A')}  (p = {stats.get('F_p', 'N/A')}){hausman_str}{bp_str}{re_str}
+  R²           = {stats['R2']:.4f}
+  Adj. R²      = {stats['R2_adj']:.4f}
+  N            = {stats['N']}
+  AIC          = {stats['AIC']:.2f}
+  BIC          = {stats['BIC']:.2f}
+  F-statistic  = {stats.get('F_stat', float('nan')):.4f}  (p = {stats.get('F_p', float('nan')):.4f}){hausman_str}{re_str}
+
+Residual Diagnostics (already computed — use EXACTLY these values):
+  Mean residual       = {np.mean(_resid_arr):.6f}
+  Std. dev. residual  = {np.std(_resid_arr):.6f}
+  Skewness            = {_skew:.4f}
+  Excess Kurtosis     = {_kurt:.4f}
+  Jarque-Bera stat    = {_jb_stat:.4f}   p-value = {_jb_p:.4f}
+  Durbin-Watson       = {_dw_stat:.4f}
+  Breusch-Pagan       = {_bp_str_ctx}
 
 Coefficient Table:
 {coeff_table}
@@ -2651,45 +2672,74 @@ Coefficient Table:
         sys_prompt = (
             "You are an expert econometrician. Given panel regression output, produce a structured, "
             "publication-quality interpretation that will be rendered into a Word document. "
+            "CRITICAL: All numeric values (coefficients, statistics, p-values) are provided in the input. "
+            "You MUST use those exact numbers — never say 'not provided' or invent values. "
             "Format your response EXACTLY as follows, using these markers:\n\n"
             "## Model Specification\n"
-            "Brief paragraph on why this estimator is appropriate, citing the Hausman test result if available.\n\n"
+            "Brief paragraph on why this estimator is appropriate, citing the Hausman test result (stat and p) if available.\n\n"
             "## Coefficient Interpretation\n"
-            "For each variable, use a bullet: '- **VariableName**: [coeff value], [SE], [t-stat], p=[p-value]. "
+            "For each variable, use a bullet: '- **VariableName**: Coef.=[value], SE=[value], t=[value], p=[value]. "
             "Interpretation: [one sentence on economic/practical meaning and direction of effect].'\n\n"
             "## Model Fit & Overall Significance\n"
-            "Discuss R², Adjusted R², F-statistic and its p-value, AIC/BIC in one paragraph. "
-            "Use **bold** for specific numeric values.\n\n"
+            "Discuss **R²**, **Adj. R²**, **F-statistic** and its p-value, **AIC** and **BIC** using the exact values provided. "
+            "Use **bold** for numeric values.\n\n"
             "## Diagnostic Test Results\n"
-            "- **Jarque-Bera**: state stat and p, conclude on residual normality.\n"
-            "- **Breusch-Pagan**: state LM stat and p, conclude on heteroskedasticity.\n"
-            "- **Durbin-Watson**: state value, conclude on autocorrelation.\n\n"
+            "Use the EXACT values from the 'Residual Diagnostics' section of the input. Never say not provided.\n"
+            "- **Jarque-Bera**: JB=[exact stat], p=[exact p]. State whether normality is rejected at 5%.\n"
+            "- **Breusch-Pagan**: LM=[exact stat], p=[exact p]. State whether heteroskedasticity is detected.\n"
+            "- **Durbin-Watson**: DW=[exact value]. State whether autocorrelation is indicated (benchmark 1.5-2.5).\n"
+            "- **Residual Skewness**: [exact value] — note if distribution is approximately symmetric.\n\n"
             "## Caveats & Concerns\n"
-            "Numbered list of up to 3 potential issues (endogeneity, measurement error, etc.).\n\n"
+            "Numbered list of up to 3 potential issues (endogeneity, measurement error, etc.) grounded in the actual results.\n\n"
             "## Recommendations\n"
-            "Numbered list of up to 3 concrete next steps for the analyst.\n\n"
-            "Use **bold** for key terms and statistics. Keep each section concise. "
-            "Do NOT use plain prose without structure. Do NOT add preamble or closing remarks."
+            "Numbered list of up to 3 concrete next steps for the analyst based on the diagnostics above.\n\n"
+            "Use **bold** for key terms and exact statistics. Keep each section concise. "
+            "Do NOT add preamble, closing remarks, or any text outside these sections."
         )
 
         col_explain, col_custom = st.columns([3, 2])
 
         with col_explain:
-            if st.button("✦ Generate AI Explanation", type="primary", width='stretch'):
+            ai_disabled = st.session_state.user_credits <= 0
+            if st.button("✦ Generate AI Explanation", type="primary", width='stretch', disabled=ai_disabled):
                 with st.spinner("AI model is analysing your results…"):
                     explanation = call_openai(sys_prompt, f"Please explain these panel regression results:\n\n{context}")
+                    if not explanation.startswith("OpenAI API key") and not explanation.startswith("Request failed"):
+                        # Deduct 1 credit for AI explainer
+                        new_credits = deduct_credit(st.session_state.user_row, st.session_state.user_credits)
+                        st.session_state.user_credits = new_credits
+                        if new_credits == 0:
+                            st.warning("⚠ You just used your last credit.")
+                        elif new_credits <= 3:
+                            st.warning(f"⚠ Only {new_credits} credit(s) remaining.")
                     st.session_state.ai_explanation = explanation
+            if ai_disabled:
+                st.caption("⚠ No credits remaining — cannot generate AI explanation.")
+            else:
+                st.caption(f"⚡ Costs 1 credit · {st.session_state.user_credits} remaining")
 
         with col_custom:
             custom_q = st.text_input("Ask a specific question about the results…",
                                       placeholder="e.g. Is x1 economically significant?")
-            if st.button("Ask AI Model", width='stretch') and custom_q:
+            ask_disabled = st.session_state.user_credits <= 0
+            if st.button("Ask AI Model", width='stretch', disabled=ask_disabled) and custom_q:
                 with st.spinner("Thinking…"):
                     answer = call_openai(
                         sys_prompt,
                         f"Here are the regression results:\n\n{context}\n\nQuestion: {custom_q}",
                     )
+                    if not answer.startswith("OpenAI API key") and not answer.startswith("Request failed"):
+                        new_credits = deduct_credit(st.session_state.user_row, st.session_state.user_credits)
+                        st.session_state.user_credits = new_credits
+                        if new_credits == 0:
+                            st.warning("⚠ You just used your last credit.")
+                        elif new_credits <= 3:
+                            st.warning(f"⚠ Only {new_credits} credit(s) remaining.")
                     st.session_state.ai_explanation = answer
+            if ask_disabled:
+                st.caption("⚠ No credits remaining.")
+            else:
+                st.caption(f"⚡ Costs 1 credit · {st.session_state.user_credits} remaining")
 
         if st.session_state.ai_explanation:
             st.markdown("---")
