@@ -27,7 +27,7 @@ def _get_sheet():
     gc = gspread.authorize(creds)
     spreadsheet_id = st.secrets["SHEET_ID"]
     sh = gc.open_by_key(spreadsheet_id)
-    return sh.sheet1   # first sheet: Key | Credits | DatePurchased | Email
+    return sh.sheet1  
 
 
 def lookup_key(access_key: str) -> dict | None:
@@ -38,7 +38,7 @@ def lookup_key(access_key: str) -> dict | None:
     """
     try:
         ws = _get_sheet()
-        records = ws.get_all_records()           # [{Key, Credits, DatePurchased, Email}, …]
+        records = ws.get_all_records()           
         for i, row in enumerate(records, start=2):  # row 1 is header
             if str(row.get("Key", "")).strip() == access_key.strip():
                 return {
