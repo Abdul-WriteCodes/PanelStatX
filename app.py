@@ -1930,11 +1930,11 @@ if not st.session_state.access_granted:
             
         st.markdown("""
         <div class="gate-links">
-            <a href="https://wa.me/2348096506034" target="_blank" rel="noopener noreferrer">&#x1F464; Get Access Key</a>
+            <a href="https://x.com/bayantx360" target="_blank" rel="noopener noreferrer">&#x1F464; Get Access Key</a>
             <span class="gate-sep">&nbsp;|&nbsp;</span>
             <a href="https://app.box.com/s/vw4c6u10bv0z8ngarzj73ej18t74e3wl" target="_blank" rel="noopener noreferrer">&#x1F4CB; User Guide</a>
             <span class="gate-sep">&nbsp;|&nbsp;</span>
-            <a href="mailto:Abdulwrite77@gmail.com">&#x2699;&#xFE0F; Support</a>
+            <a href="mailto:bayantx360@gmail.com">&#x2699;&#xFE0F; Support</a>
         </div>
         """, unsafe_allow_html=True)
  
@@ -1943,7 +1943,7 @@ if not st.session_state.access_granted:
     st.markdown("""
     <div class="lp-footer fi d7">
         <div class="footer-brand">Panel<span class="ft">Stat</span>X</div>
-        <div class="footer-copy">Panel Regression Analysis &middot; Powered by AI Model &middot; Credit-based access</div>
+        <div class="footer-copy">Panel Regression Analysis &middot; Distributed by Bayantx360 &middot; Credit-based access</div>
     </div>
     """, unsafe_allow_html=True)
 
