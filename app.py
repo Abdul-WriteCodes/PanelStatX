@@ -11,7 +11,7 @@ import warnings
 warnings.filterwarnings("ignore")
 
 
-# ── Google Sheets cred system ───────────────────────────────────────────────
+# ── cred system ───────────────────────────────────────────────
 from google.oauth2.service_account import Credentials
 import gspread
 
@@ -39,7 +39,7 @@ def lookup_key(access_key: str) -> dict | None:
     try:
         ws = _get_sheet()
         records = ws.get_all_records()           
-        for i, row in enumerate(records, start=2):  # row 1 is header
+        for i, row in enumerate(records, start=2):
             if str(row.get("Key", "")).strip() == access_key.strip():
                 return {
                     "row_index": i,
@@ -2393,7 +2393,7 @@ with tab_results:
                 .format({"Coeff.": "{:.4f}", "Std. Err.": "{:.4f}",
                          "t-stat": "{:.3f}", "p-value": "{:.4f}"})
                 .map(lambda v: "color: #00e5c8" if v == "✓ Significant" else "color: #6b7a9a", subset=["Sig"]),
-            use_container_width=True, hide_index=True
+            width='stretch', hide_index=True
         )
         st.caption("*p<0.1  **p<0.05  ***p<0.01")
 
