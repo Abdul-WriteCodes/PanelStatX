@@ -1926,7 +1926,6 @@ if not st.session_state.access_granted:
       <div class="section-head fi d5">
         <p class="section-title">UPGRADE <em>PLAN </p>
         <span class="section-label">Pay-As-You-Go Credits &middot; No monthly Subscription</span>
-        <p class="section-title">Simple, <em>transparent</em> pricing</p>
       </div>
     </div>
     """, unsafe_allow_html=True)
