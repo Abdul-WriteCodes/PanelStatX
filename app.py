@@ -1924,8 +1924,8 @@ if not st.session_state.access_granted:
     st.markdown("""
     <div class="lp-pricing">
       <div class="section-head fi d5">
-        <span class="section-label">Pay-As-You-Go Credits &middot; No Subscription</span>
-        <p class="section-title">Simple, <em>transparent</em> pricing</p>
+        <span class="section-label">Pay-As-You-Go Credits &middot; No monthly Subscription</span>
+        <p class="section-title">UPGRADE:Simple, <em>transparent</em> pricing</p>
       </div>
     </div>
     """, unsafe_allow_html=True)
