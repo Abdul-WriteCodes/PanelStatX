@@ -1916,7 +1916,7 @@ if not st.session_state.access_granted:
         st.markdown('<div class="trial-btn-zone">', unsafe_allow_html=True)
         free_trial_btn = st.button("⬡  Start Free Trial", width='stretch', key="free_trial_btn")
         st.markdown('</div>', unsafe_allow_html=True)
-        st.markdown('<div class="trial-note" style="text-align:center;">No sign-up · No credit card · Instant access</div>', unsafe_allow_html=True)
+        st.markdown('<div class="trial-note" style="text-align:center;">Free Trial Require No sign-up · No credit card · Instant access</div>', unsafe_allow_html=True)
 
     st.markdown("<br>", unsafe_allow_html=True)
 
@@ -1924,8 +1924,9 @@ if not st.session_state.access_granted:
     st.markdown("""
     <div class="lp-pricing">
       <div class="section-head fi d5">
+        <p class="section-title">UPGRADE <em>PLAN </p>
         <span class="section-label">Pay-As-You-Go Credits &middot; No monthly Subscription</span>
-        <p class="section-title">UPGRADE:Simple, <em>transparent</em> pricing</p>
+        <p class="section-title">Simple, <em>transparent</em> pricing</p>
       </div>
     </div>
     """, unsafe_allow_html=True)
