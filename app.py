@@ -2147,7 +2147,7 @@ with st.sidebar:
         st.session_state._credit_msg = None
 
     if credits_left <= 0 and not is_trial:
-        st.error("⚠ No credits remaining. Please purchase more to run analyses.")
+        st.warning("⚠ No credits remaining. AI Explainer and Report Download require credits.")
         st.markdown("""
         <div style="text-align:center;font-family:'DM Mono',monospace;font-size:0.7rem;
                     color:var(--muted);padding:8px 0;">
@@ -2210,7 +2210,6 @@ with st.sidebar:
             "Run Analysis",
             use_container_width=True,
             type="primary",
-            disabled=(st.session_state.user_credits <= 0 and not st.session_state.get("is_free_trial", False)),
         )
 
         # ── Analysis status feedback label ────────────────────────────────────
@@ -2230,7 +2229,7 @@ with st.sidebar:
                 Analysis complete
             </div>
             """, unsafe_allow_html=True)
-        elif st.session_state.df is not None and not (st.session_state.user_credits <= 0 and not st.session_state.get("is_free_trial", False)):
+        elif st.session_state.df is not None:
             st.markdown("""
             <div style="
                 display:flex; align-items:center; gap:8px;
@@ -2260,17 +2259,21 @@ with st.sidebar:
         st.session_state.ai_explanation = ""
         st.rerun()
 
+    # ── Sign Out button ────────────────────────────────────────────────────────
+    if st.button("Sign Out", use_container_width=True):
+        for key in ["access_granted", "access_error", "user_key", "user_credits",
+                    "user_email", "user_row", "is_free_trial", "df", "results",
+                    "ai_explanation", "_credit_msg", "model_type"]:
+            if key in st.session_state:
+                del st.session_state[key]
+        st.rerun()
+
 
 # ═══════════════════════════════════════════════════════════════════════════════
 # RUN MODEL
 # ═══════════════════════════════════════════════════════════════════════════════
 
 if run_btn and st.session_state.df is not None and x_cols:
-    # ── Credit guard ──────────────────────────────────────────────────────────
-    if st.session_state.user_credits <= 0 and not st.session_state.get("is_free_trial", False):
-        st.error("⚠ You have no credits remaining. Please purchase more to run analyses.")
-        st.stop()
-
     df = st.session_state.df
     with st.spinner("Running regression…"):
         try:
@@ -2319,19 +2322,6 @@ if run_btn and st.session_state.df is not None and x_cols:
             }
             st.session_state.ai_explanation = ""
 
-            # ── Deduct 1 credit (paid users only) ────────────────────────────
-            if not st.session_state.get("is_free_trial", False):
-                new_credits = deduct_credit(
-                    st.session_state.user_row,
-                    st.session_state.user_credits,
-                )
-                st.session_state.user_credits = new_credits
-                if new_credits == 0:
-                    st.session_state._credit_msg = ("warn", "⚠ You just used your last credit. Purchase more to run further analyses.")
-                elif new_credits <= 3:
-                    st.session_state._credit_msg = ("warn", f"⚠ Only {new_credits} credit(s) remaining.")
-                else:
-                    st.session_state._credit_msg = None
             st.rerun()
 
         except Exception as e:
@@ -2573,6 +2563,7 @@ with tab_results:
                 st.link_button("Upgrade — Get Access Key →", "https://x.com/bayantx360",
                                use_container_width=True)
             else:
+                dl_disabled = st.session_state.user_credits <= 0
                 try:
                     import datetime
                     docx_bytes = build_docx_report(
@@ -2581,14 +2572,29 @@ with tab_results:
                         ai_explanation=st.session_state.get("ai_explanation", ""),
                     )
                     fname = f"PanelStatX_Report_{datetime.datetime.now().strftime('%Y%m%d_%H%M')}.docx"
-                    st.download_button(
+                    if st.download_button(
                         label="⬇  Download Report (.docx)",
                         data=docx_bytes,
                         file_name=fname,
                         mime="application/vnd.openxmlformats-officedocument.wordprocessingml.document",
                         use_container_width=True,
                         type="primary",
-                    )
+                        disabled=dl_disabled,
+                        on_click=None,
+                    ):
+                        # Deduct 1 credit for report download
+                        new_credits = deduct_credit(st.session_state.user_row, st.session_state.user_credits)
+                        st.session_state.user_credits = new_credits
+                        if new_credits == 0:
+                            st.session_state._credit_msg = ("warn", "⚠ You just used your last credit.")
+                        elif new_credits <= 3:
+                            st.session_state._credit_msg = ("warn", f"⚠ Only {new_credits} credit(s) remaining.")
+                        else:
+                            st.session_state._credit_msg = None
+                    if dl_disabled:
+                        st.caption("⚠ No credits remaining — cannot download report.")
+                    else:
+                        st.caption(f"⚡ Costs 1 credit · {st.session_state.user_credits} remaining")
                 except Exception as e:
                     st.error(f"Report generation error: {e}")
         with dl_col2:
