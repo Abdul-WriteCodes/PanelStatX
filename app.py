@@ -1937,7 +1937,7 @@ if not st.session_state.access_granted:
         st.markdown("""
         <div class="price-card fi d3">
           <div class="price-plan">Starter</div>
-          <div class="price-amount"><span class="price-curr">$</span>10</div>
+          <div class="price-amount"><span class="price-curr">.</span>$10</div>
           <div class="price-credits">5 Analysis Credits</div>
           <div class="price-divider"></div>
           <ul class="price-features">
@@ -1956,7 +1956,7 @@ if not st.session_state.access_granted:
         <div class="price-card featured fi d4">
           <span class="price-badge badge-pop">Most Popular</span>
           <div class="price-plan">Standard</div>
-          <div class="price-amount"><span class="price-curr">$</span>25</div>
+          <div class="price-amount"><span class="price-curr">.</span>$25</div>
           <div class="price-credits">20 Analysis Credits</div>
           <div class="price-divider"></div>
           <ul class="price-features">
@@ -1975,7 +1975,7 @@ if not st.session_state.access_granted:
         <div class="price-card fi d5">
           <span class="price-badge badge-val">Best Value</span>
           <div class="price-plan">Team</div>
-          <div class="price-amount"><span class="price-curr">$</span>100</div>
+          <div class="price-amount"><span class="price-curr">.</span>$100</div>
           <div class="price-credits">100 Analysis Credits</div>
           <div class="price-divider"></div>
           <ul class="price-features">
