@@ -1,20 +1,21 @@
-#  PanelStatX
+#  PanelStatX: A web-based AI-powered panel regression analysis system. 
+
 
 <p align="center">
   <img src="Assets/PSX1.png" alt="PanelStatX Logo" width="800"/>
 </p>
 
 
-PanelStatX is a web-based AI-powered panel regression analysis system. 
+PanelStatX is the fastest way to run panel regression without code
 
-🤢The Problem
+## The Problem
 
 In carrying out panel regression, rsearchers and students struggle with:
 - Expensive tools like Stata
 - Steep learning curve (R, Python)
 - Time-consuming workflows
 
-🤓The Solution
+## The Solution
 
 PanelStatX solve this high cost of accessibility and steep technical learning curve problem that comes with Stata, R and Python. is built as a no-code statistical analysis system that let users run analysis with:
 - 📵 No software installation
@@ -22,10 +23,11 @@ PanelStatX solve this high cost of accessibility and steep technical learning cu
 - 🚫 No writing of code syntax.
 
 Benefits of Using PanelStatX
-- ⏱ Reduces analysis time by ~80%
+- 🕧 Reduces analysis time by ~80%
 - 💸 Eliminates need for paid software
 - 🎓 User-friendly and can be used by anyone with basic digital skill
 - 🔁 Can be accessed anywhere and used to run analysis via mobile phone and laptop devices
+> Use Case: PanelStatX is an alternative to Stata and R. It has become a tool of choice for economists, researchers, students, and data analysts for completing their data analysis without paying exorbitant license fee or writing a complex code syntax. It is a useful tool to complete their research timely
 
 ---
 
