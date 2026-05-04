@@ -1,65 +1,49 @@
-# ⬡ PanelStatX
+#  PanelStatX
 
 <p align="center">
   <img src="Assets/PSX1.png" alt="PanelStatX Logo" width="800"/>
 </p>
 
 
-PanelStatX is a web-based AI-powered panel regression analysis system. It is built as a no-code statistical analysis system for economists, researchers, students, analysts, and data professionals who need to carry out rigorous panel regression.
+PanelStatX is a web-based AI-powered panel regression analysis system. 
 
-PanelStatX stands out for its:
--	✅️Simplicity: No complex installation or set up is required
--	📱Accessibility: It can be accessed and used via Android/iOS mobile phones, laptop and desktop devices💻
--	🧑‍🏫User Friendliness: It is purely a no-code system with a very low steep learning curve. It eliminates friction of writing compex Python scripts, R packages, or mastering use of heavyweight statistical software for panel regression
--	📟Hybrid Performance: It combines institutional-grade econometric methods with an AI-powered explainer.
--	🧠Intelligence: It uses Large Language Model (GPT-4o) as a intelligent layer to explain results for users with no statistical background
+🤢The Problem
+
+In carrying out panel regression, rsearchers and students struggle with:
+- Expensive tools like Stata
+- Steep learning curve (R, Python)
+- Time-consuming workflows
+
+🤓The Solution
+
+PanelStatX solve this high cost of accessibility and steep technical learning curve problem that comes with Stata, R and Python. is built as a no-code statistical analysis system that let users:
+- Upload your dataset
+- Run panel regression instantly
+- Get results + interpretation
 
 ---
 
 ## Key Features
-Analysing panel data correctly requires specialised estimators that account for hidden differences between entities and time trends.
- 
-PanelStatX automatically handles these complexities, enabling users to focus on interpretation rather than implementation. 
 
 The system is designed and equipped with:
--	Core Regression Models as Estimators
+-	Five different model estimators for handling panel data. These are:
 	- 📈Pooled OLS
 	- 🏢Fixed Effects
 	- 🔄Fixed Effects (Two-Way)
 	- ⚙️Random Effects (GLS)
 	- 📉First Difference
 
--	Statistical Diagnostics
-	-📋 Coefficient Summary Table covering standard errors, t-statistics, p-values, and significance stars (`***`, `**`, `*`)
-	- 📐Model Fit Metrics: covering R², Adjusted R², AIC, BIC, and F-statistic for evaluating model performance
-	- 🧪 Model Diagnostic including:
-		- ⚖️Hausman Test
-		- 🔔Jarque-Bera Test:
-		- 🔁Durbin-Watson Statistic
-		- 📉Breusch-Pagan Test
-	
-	
--	🤖 AI Explainer Powered by OpenAI’s **GPT-4o**: System supports one one-click clear nterpretation in terms:
-	-	Model choice rationale
-	-	Coefficient interpretation (B-coefficient)
-	-	Statistical significance (p-values)
-	-	Model fit quality
-	-	Key caveats (e.g., endogeneity, heteroskedasticity) and recommendations
-
--	📊Visualisations: System produce interactive charts that include 
-	- 	📈Time-series trends by entity
-	-	📊Entity-level comparison bar charts
-	-	✳️Correlation heatmaps
-	-	🔁Residual Distribution Plots for understanding error distribution and detect deviations from normality.
+The system analyse panel dataset and produce outputs that covers:
+- 📋 Coefficient Summary Metrics (standard errors, t-statistics, p-values with significance stars (`***`, `**`, `*`))
+- 📐 Model Fit Metrics (R², Adjusted R², AIC, BIC, F-statistic)
+- 🔬 Model Diagnostic (Hausman Test, Jarque-Bera Test, Durbin-Watson Statistic, Breusch-Pagan Test)
+- 📊 Visual Results (Entity-level comparison bar charts, Correlation heatmaps, Residual Distribution Plots for understanding error distribution and detect deviations from normality.
 	-	🔁Q-Q Plots that visually assess whether residuals follow a theoretical normal distribution.
 	-	✅️Fitted vs Actual Scatter plots that evaluate model performance by comparing predicted vs actual values.
 
 
--	📥Downloadable Report (.docx) containing:
-	- 📊Model summary and fit statistics table
-	- 🅱️Full coefficient estimates table (with significance highlighting)
-	- 🔁Residual diagnostics table with auto-generated interpretations
-	- 🧠AI write-up section 
+-	📥Downloadable Report (.docx)
+Report contain Model Fit Result, Coeffint summary Table, Diagnostic Result, as well as AI'gnerated explanation of thd result
 
 ---
 ## Workflow
@@ -86,11 +70,3 @@ To use PanelStatX:
 ---
 
 
-
-## Pricing
-
-- Starter: 5 Credits ($10)
-- Standard: 20 Credits ($25)
-- Team: 100 Credits ($100)
-  
-*⬡ PanelStatX · Panel Regression Analysis System · Powered by GPT-4*
