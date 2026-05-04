@@ -27,7 +27,10 @@ Benefits of Using PanelStatX
 - 💸 Eliminates need for paid software
 - 🎓 User-friendly and can be used by anyone with basic digital skill
 - 🔁 Can be accessed anywhere and used to run analysis via mobile phone and laptop devices
-> Use Case: PanelStatX is an alternative to Stata and R. It has become a tool of choice for economists, researchers, students, and data analysts for completing their data analysis without paying exorbitant license fee or writing a complex code syntax. It is a useful tool to complete their research timely
+
+
+
+> Use Case:PanelStatX provides a practical alternative to tools like Stata and R by enabling economists, researchers, students, and data analysts to perform panel data analysis without complex coding or expensive licenses. It streamlines workflows, helping users complete analysis faster and more efficiently.
 
 ---
 
@@ -64,8 +67,7 @@ PanelStatX is very easy and direct to use by anyone under 3 minutes
 6. 📄Download full results of the analysis + AI explained outputs as docx
 > Note: Access key🔑 is required to bs able to use the AI-powered explainer feature and download of analysis report. Without access key, these features are not permitted but analysis will run.
 
----
-
-
+--- 
+👉 Star this repo if you find it useful
 
 
