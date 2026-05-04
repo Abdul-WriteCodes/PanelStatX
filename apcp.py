@@ -11,6 +11,7 @@ import warnings
 warnings.filterwarnings("ignore")
 
 
+
 # ── cred system ───────────────────────────────────────────────
 from google.oauth2.service_account import Credentials
 import gspread
@@ -1258,8 +1259,6 @@ for key, default in [
     ("user_key", ""), ("user_credits", 0),
     ("user_email", ""), ("user_row", None),
     ("_credit_msg", None),
-    # Free trial flag
-    ("is_free_trial", False),
 ]:
     if key not in st.session_state:
         st.session_state[key] = default
@@ -1814,118 +1813,12 @@ if not st.session_state.access_granted:
 
 
 
-    # ── Free Trial CTA ────────────────────────────────────────────────────
-    st.markdown("""
-    <style>
-    .trial-section {
-        max-width: 780px; margin: 0 auto;
-        padding: clamp(16px,3vw,40px) clamp(20px,5vw,48px) clamp(8px,2vw,20px);
-        text-align: center;
-    }
-    .trial-card {
-        background: linear-gradient(135deg, rgba(0,229,200,0.06) 0%, rgba(124,109,240,0.07) 100%);
-        border: 1px solid rgba(0,229,200,0.22);
-        border-radius: 20px;
-        padding: clamp(28px,4vw,44px) clamp(24px,4vw,44px);
-        position: relative; overflow: hidden;
-    }
-    .trial-card::before {
-        content: ''; position: absolute; top: 0; left: 0; right: 0; height: 2px;
-        background: linear-gradient(90deg, transparent, var(--teal) 40%, var(--purple) 60%, transparent);
-    }
-    .trial-label {
-        font-family: var(--mono); font-size: 0.58rem;
-        letter-spacing: 0.22em; text-transform: uppercase;
-        color: var(--teal); margin-bottom: 12px; display: block;
-    }
-    .trial-title {
-        font-family: var(--display); font-weight: 800;
-        font-size: clamp(1.4rem, 3vw, 1.9rem);
-        color: var(--text); letter-spacing: -0.025em; margin-bottom: 10px;
-    }
-    .trial-title em { font-style: normal; color: var(--teal); }
-    .trial-desc {
-        font-family: var(--mono); font-size: 0.7rem;
-        color: var(--text2); line-height: 1.9; margin-bottom: 24px;
-        max-width: 500px; margin-left: auto; margin-right: auto;
-    }
-    .trial-limits {
-        display: flex; flex-wrap: wrap; justify-content: center; gap: 10px;
-        margin-bottom: 28px;
-    }
-    .tl-pill {
-        display: inline-flex; align-items: center; gap: 7px;
-        font-family: var(--mono); font-size: 0.6rem;
-        letter-spacing: 0.05em; padding: 7px 14px;
-        border-radius: 8px; border: 1px solid var(--border2);
-        background: var(--s2); color: var(--text2);
-    }
-    .tl-pill.ok  { border-color: rgba(0,229,200,0.25); color: var(--teal); }
-    .tl-pill.no  { border-color: rgba(240,92,124,0.2); color: #f05c7c; opacity: 0.8; }
-    .tl-icon { font-size: 0.75rem; }
-    /* Override Streamlit button inside trial card */
-    .trial-btn-zone .stButton > button {
-        background: linear-gradient(135deg, #00e5c8, #00c4ab) !important;
-        border: none !important;
-        color: #050b10 !important;
-        font-family: var(--display) !important;
-        font-weight: 800 !important;
-        font-size: 0.82rem !important;
-        border-radius: 12px !important;
-        padding: 14px 40px !important;
-        letter-spacing: 0.04em !important;
-        box-shadow: 0 4px 24px rgba(0,229,200,0.32) !important;
-        transition: box-shadow 0.2s, transform 0.2s !important;
-        min-width: 260px;
-    }
-    .trial-btn-zone .stButton > button:hover {
-        box-shadow: 0 8px 32px rgba(0,229,200,0.52) !important;
-        transform: translateY(-2px) !important;
-        background: linear-gradient(135deg, #00e5c8, #00c4ab) !important;
-        color: #050b10 !important;
-    }
-    .trial-note {
-        font-family: var(--mono); font-size: 0.58rem;
-        color: var(--muted); margin-top: 14px;
-    }
-    </style>
-
-    <div class="trial-section fi d5">
-      <div class="trial-card">
-        <span class="trial-label">&#x25C8;&nbsp; No credit card required &middot; Instant access</span>
-        <div class="trial-title">Try <em>PanelStatX</em> Free</div>
-        <p class="trial-desc">
-          Upload your panel data, run regressions, and explore results — completely free.
-          Upgrade to a paid plan to unlock report downloads and AI interpretation.
-        </p>
-        <div class="trial-limits">
-          <span class="tl-pill ok"><span class="tl-icon">&#x2713;</span> Upload Data (CSV / Excel)</span>
-          <span class="tl-pill ok"><span class="tl-icon">&#x2713;</span> Run Panel Regressions</span>
-          <span class="tl-pill ok"><span class="tl-icon">&#x2713;</span> View Results &amp; Diagnostics</span>
-          <span class="tl-pill ok"><span class="tl-icon">&#x2713;</span> Entity Plots</span>
-          <span class="tl-pill no"><span class="tl-icon">&#x2715;</span> Download Report (.docx)</span>
-          <span class="tl-pill no"><span class="tl-icon">&#x2715;</span> AI Explainer</span>
-        </div>
-      </div>
-    </div>
-    """, unsafe_allow_html=True)
-
-    # ── Free Trial button (Streamlit widget) ──────────────────────────────
-    _, trial_btn_col, _ = st.columns([1.5, 1, 1.5])
-    with trial_btn_col:
-        st.markdown('<div class="trial-btn-zone">', unsafe_allow_html=True)
-        free_trial_btn = st.button("⬡  Start Free Trial", width='stretch', key="free_trial_btn")
-        st.markdown('</div>', unsafe_allow_html=True)
-        st.markdown('<div class="trial-note" style="text-align:center;">Free Trial Require No sign-up · No credit card · Instant access</div>', unsafe_allow_html=True)
-
-    st.markdown("<br>", unsafe_allow_html=True)
-
     # ── Pricing header ─────────────────────────────────────────────────────
     st.markdown("""
     <div class="lp-pricing">
       <div class="section-head fi d5">
-        <p class="section-title">UPGRADE <em>PLAN </p>
-        <span class="section-label">Pay-As-You-Go Credits &middot; No monthly Subscription</span>
+        <span class="section-label">Pay-As-You-Go Credits &middot; No Subscription</span>
+        <p class="section-title">Simple, <em>transparent</em> pricing</p>
       </div>
     </div>
     """, unsafe_allow_html=True)
@@ -2055,17 +1948,6 @@ if not st.session_state.access_granted:
     </div>
     """, unsafe_allow_html=True)
 
-    # ── Free Trial activation ─────────────────────────────────────────────
-    if free_trial_btn:
-        st.session_state.access_granted = True
-        st.session_state.access_error   = ""
-        st.session_state.is_free_trial  = True
-        st.session_state.user_key       = "FREE-TRIAL"
-        st.session_state.user_credits   = 999   # effectively unlimited for trial
-        st.session_state.user_email     = "Free Trial"
-        st.session_state.user_row       = None
-        st.rerun()
-
     # ── Unlock logic ──────────────────────────────────────────────────────────
     if unlock_btn:
         if not entered_key:
@@ -2114,10 +1996,8 @@ with st.sidebar:
 
     # ── Credit HUD ────────────────────────────────────────────────────────────
     credits_left = st.session_state.user_credits
-    is_trial = st.session_state.get("is_free_trial", False)
-    credit_color = "#00e5c8" if is_trial or credits_left > 5 else "#f5a623" if credits_left > 1 else "#f05c7c"
-    credit_label = "Free Trial" if is_trial else ("Credits remaining" if credits_left > 1 else ("1 credit left!" if credits_left == 1 else "No credits"))
-    credit_display = "∞" if is_trial else str(credits_left)
+    credit_color = "#00e5c8" if credits_left > 5 else "#f5a623" if credits_left > 1 else "#f05c7c"
+    credit_label = "Credits remaining" if credits_left > 1 else ("1 credit left!" if credits_left == 1 else "No credits")
     email_display = st.session_state.user_email or "—"
     st.markdown(f"""
     <div style="background:var(--surface2);border:1px solid var(--border);border-radius:8px;
@@ -2128,13 +2008,13 @@ with st.sidebar:
                     overflow:hidden;text-overflow:ellipsis;white-space:nowrap;">{email_display}</div>
         <div style="display:flex;align-items:baseline;gap:6px;">
             <span style="font-family:'Syne',sans-serif;font-size:1.6rem;font-weight:700;
-                         color:{credit_color};line-height:1;">{credit_display}</span>
+                         color:{credit_color};line-height:1;">{credits_left}</span>
             <span style="font-size:0.62rem;color:var(--muted);text-transform:uppercase;
                          letter-spacing:0.1em;">{credit_label}</span>
         </div>
         <div style="margin-top:8px;background:var(--border);border-radius:2px;height:3px;">
             <div style="height:3px;border-radius:2px;background:{credit_color};
-                        width:{'100' if is_trial else min(100, credits_left * 10)}%;transition:width 0.4s;"></div>
+                        width:{min(100, credits_left * 10)}%;transition:width 0.4s;"></div>
         </div>
     </div>
     """, unsafe_allow_html=True)
@@ -2146,7 +2026,7 @@ with st.sidebar:
             st.warning(_cmsg[1])
         st.session_state._credit_msg = None
 
-    if credits_left <= 0 and not is_trial:
+    if credits_left <= 0:
         st.error("⚠ No credits remaining. Please purchase more to run analyses.")
         st.markdown("""
         <div style="text-align:center;font-family:'DM Mono',monospace;font-size:0.7rem;
@@ -2210,7 +2090,7 @@ with st.sidebar:
             "Run Analysis",
             use_container_width=True,
             type="primary",
-            disabled=(st.session_state.user_credits <= 0 and not st.session_state.get("is_free_trial", False)),
+            disabled=(st.session_state.user_credits <= 0),
         )
 
         # ── Analysis status feedback label ────────────────────────────────────
@@ -2230,7 +2110,7 @@ with st.sidebar:
                 Analysis complete
             </div>
             """, unsafe_allow_html=True)
-        elif st.session_state.df is not None and not (st.session_state.user_credits <= 0 and not st.session_state.get("is_free_trial", False)):
+        elif st.session_state.df is not None and not (st.session_state.user_credits <= 0):
             st.markdown("""
             <div style="
                 display:flex; align-items:center; gap:8px;
@@ -2267,7 +2147,7 @@ with st.sidebar:
 
 if run_btn and st.session_state.df is not None and x_cols:
     # ── Credit guard ──────────────────────────────────────────────────────────
-    if st.session_state.user_credits <= 0 and not st.session_state.get("is_free_trial", False):
+    if st.session_state.user_credits <= 0:
         st.error("⚠ You have no credits remaining. Please purchase more to run analyses.")
         st.stop()
 
@@ -2319,19 +2199,18 @@ if run_btn and st.session_state.df is not None and x_cols:
             }
             st.session_state.ai_explanation = ""
 
-            # ── Deduct 1 credit (paid users only) ────────────────────────────
-            if not st.session_state.get("is_free_trial", False):
-                new_credits = deduct_credit(
-                    st.session_state.user_row,
-                    st.session_state.user_credits,
-                )
-                st.session_state.user_credits = new_credits
-                if new_credits == 0:
-                    st.session_state._credit_msg = ("warn", "⚠ You just used your last credit. Purchase more to run further analyses.")
-                elif new_credits <= 3:
-                    st.session_state._credit_msg = ("warn", f"⚠ Only {new_credits} credit(s) remaining.")
-                else:
-                    st.session_state._credit_msg = None
+            # ── Deduct 1 credit ───────────────────────────────────────────────
+            new_credits = deduct_credit(
+                st.session_state.user_row,
+                st.session_state.user_credits,
+            )
+            st.session_state.user_credits = new_credits
+            if new_credits == 0:
+                st.session_state._credit_msg = ("warn", "⚠ You just used your last credit. Purchase more to run further analyses.")
+            elif new_credits <= 3:
+                st.session_state._credit_msg = ("warn", f"⚠ Only {new_credits} credit(s) remaining.")
+            else:
+                st.session_state._credit_msg = None
             st.rerun()
 
         except Exception as e:
@@ -2559,50 +2438,35 @@ with tab_results:
 
         dl_col1, dl_col2 = st.columns([1, 2])
         with dl_col1:
-            if st.session_state.get("is_free_trial", False):
-                st.markdown("""
-                <div style="background:rgba(124,109,240,0.07);border:1px solid rgba(124,109,240,0.25);
-                            border-radius:10px;padding:16px 18px;font-family:'DM Mono',monospace;
-                            font-size:0.72rem;color:#7c6df0;line-height:1.8;">
-                    <div style="font-family:'Syne',sans-serif;font-weight:700;font-size:0.85rem;
-                                margin-bottom:6px;color:#a89df5;">⬡ Paid Feature</div>
-                    Report download is not available on the Free Trial.
-                    Upgrade to a paid plan to export publication-ready DOCX reports.
-                </div>
-                """, unsafe_allow_html=True)
-                st.link_button("Upgrade — Get Access Key →", "https://x.com/bayantx360",
-                               use_container_width=True)
-            else:
-                try:
-                    import datetime
-                    docx_bytes = build_docx_report(
-                        res,
-                        st.session_state.model_type,
-                        ai_explanation=st.session_state.get("ai_explanation", ""),
-                    )
-                    fname = f"PanelStatX_Report_{datetime.datetime.now().strftime('%Y%m%d_%H%M')}.docx"
-                    st.download_button(
-                        label="⬇  Download Report (.docx)",
-                        data=docx_bytes,
-                        file_name=fname,
-                        mime="application/vnd.openxmlformats-officedocument.wordprocessingml.document",
-                        use_container_width=True,
-                        type="primary",
-                    )
-                except Exception as e:
-                    st.error(f"Report generation error: {e}")
+            try:
+                import datetime
+                docx_bytes = build_docx_report(
+                    res,
+                    st.session_state.model_type,
+                    ai_explanation=st.session_state.get("ai_explanation", ""),
+                )
+                fname = f"PanelStatX_Report_{datetime.datetime.now().strftime('%Y%m%d_%H%M')}.docx"
+                st.download_button(
+                    label="⬇  Download Report (.docx)",
+                    data=docx_bytes,
+                    file_name=fname,
+                    mime="application/vnd.openxmlformats-officedocument.wordprocessingml.document",
+                    use_container_width=True,
+                    type="primary",
+                )
+            except Exception as e:
+                st.error(f"Report generation error: {e}")
         with dl_col2:
-            if not st.session_state.get("is_free_trial", False):
-                ai_ready = bool(st.session_state.get("ai_explanation", "").strip())
-                tip_color = "#22d3a0" if ai_ready else "#6b7a9a"
-                tip_icon  = "✓" if ai_ready else "○"
-                tip_text  = "AI interpretation included in report." if ai_ready else "AI write-up not yet generated — go to AI Explainer tab first, then download."
-                st.markdown(f"""
-                <div style="font-family:'DM Mono',monospace;font-size:0.7rem;color:{tip_color};
-                            padding:10px 0;line-height:1.8;">
-                    {tip_icon} {tip_text}
-                </div>
-                """, unsafe_allow_html=True)
+            ai_ready = bool(st.session_state.get("ai_explanation", "").strip())
+            tip_color = "#22d3a0" if ai_ready else "#6b7a9a"
+            tip_icon  = "✓" if ai_ready else "○"
+            tip_text  = "AI interpretation included in report." if ai_ready else "AI write-up not yet generated — go to AI Explainer tab first, then download."
+            st.markdown(f"""
+            <div style="font-family:'DM Mono',monospace;font-size:0.7rem;color:{tip_color};
+                        padding:10px 0;line-height:1.8;">
+                {tip_icon} {tip_text}
+            </div>
+            """, unsafe_allow_html=True)
 
 
 # ──────────────────────────────────────────────────────────────────────────────
@@ -2850,136 +2714,111 @@ Coefficient Table:
             "Do NOT add preamble, closing remarks, or any text outside these sections."
         )
 
-        # ── Free trial block for AI Explainer ────────────────────────────────
-        if st.session_state.get("is_free_trial", False):
-            st.markdown("""
-            <div style="background:linear-gradient(135deg,rgba(124,109,240,0.07) 0%,rgba(0,229,200,0.05) 100%);
-                        border:1px solid rgba(124,109,240,0.28);border-left:3px solid #7c6df0;
-                        border-radius:12px;padding:28px 28px;margin-bottom:8px;
-                        font-family:'DM Mono',monospace;font-size:0.78rem;color:var(--text);line-height:1.9;">
-                <div style="font-family:'Syne',sans-serif;font-weight:800;font-size:1.1rem;
-                            color:#a89df5;margin-bottom:10px;letter-spacing:-0.01em;">
-                    ✦ AI Explainer · Paid Feature
-                </div>
-                <div style="color:var(--text2);margin-bottom:18px;">
-                    AI-powered interpretation of your regression results is <strong style="color:var(--text);">not available on the Free Trial</strong>.
-                    Upgrade to any paid plan to unlock:<br><br>
-                    &nbsp;&nbsp;&#x2713;&nbsp; Full AI econometric interpretation of coefficients, fit, and diagnostics<br>
-                    &nbsp;&nbsp;&#x2713;&nbsp; Ask custom questions about your results<br>
-                    &nbsp;&nbsp;&#x2713;&nbsp; AI write-up embedded in downloadable DOCX report
-                </div>
-            </div>
-            """, unsafe_allow_html=True)
-            _, upg_col, _ = st.columns([1, 2, 1])
-            with upg_col:
-                st.link_button("⬡  Upgrade to Paid Plan →", "https://x.com/bayantx360",
-                               use_container_width=True)
-        else:
-            col_explain, col_custom = st.columns([3, 2])
+        col_explain, col_custom = st.columns([3, 2])
 
-            with col_explain:
-                ai_disabled = st.session_state.user_credits <= 0
-                if st.button("✦ Generate AI Explanation", type="primary", width='stretch', disabled=ai_disabled):
-                    with st.spinner("AI model is analysing your results…"):
-                        explanation = call_openai(sys_prompt, f"Please explain these panel regression results:\n\n{context}")
-                        if not explanation.startswith("OpenAI API key") and not explanation.startswith("Request failed"):
-                            # Deduct 1 credit for AI explainer
-                            new_credits = deduct_credit(st.session_state.user_row, st.session_state.user_credits)
-                            st.session_state.user_credits = new_credits
-                            if new_credits == 0:
-                                st.session_state._credit_msg = ("warn", "⚠ You just used your last credit.")
-                            elif new_credits <= 3:
-                                st.session_state._credit_msg = ("warn", f"⚠ Only {new_credits} credit(s) remaining.")
-                            else:
-                                st.session_state._credit_msg = None
-                        st.session_state.ai_explanation = explanation
-                        st.rerun()
-                if ai_disabled:
-                    st.caption("⚠ No credits remaining — cannot generate AI explanation.")
-                else:
-                    st.caption(f"⚡ Costs 1 credit · {st.session_state.user_credits} remaining")
+        with col_explain:
+            ai_disabled = st.session_state.user_credits <= 0
+            if st.button("✦ Generate AI Explanation", type="primary", width='stretch', disabled=ai_disabled):
+                with st.spinner("AI model is analysing your results…"):
+                    explanation = call_openai(sys_prompt, f"Please explain these panel regression results:\n\n{context}")
+                    if not explanation.startswith("OpenAI API key") and not explanation.startswith("Request failed"):
+                        # Deduct 1 credit for AI explainer
+                        new_credits = deduct_credit(st.session_state.user_row, st.session_state.user_credits)
+                        st.session_state.user_credits = new_credits
+                        if new_credits == 0:
+                            st.session_state._credit_msg = ("warn", "⚠ You just used your last credit.")
+                        elif new_credits <= 3:
+                            st.session_state._credit_msg = ("warn", f"⚠ Only {new_credits} credit(s) remaining.")
+                        else:
+                            st.session_state._credit_msg = None
+                    st.session_state.ai_explanation = explanation
+                    st.rerun()
+            if ai_disabled:
+                st.caption("⚠ No credits remaining — cannot generate AI explanation.")
+            else:
+                st.caption(f"⚡ Costs 1 credit · {st.session_state.user_credits} remaining")
 
-            with col_custom:
-                custom_q = st.text_input("Ask a specific question about the results…",
-                                          placeholder="e.g. Is x1 economically significant?")
-                ask_disabled = st.session_state.user_credits <= 0
-                if st.button("Ask AI Model", width='stretch', disabled=ask_disabled) and custom_q:
-                    with st.spinner("Thinking…"):
-                        answer = call_openai(
-                            sys_prompt,
-                            f"Here are the regression results:\n\n{context}\n\nQuestion: {custom_q}",
-                        )
-                        if not answer.startswith("OpenAI API key") and not answer.startswith("Request failed"):
-                            new_credits = deduct_credit(st.session_state.user_row, st.session_state.user_credits)
-                            st.session_state.user_credits = new_credits
-                            if new_credits == 0:
-                                st.session_state._credit_msg = ("warn", "⚠ You just used your last credit.")
-                            elif new_credits <= 3:
-                                st.session_state._credit_msg = ("warn", f"⚠ Only {new_credits} credit(s) remaining.")
-                            else:
-                                st.session_state._credit_msg = None
-                        st.session_state.ai_explanation = answer
-                        st.rerun()
-                if ask_disabled:
-                    st.caption("⚠ No credits remaining.")
-                else:
-                    st.caption(f"⚡ Costs 1 credit · {st.session_state.user_credits} remaining")
-
-            if st.session_state.ai_explanation:
-                st.markdown("---")
-
-                def _md_to_html(text):
-                    """Convert ## headings, **bold**, *italic*, - bullets, 1. numbers to HTML."""
-                    import re as _re
-                    import html as _html
-                    HDR_STYLE = (
-                        "font-family:'Syne',sans-serif;font-size:0.78rem;font-weight:700;"
-                        "text-transform:uppercase;letter-spacing:0.1em;color:var(--accent);"
-                        "margin:18px 0 6px 0;border-bottom:1px solid rgba(0,229,200,0.2);padding-bottom:4px;"
+        with col_custom:
+            custom_q = st.text_input("Ask a specific question about the results…",
+                                      placeholder="e.g. Is x1 economically significant?")
+            ask_disabled = st.session_state.user_credits <= 0
+            if st.button("Ask AI Model", width='stretch', disabled=ask_disabled) and custom_q:
+                with st.spinner("Thinking…"):
+                    answer = call_openai(
+                        sys_prompt,
+                        f"Here are the regression results:\n\n{context}\n\nQuestion: {custom_q}",
                     )
-                    BULLET_WRAP  = 'style="padding:2px 0 2px 18px;position:relative;"'
-                    BULLET_MARK  = 'style="position:absolute;left:4px;color:var(--accent);"'
-                    NUMBER_WRAP  = 'style="padding:2px 0 2px 24px;position:relative;"'
-                    NUMBER_MARK  = 'style="position:absolute;left:4px;color:var(--accent);font-weight:700;"'
-                    html_parts = []
-                    for line in text.split("\n"):
-                        s = line.strip()
-                        if not s:
-                            html_parts.append("<br>")
-                            continue
-                        if s.startswith("## ") or s.startswith("### "):
-                            h = _html.escape(s.lstrip("# ").rstrip(":"))
-                            html_parts.append('<div style="' + HDR_STYLE + '">' + h + "</div>")
-                            continue
-                        s_e = _html.escape(s)
-                        s_e = _re.sub(r'\*\*([^*]+)\*\*', r'<strong>\1</strong>', s_e)
-                        s_e = _re.sub(r'\*([^*]+)\*',   r'<em>\1</em>',           s_e)
-                        if _re.match(r'^[-\u2022\u2013]\s+', s_e):
-                            body = _re.sub(r'^[-\u2022\u2013]\s+', '', s_e)
-                            html_parts.append(
-                                '<div ' + BULLET_WRAP + '>'
-                                '<span ' + BULLET_MARK + '>&#x2013;</span>' + body + '</div>'
-                            )
-                            continue
-                        m = _re.match(r'^(\d+)[.)]\s+(.*)', s_e)
-                        if m:
-                            html_parts.append(
-                                '<div ' + NUMBER_WRAP + '>'
-                                '<span ' + NUMBER_MARK + '>' + m.group(1) + '.</span>'
-                                + m.group(2) + '</div>'
-                            )
-                            continue
-                        html_parts.append('<div style="padding:2px 0;">' + s_e + '</div>')
-                    return "\n".join(html_parts)
+                    if not answer.startswith("OpenAI API key") and not answer.startswith("Request failed"):
+                        new_credits = deduct_credit(st.session_state.user_row, st.session_state.user_credits)
+                        st.session_state.user_credits = new_credits
+                        if new_credits == 0:
+                            st.session_state._credit_msg = ("warn", "⚠ You just used your last credit.")
+                        elif new_credits <= 3:
+                            st.session_state._credit_msg = ("warn", f"⚠ Only {new_credits} credit(s) remaining.")
+                        else:
+                            st.session_state._credit_msg = None
+                    st.session_state.ai_explanation = answer
+                    st.rerun()
+            if ask_disabled:
+                st.caption("⚠ No credits remaining.")
+            else:
+                st.caption(f"⚡ Costs 1 credit · {st.session_state.user_credits} remaining")
 
-                ai_html = _md_to_html(st.session_state.ai_explanation)
-                st.markdown(
-                    '<div class="ai-label">\u2746 &nbsp; AI MODEL INTERPRETATION</div>'
-                    '<div class="ai-box" style="white-space:normal;">' + ai_html + '</div>',
-                    unsafe_allow_html=True,
+        if st.session_state.ai_explanation:
+            st.markdown("---")
+
+            def _md_to_html(text):
+                """Convert ## headings, **bold**, *italic*, - bullets, 1. numbers to HTML."""
+                import re as _re
+                import html as _html
+                HDR_STYLE = (
+                    "font-family:'Syne',sans-serif;font-size:0.78rem;font-weight:700;"
+                    "text-transform:uppercase;letter-spacing:0.1em;color:var(--accent);"
+                    "margin:18px 0 6px 0;border-bottom:1px solid rgba(0,229,200,0.2);padding-bottom:4px;"
                 )
+                BULLET_WRAP  = 'style="padding:2px 0 2px 18px;position:relative;"'
+                BULLET_MARK  = 'style="position:absolute;left:4px;color:var(--accent);"'
+                NUMBER_WRAP  = 'style="padding:2px 0 2px 24px;position:relative;"'
+                NUMBER_MARK  = 'style="position:absolute;left:4px;color:var(--accent);font-weight:700;"'
+                html_parts = []
+                for line in text.split("\n"):
+                    s = line.strip()
+                    if not s:
+                        html_parts.append("<br>")
+                        continue
+                    if s.startswith("## ") or s.startswith("### "):
+                        h = _html.escape(s.lstrip("# ").rstrip(":"))
+                        html_parts.append('<div style="' + HDR_STYLE + '">' + h + "</div>")
+                        continue
+                    s_e = _html.escape(s)
+                    s_e = _re.sub(r'\*\*([^*]+)\*\*', r'<strong>\1</strong>', s_e)
+                    s_e = _re.sub(r'\*([^*]+)\*',   r'<em>\1</em>',           s_e)
+                    if _re.match(r'^[-\u2022\u2013]\s+', s_e):
+                        body = _re.sub(r'^[-\u2022\u2013]\s+', '', s_e)
+                        html_parts.append(
+                            '<div ' + BULLET_WRAP + '>'
+                            '<span ' + BULLET_MARK + '>&#x2013;</span>' + body + '</div>'
+                        )
+                        continue
+                    m = _re.match(r'^(\d+)[.)]\s+(.*)', s_e)
+                    if m:
+                        html_parts.append(
+                            '<div ' + NUMBER_WRAP + '>'
+                            '<span ' + NUMBER_MARK + '>' + m.group(1) + '.</span>'
+                            + m.group(2) + '</div>'
+                        )
+                        continue
+                    html_parts.append('<div style="padding:2px 0;">' + s_e + '</div>')
+                return "\n".join(html_parts)
 
-        # ── Quick insight cards (always shown for paid users; shown for trial too) ──
+            ai_html = _md_to_html(st.session_state.ai_explanation)
+            st.markdown(
+                '<div class="ai-label">\u2746 &nbsp; AI MODEL INTERPRETATION</div>'
+                '<div class="ai-box" style="white-space:normal;">' + ai_html + '</div>',
+                unsafe_allow_html=True,
+            )
+
+        # ── Quick insight cards ────────────────────────────────────────────────
         st.markdown("---")
         st.markdown('<div class="scard-title">Quick Insights</div>', unsafe_allow_html=True)
 
