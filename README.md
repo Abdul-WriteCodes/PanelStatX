@@ -65,7 +65,7 @@ PanelStatX is very easy and direct to use by anyone under 3 minutes
     - ▶️Click 'Run Analysis' and results will appear instantly across five tabs
 5. 🔍View Results and Explore — check diagnostics, visualise entity trends, ask the AI explainer questions
 6. 📄Download full results of the analysis + AI explained outputs as docx
-> Note: Access key🔑 is required to bs able to use the AI-powered explainer feature and download of analysis report. Without access key, these features are not permitted but analysis will run.
+> Note: Access key🔑 is required to be able to use the AI-powered explainer feature and download of analysis report. Without access key, these features are not permitted but analysis will run.
 
 --- 
 👉 Star this repo if you find it useful
