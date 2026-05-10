@@ -1920,7 +1920,7 @@ if not st.session_state.access_granted:
 
     st.markdown("<br>", unsafe_allow_html=True)
     
-    '''
+    
     # ── Pricing header ─────────────────────────────────────────────────────
     st.markdown("""
     <div class="lp-pricing">
@@ -1931,12 +1931,8 @@ if not st.session_state.access_granted:
     </div>
     """, unsafe_allow_html=True)
 
-    '''
-
         # ── Pricing cards ─────────────────────────────────────────────────────
     pc1, pc2, pc3 = st.columns(3, gap="small")
-
-
 
     with pc1:
         st.markdown("""
