@@ -1920,7 +1920,7 @@ if not st.session_state.access_granted:
 
     st.markdown("<br>", unsafe_allow_html=True)
     
-
+    -= """
     # ── Pricing header ─────────────────────────────────────────────────────
     st.markdown("""
     <div class="lp-pricing">
@@ -1933,6 +1933,10 @@ if not st.session_state.access_granted:
 
         # ── Pricing cards ─────────────────────────────────────────────────────
     pc1, pc2, pc3 = st.columns(3, gap="small")
+
+    """
+
+    _= """
 
     with pc1:
         st.markdown("""
@@ -1989,6 +1993,7 @@ if not st.session_state.access_granted:
         """, unsafe_allow_html=True)
         st.link_button("Buy Credits →", "https://flutterwave.com/pay/yw7k3gmyjoud",
                            width='stretch')
+        """
 
     # ── Access Gate ───────────────────────────────────────────────────────────
     st.markdown("""
