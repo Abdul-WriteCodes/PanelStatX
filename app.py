@@ -1919,7 +1919,8 @@ if not st.session_state.access_granted:
         st.markdown('<div class="trial-note" style="text-align:center;">Free Trial Require No sign-up · No credit card · Instant access</div>', unsafe_allow_html=True)
 
     st.markdown("<br>", unsafe_allow_html=True)
-
+    
+if False:
     # ── Pricing header ─────────────────────────────────────────────────────
     st.markdown("""
     <div class="lp-pricing">
