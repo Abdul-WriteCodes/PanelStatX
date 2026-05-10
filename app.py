@@ -1931,8 +1931,11 @@ if not st.session_state.access_granted:
     </div>
     """, unsafe_allow_html=True)
 
+    '''
+
         # ── Pricing cards ─────────────────────────────────────────────────────
     pc1, pc2, pc3 = st.columns(3, gap="small")
+
 
 
     with pc1:
@@ -1990,7 +1993,7 @@ if not st.session_state.access_granted:
         """, unsafe_allow_html=True)
         st.link_button("Buy Credits →", "https://flutterwave.com/pay/yw7k3gmyjoud",
                            width='stretch')
-        '''
+        
 
     # ── Access Gate ───────────────────────────────────────────────────────────
     st.markdown("""
