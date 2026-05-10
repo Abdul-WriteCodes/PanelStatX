@@ -1920,7 +1920,7 @@ if not st.session_state.access_granted:
 
     st.markdown("<br>", unsafe_allow_html=True)
     
-if False:
+
     # ── Pricing header ─────────────────────────────────────────────────────
     st.markdown("""
     <div class="lp-pricing">
